@@ -1,8 +1,12 @@
 package io.github.plastix.forage.ui.cachelist;
 
-import dagger.Component;
+import javax.inject.Singleton;
 
-@Component(modules = CacheListModule.class)
+import dagger.Component;
+import io.github.plastix.forage.data.api.OkApiModule;
+
+@Singleton
+@Component(modules = {CacheListModule.class, OkApiModule.class})
 public interface CacheListComponent {
-    void inject(CacheListView cacheListView);
+    void inject(CacheListFragment cacheListFragment);
 }
