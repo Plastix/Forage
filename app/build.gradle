@@ -16,7 +16,7 @@ def getProps(String propName) {
     if (propsFile.exists()) {
         def props = new Properties()
         props.load(new FileInputStream(propsFile))
-        return props[propName]
+        return String.format("\"%s\"", props[propName]);
     } else {
         return "";
     }
