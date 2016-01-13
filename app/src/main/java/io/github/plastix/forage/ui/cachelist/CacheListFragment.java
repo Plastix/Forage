@@ -30,6 +30,9 @@ public class CacheListFragment extends Fragment implements CacheListView {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
+        // Tell the activity we have menu items to contribute to the toolbar
+        setHasOptionsMenu(true);
+
         injectDependencies();
     }
 
@@ -56,12 +59,21 @@ public class CacheListFragment extends Fragment implements CacheListView {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu items from the Fragment's menu
+        inflater.inflate(R.menu.menu_cache_list_fragment, menu);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_test:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     @Override
