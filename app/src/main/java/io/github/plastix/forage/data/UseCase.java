@@ -12,7 +12,6 @@ public abstract class UseCase {
         this.subscription = Subscriptions.empty();
     }
 
-
     public void unsubscribe() {
         if (!subscription.isUnsubscribed()) {
             this.subscription.unsubscribe();

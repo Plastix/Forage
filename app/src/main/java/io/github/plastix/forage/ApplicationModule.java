@@ -11,9 +11,9 @@ import dagger.Provides;
 @Module
 public class ApplicationModule {
 
-    private final ForageApp app;
+    private final ForageApplication app;
 
-    public ApplicationModule(ForageApp app) {
+    public ApplicationModule(ForageApplication app) {
         this.app = app;
     }
 

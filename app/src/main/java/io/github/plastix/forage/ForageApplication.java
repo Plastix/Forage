@@ -2,7 +2,7 @@ package io.github.plastix.forage;
 
 import android.app.Application;
 
-public class ForageApp extends Application {
+public class ForageApplication extends Application {
 
     private ApplicationComponent component;
 

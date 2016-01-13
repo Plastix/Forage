@@ -11,6 +11,17 @@ buildscript {
     }
 }
 
+def getProps(String propName) {
+    def propsFile = rootProject.file('local.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        return "";
+    }
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -21,6 +32,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        buildConfigField("String", "OKAPI_US_CONSUMER_KEY", getProps("okapi_us_consumer_key"))
     }
     buildTypes {
         release {
