@@ -16,7 +16,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * A light wrapper around {@link OkApiService}.
+ * A light Rx wrapper around {@link OkApiService}.
  */
 @Singleton
 public class OkApiInteractor {
@@ -29,7 +29,7 @@ public class OkApiInteractor {
     }
 
     public Single<JsonArray> getNearbyCaches(Location location) {
-        return apiService.getNearbyCaches(
+        return apiService.searchAndRetrieve(
                 OkApiService.ENDPOINT_NEAREST,
                 String.format("{\"center\":\"%s|%s\"}", location.getLatitude(), location.getLongitude()),
                 OkApiService.ENDPOINT_GEOCACHES,
