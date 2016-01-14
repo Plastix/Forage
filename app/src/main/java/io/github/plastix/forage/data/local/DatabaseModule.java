@@ -6,7 +6,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 @Module
-public class RealmModule {
+public class DatabaseModule {
 
     @Provides
     public Realm provideRealm() {

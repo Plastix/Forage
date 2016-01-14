@@ -6,16 +6,16 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 
-public class RealmInteractor {
+public class DatabaseInteractor {
 
     private Realm realm;
 
     @Inject
-    public RealmInteractor(Realm realm) {
+    public DatabaseInteractor(Realm realm) {
         this.realm = realm;
     }
 
-
+    // TODO Don't expose Realm's transaction callback
     public void saveCachesFromJson(final JsonArray data, final Realm.Transaction.Callback callback) {
 
         realm.executeTransaction(new Realm.Transaction() {
