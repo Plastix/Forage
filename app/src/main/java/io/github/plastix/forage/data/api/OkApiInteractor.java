@@ -41,7 +41,7 @@ public class OkApiInteractor {
             public JsonArray call(JsonObject jsonObject) {
                 return JsonUtils.jsonObjectToArray(jsonObject);
             }
-        }).observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread());
+        }).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }
