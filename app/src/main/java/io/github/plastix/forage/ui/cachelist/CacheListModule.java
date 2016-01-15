@@ -1,7 +1,11 @@
 package io.github.plastix.forage.ui.cachelist;
 
+import android.content.res.Resources;
+import android.view.LayoutInflater;
+
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
 
 @Module
 public class CacheListModule {
@@ -16,4 +20,10 @@ public class CacheListModule {
     public CacheListView provideCacheListView() {
         return cacheListView;
     }
+
+    @Provides
+    public CacheAdapter provideCacheAdapter(Realm realm, Resources resources) {
+        return new CacheAdapter(realm, resources);
+    }
+
 }

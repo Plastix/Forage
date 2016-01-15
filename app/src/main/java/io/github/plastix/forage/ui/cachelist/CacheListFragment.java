@@ -3,6 +3,7 @@ package io.github.plastix.forage.ui.cachelist;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,12 +16,16 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 
 public class CacheListFragment extends Fragment implements CacheListView {
 
     @Inject
     CacheListPresenter presenter;
+
+    @Inject
+    CacheAdapter adapter;
 
     @Bind(R.id.cachelist_rv)
     RecyclerView recyclerView;
@@ -37,9 +42,8 @@ public class CacheListFragment extends Fragment implements CacheListView {
     }
 
     private void injectDependencies() {
-        DaggerCacheListComponent.builder()
-                .cacheListModule(new CacheListModule(this))
-                .build().inject(this);
+        ForageApplication.getComponent(getContext())
+                .plus(new CacheListModule(this)).injectTo(this);
     }
 
     @Override
@@ -47,7 +51,7 @@ public class CacheListFragment extends Fragment implements CacheListView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cache_list, container, false);
-        ButterKnife.bind(view);
+        ButterKnife.bind(this, view);
 
         return view;
     }
@@ -55,6 +59,16 @@ public class CacheListFragment extends Fragment implements CacheListView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    // TODO Logic for empty views
+    @Override
+    public void updateList() {
+        adapter.loadData();
     }
 
     @Override
@@ -68,11 +82,8 @@ public class CacheListFragment extends Fragment implements CacheListView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_test:
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -80,5 +91,6 @@ public class CacheListFragment extends Fragment implements CacheListView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        adapter.destroy();
     }
 }

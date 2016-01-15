@@ -2,6 +2,7 @@ package io.github.plastix.forage;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
 
 import javax.inject.Singleton;
 
@@ -32,5 +33,11 @@ public class ApplicationModule {
     @ForApplication
     public Context provideApplicationContext() {
         return app.getApplicationContext();
+    }
+
+    @Provides
+    @Singleton
+    public Resources provideResources(@ForApplication Context context) {
+        return context.getResources();
     }
 }

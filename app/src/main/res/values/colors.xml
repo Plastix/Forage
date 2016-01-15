@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- Remap theme colors-->
+    <color name="colorPrimary">@color/cyan</color>
+    <color name="colorPrimaryDark">@color/cyan_dark</color>
+    <color name="colorAccent">@color/pink</color>
+
+    <!-- Grayscale-->
+    <color name="white">#FFFFFF</color>
+    <color name="gray_dark">#212121</color>
+    <color name="gray">#727272</color>
+    <color name="gray_light">#B6B6B6</color>
+
+    <!-- Material Colors -->
+    <color name="cyan">#00BCD4</color>
+    <color name="cyan_dark">#0097A7</color>
+    <color name="cyan_light">#B2EBF2</color>
+    <color name="pink">#FF4081</color>
+
 </resources>

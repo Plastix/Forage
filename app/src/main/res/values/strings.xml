@@ -2,6 +2,8 @@
     <string name="app_name">Forage</string>
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cache.item.type">%s Cache</string>
+    <string name="cache.item.terrain">{cmd-terrain} %s</string>
+    <string name="cache.item.difficulty">{cmd-speedometer} %s</string>
+    <string name="cache.item.size">{cmd-cube} %s</string>
 </resources>
