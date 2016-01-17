@@ -3,6 +3,7 @@ package io.github.plastix.forage;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
 
 import javax.inject.Singleton;
 
@@ -39,5 +40,11 @@ public class ApplicationModule {
     @Singleton
     public Resources provideResources(@ForApplication Context context) {
         return context.getResources();
+    }
+
+    @Provides
+    @Singleton
+    public ConnectivityManager provideConnectivityManager(@ForApplication Context context){
+        return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 }

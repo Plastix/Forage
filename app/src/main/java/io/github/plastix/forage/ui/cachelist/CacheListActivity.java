@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import io.github.plastix.forage.R;
 
+// TODO Handle permission for location here
 public class CacheListActivity extends AppCompatActivity {
 
     private static final String CACHE_LIST_FRAG = "io.github.plastix.forage.ui.cachelist.cachelistfragment";

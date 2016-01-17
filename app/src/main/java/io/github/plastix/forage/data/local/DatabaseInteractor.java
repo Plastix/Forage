@@ -21,6 +21,7 @@ public class DatabaseInteractor {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
+                realm.where(Cache.class).findAll().clear();
                 realm.createOrUpdateAllFromJson(Cache.class, data.toString());
             }
         }, callback);

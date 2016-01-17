@@ -2,6 +2,7 @@ package io.github.plastix.forage.ui.cachelist;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -72,6 +73,17 @@ public class CacheListFragment extends Fragment implements CacheListView {
     }
 
     @Override
+    public void onError() {
+        Snackbar.make(recyclerView, "Error", Snackbar.LENGTH_LONG)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.getCaches();
+                    }
+                }).show();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu items from the Fragment's menu
         inflater.inflate(R.menu.menu_cache_list_fragment, menu);
@@ -82,9 +94,24 @@ public class CacheListFragment extends Fragment implements CacheListView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_fetch:
+                presenter.getCaches();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.onStart();
     }
 
     @Override
