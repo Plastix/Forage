@@ -15,6 +15,7 @@ import javax.inject.Singleton;
 import io.github.plastix.forage.ui.LifecycleCallbacks;
 import rx.Observable;
 import rx.Observer;
+import rx.Single;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action0;
@@ -30,17 +31,16 @@ public class LocationInteractor implements LifecycleCallbacks {
         this.apiClient = apiClient;
     }
 
-
     /**
      * The caller must already have location permissions before getting the location
      */
-    public Observable<Location> getLocation() {
+    public Single<Location> getUpdatedLocation() {
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setNumUpdates(1)
                 .setExpirationDuration(2500);
 
-        return Observable.create(new LocationOnSubscribe(request));
+        return Observable.create(new LocationOnSubscribe(request)).take(1).toSingle();
     }
 
     @Override

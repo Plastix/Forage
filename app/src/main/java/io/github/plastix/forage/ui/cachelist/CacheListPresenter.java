@@ -7,13 +7,13 @@ import com.google.gson.JsonArray;
 
 import javax.inject.Inject;
 
-import io.github.plastix.forage.ui.LifecycleCallbacks;
 import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.location.LocationInteractor;
+import io.github.plastix.forage.ui.LifecycleCallbacks;
 import io.github.plastix.forage.util.NetworkUtils;
 import io.realm.Realm;
-import rx.Observable;
+import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
 import rx.functions.Func1;
@@ -47,24 +47,18 @@ public class CacheListPresenter implements LifecycleCallbacks {
             view.onError();
         } else {
 
-            //TODO Switch to all Singles or all Observables?
-            this.subscription = locationInteractor.getLocation().take(1).flatMap(new Func1<Location, Observable<JsonArray>>() {
+            this.subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Single<JsonArray>>() {
                 @Override
-                public Observable<JsonArray> call(Location location) {
-                    return apiInteractor.getNearbyCaches(location).toObservable();
+                public Single<JsonArray> call(Location location) {
+                    return apiInteractor.getNearbyCaches(location);
                 }
-            }).toSingle().subscribe(new SingleSubscriber<JsonArray>() {
+            }).subscribe(new SingleSubscriber<JsonArray>() {
                 @Override
                 public void onSuccess(JsonArray value) {
-                    databaseInteractor.saveCachesFromJson(value, new Realm.Transaction.Callback() {
+                    databaseInteractor.saveCachesFromJson(value, new Realm.Transaction.Callback(){
                         @Override
                         public void onSuccess() {
                             view.updateList();
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            super.onError(e);
                         }
                     });
                 }
