@@ -1,4 +1,4 @@
-package io.github.plastix.forage;
+package io.github.plastix.forage.ui;
 
 /**
  * Android lifecycle callbacks from activities/fragments. Presenters can implement this interface to

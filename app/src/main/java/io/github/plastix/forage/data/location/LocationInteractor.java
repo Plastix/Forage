@@ -3,7 +3,6 @@ package io.github.plastix.forage.data.location;
 import android.location.Location;
 import android.os.Bundle;
 
-import com.fernandocejas.frodo.annotation.RxLogObservable;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -13,10 +12,9 @@ import com.google.android.gms.location.LocationServices;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.github.plastix.forage.LifecycleCallbacks;
+import io.github.plastix.forage.ui.LifecycleCallbacks;
 import rx.Observable;
 import rx.Observer;
-import rx.Single;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action0;

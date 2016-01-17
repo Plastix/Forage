@@ -7,7 +7,7 @@ import com.google.gson.JsonArray;
 
 import javax.inject.Inject;
 
-import io.github.plastix.forage.LifecycleCallbacks;
+import io.github.plastix.forage.ui.LifecycleCallbacks;
 import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.location.LocationInteractor;
