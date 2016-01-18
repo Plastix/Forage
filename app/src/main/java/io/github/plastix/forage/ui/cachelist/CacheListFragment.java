@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -64,12 +65,12 @@ public class CacheListFragment extends Fragment implements CacheListView {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-    }
-
-    // TODO Logic for empty views
-    @Override
-    public void updateList() {
-        adapter.loadData();
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                Log.d(getTag(), "List data changed!");
+            }
+        });
     }
 
     @Override
@@ -97,6 +98,9 @@ public class CacheListFragment extends Fragment implements CacheListView {
             case R.id.action_fetch:
                 presenter.getCaches();
                 return true;
+            case R.id.action_clear:
+                presenter.clearCaches();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -118,6 +122,6 @@ public class CacheListFragment extends Fragment implements CacheListView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        adapter.destroy();
+        adapter.closeRealm();
     }
 }

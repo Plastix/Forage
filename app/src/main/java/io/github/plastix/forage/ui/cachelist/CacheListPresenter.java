@@ -12,7 +12,6 @@ import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.ui.LifecycleCallbacks;
 import io.github.plastix.forage.util.NetworkUtils;
-import io.realm.Realm;
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
@@ -43,6 +42,8 @@ public class CacheListPresenter implements LifecycleCallbacks {
     }
 
     public void getCaches() {
+        cancelRequest();
+
         if (!NetworkUtils.hasInternetConnection(connectivityManager)) {
             view.onError();
         } else {
@@ -55,12 +56,7 @@ public class CacheListPresenter implements LifecycleCallbacks {
             }).subscribe(new SingleSubscriber<JsonArray>() {
                 @Override
                 public void onSuccess(JsonArray value) {
-                    databaseInteractor.saveCachesFromJson(value, new Realm.Transaction.Callback(){
-                        @Override
-                        public void onSuccess() {
-                            view.updateList();
-                        }
-                    });
+                    databaseInteractor.saveGeocachesFromJson(value);
                 }
 
                 @Override
@@ -72,6 +68,15 @@ public class CacheListPresenter implements LifecycleCallbacks {
         }
     }
 
+    public void cancelRequest() {
+        if (!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+    }
+
+    public void clearCaches() {
+        databaseInteractor.clearGeocaches();
+    }
 
     @Override
     public void onStart() {
@@ -87,12 +92,6 @@ public class CacheListPresenter implements LifecycleCallbacks {
     @Override
     public void onResume() {
 
-    }
-
-    public void cancelRequest() {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
     }
 
 

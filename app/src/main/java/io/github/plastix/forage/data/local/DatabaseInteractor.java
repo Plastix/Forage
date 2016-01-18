@@ -15,16 +15,23 @@ public class DatabaseInteractor {
         this.realm = realm;
     }
 
-    // TODO Don't expose Realm's transaction callback
-    public void saveCachesFromJson(final JsonArray data, final Realm.Transaction.Callback callback) {
-
+    public void clearGeocaches() {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.where(Cache.class).findAll().clear();
+            }
+        }, null); // Passing a null callback makes this transaction async which doesn't block other writes
+    }
+
+    public void saveGeocachesFromJson(final JsonArray data) {
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
                 realm.createOrUpdateAllFromJson(Cache.class, data.toString());
             }
-        }, callback);
+        }, null);
     }
 
 }
