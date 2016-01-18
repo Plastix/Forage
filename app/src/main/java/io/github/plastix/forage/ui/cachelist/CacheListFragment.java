@@ -20,6 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
+import io.github.plastix.forage.ui.SimpleDividerItemDecoration;
 
 public class CacheListFragment extends Fragment implements CacheListView {
 
@@ -28,6 +29,9 @@ public class CacheListFragment extends Fragment implements CacheListView {
 
     @Inject
     CacheAdapter adapter;
+
+    @Inject
+    SimpleDividerItemDecoration itemDecorator;
 
     @Bind(R.id.cachelist_rv)
     RecyclerView recyclerView;
@@ -63,6 +67,7 @@ public class CacheListFragment extends Fragment implements CacheListView {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(itemDecorator);
         recyclerView.setAdapter(adapter);
 
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
