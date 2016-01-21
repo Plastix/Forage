@@ -2,8 +2,9 @@ package io.github.plastix.forage.ui.cachelist;
 
 import android.location.Location;
 import android.net.ConnectivityManager;
+import android.util.Log;
 
-import com.google.gson.JsonArray;
+import org.json.JSONArray;
 
 import javax.inject.Inject;
 
@@ -48,19 +49,20 @@ public class CacheListPresenter implements LifecycleCallbacks {
             view.onErrorInternet();
         } else {
 
-            this.subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Single<JsonArray>>() {
+            this.subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Single<JSONArray>>() {
                 @Override
-                public Single<JsonArray> call(Location location) {
+                public Single<JSONArray> call(Location location) {
                     return apiInteractor.getNearbyCaches(location);
                 }
-            }).subscribe(new SingleSubscriber<JsonArray>() {
+            }).subscribe(new SingleSubscriber<JSONArray>() {
                 @Override
-                public void onSuccess(JsonArray value) {
+                public void onSuccess(JSONArray value) {
                     databaseInteractor.saveGeocachesFromJson(value);
                 }
 
                 @Override
                 public void onError(Throwable error) {
+                    Log.e("error", error.getMessage(), error);
                     view.onErrorInternet();
                 }
             });

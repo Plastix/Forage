@@ -1,18 +1,16 @@
 package io.github.plastix.forage.util;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class JsonUtils {
 
-    public static JsonArray jsonObjectToArray(JsonObject object) {
-        JsonArray array = new JsonArray();
-        for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
-            array.add(object.getAsJsonObject(entry.getKey()));
+    public static JSONArray jsonObjectToArray(JSONObject object) {
+        try {
+            return object.toJSONArray(object.names());
+        } catch (JSONException e) {
+            return new JSONArray();
         }
-        return array;
     }
 }

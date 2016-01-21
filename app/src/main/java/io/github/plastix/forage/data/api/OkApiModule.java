@@ -5,7 +5,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.GsonConverterFactory;
+import io.github.plastix.forage.data.api.converter.JsonObjectConverterFactory;
 import retrofit2.Retrofit;
 import retrofit2.RxJavaCallAdapterFactory;
 
@@ -26,18 +26,18 @@ public class OkApiModule {
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(@Named("BASE_ENDPOINT") String baseUrl, GsonConverterFactory gsonConverter, RxJavaCallAdapterFactory rxAdapter) {
+    public Retrofit provideRetrofit(@Named("BASE_ENDPOINT") String baseUrl, JsonObjectConverterFactory jsonConverter, RxJavaCallAdapterFactory rxAdapter) {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(gsonConverter)
+                .addConverterFactory(jsonConverter)
                 .addCallAdapterFactory(rxAdapter)
                 .build();
     }
 
     @Provides
     @Singleton
-    public GsonConverterFactory provideGsonConverterFactory() {
-        return GsonConverterFactory.create();
+    public JsonObjectConverterFactory provideJsonObjectConverterFactory() {
+        return new JsonObjectConverterFactory();
     }
 
     @Provides

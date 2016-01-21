@@ -1,6 +1,6 @@
 package io.github.plastix.forage.data.local;
 
-import com.google.gson.JsonArray;
+import org.json.JSONArray;
 
 import javax.inject.Inject;
 
@@ -36,12 +36,12 @@ public class DatabaseInteractor {
      *
      * @param data JSON Array of Geocaches.
      */
-    public void saveGeocachesFromJson(final JsonArray data) {
+    public void saveGeocachesFromJson(final JSONArray data) {
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.createOrUpdateAllFromJson(Cache.class, data.toString());
+                realm.createOrUpdateAllFromJson(Cache.class, data);
             }
         }, null);
     }

@@ -2,8 +2,8 @@ package io.github.plastix.forage.data.api;
 
 import android.location.Location;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -34,7 +34,7 @@ public class OkApiInteractor {
      * @param location Center location.
      * @return A rx.Single JsonArray.
      */
-    public Single<JsonArray> getNearbyCaches(Location location) {
+    public Single<JSONArray> getNearbyCaches(Location location) {
         return apiService.searchAndRetrieve(
                 OkApiService.ENDPOINT_NEAREST,
                 String.format("{\"center\":\"%s|%s\"}", location.getLatitude(), location.getLongitude()),
@@ -42,9 +42,9 @@ public class OkApiInteractor {
                 "{\"fields\":\"code|name|location|type|status|terrain|difficulty|size2|description\"}",
                 false,
                 BuildConfig.OKAPI_US_CONSUMER_KEY
-        ).map(new Func1<JsonObject, JsonArray>() { // TODO Replace this map with a Retrofit converter?
+        ).map(new Func1<JSONObject, JSONArray>() {
             @Override
-            public JsonArray call(JsonObject jsonObject) {
+            public JSONArray call(JSONObject jsonObject) {
                 return JsonUtils.jsonObjectToArray(jsonObject);
             }
         }).subscribeOn(Schedulers.newThread())
