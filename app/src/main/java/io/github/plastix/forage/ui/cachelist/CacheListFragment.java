@@ -22,6 +22,9 @@ import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.SimpleDividerItemDecoration;
 
+/**
+ * Fragment that is responsible for the Geocache list.
+ */
 public class CacheListFragment extends Fragment implements CacheListView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -112,6 +115,11 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
                 }).show();
     }
 
+    private void downloadGeocaches() {
+        swipeRefreshLayout.setRefreshing(true);
+        presenter.getCaches();
+    }
+
     @Override
     public void onErrorLocation() {
         stopRefresh();
@@ -127,11 +135,6 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
     @Override
     public void onRefresh() {
         downloadGeocaches();
-    }
-
-    private void downloadGeocaches() {
-        swipeRefreshLayout.setRefreshing(true);
-        presenter.getCaches();
     }
 
     @Override
@@ -156,12 +159,18 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
         }
     }
 
+    /**
+     * Call the onStop() lifecycle callback of the presenter.
+     */
     @Override
     public void onStop() {
         super.onStop();
         presenter.onStop();
     }
 
+    /**
+     * Call the onStart() lifecycle callback of the presenter.
+     */
     @Override
     public void onStart() {
         super.onStart();

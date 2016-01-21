@@ -6,6 +6,9 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 
+/**
+ * Wrapper around Realm DB operations.
+ */
 public class DatabaseInteractor {
 
     private Realm realm;
@@ -15,6 +18,9 @@ public class DatabaseInteractor {
         this.realm = realm;
     }
 
+    /**
+     * Removes all {@link Cache} objects from the Realm database.
+     */
     public void clearGeocaches() {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -24,6 +30,12 @@ public class DatabaseInteractor {
         }, null); // Passing a null callback makes this transaction async which doesn't block other writes
     }
 
+    /**
+     * Creates or updates all {@link Cache} objects in the Realm database using the JSON array.
+     * Geocaches are updated if they have the same primary key.
+     *
+     * @param data JSON Array of Geocaches.
+     */
     public void saveGeocachesFromJson(final JsonArray data) {
 
         realm.executeTransaction(new Realm.Transaction() {

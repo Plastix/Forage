@@ -3,8 +3,10 @@ package io.github.plastix.forage.data.local;
 import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
+/**
+ * Dagger module to provide a {@link Realm} instance.
+ */
 @Module
 public class DatabaseModule {
 

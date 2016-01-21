@@ -11,6 +11,9 @@ import dagger.Module;
 import dagger.Provides;
 import io.github.plastix.forage.ForApplication;
 
+/**
+ * Dagger module to provide a location dependencies.
+ */
 @Module
 public class LocationModule {
 

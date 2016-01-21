@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:fontFamily="sans-serif-light"
-        android:text="@string/cachelist.no_caches"
+        android:text="@string/cachelist_no_caches"
         android:textSize="20sp"
         android:typeface="sans"/>
 

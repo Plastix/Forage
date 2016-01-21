@@ -21,6 +21,9 @@ import rx.Subscription;
 import rx.functions.Action0;
 import rx.subscriptions.Subscriptions;
 
+/**
+ * Reactive wrapper around Google Play Location Services.
+ */
 @Singleton
 public class LocationInteractor implements LifecycleCallbacks {
 
@@ -32,7 +35,10 @@ public class LocationInteractor implements LifecycleCallbacks {
     }
 
     /**
-     * The caller must already have location permissions before getting the location
+     * Gets the updated location using Google Play Location Services.
+     * The caller must have location permissions before calling this method!
+     *
+     * @return A rx.Single Location.
      */
     public Single<Location> getUpdatedLocation() {
         LocationRequest request = LocationRequest.create()
@@ -43,6 +49,9 @@ public class LocationInteractor implements LifecycleCallbacks {
         return Observable.create(new LocationOnSubscribe(request)).take(1).toSingle();
     }
 
+    /**
+     * Lifecycle callback used to connect to Google Play Services.
+     */
     @Override
     public void onStart() {
         connectToGoogleApi();
@@ -58,6 +67,9 @@ public class LocationInteractor implements LifecycleCallbacks {
         return apiClient.isConnected() || apiClient.isConnecting();
     }
 
+    /**
+     * Lifecycle callback used to disconnect from Google Play Services.
+     */
     @Override
     public void onStop() {
         if (isGoogleApiConnected()) {
@@ -67,9 +79,12 @@ public class LocationInteractor implements LifecycleCallbacks {
 
     @Override
     public void onResume() {
+        // Unused
     }
 
-
+    /**
+     * Observable subscriber wrapper around GoogleAPI connection callbacks.
+     */
     private class LocationOnSubscribe implements Observable.OnSubscribe<Location>, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
         private Observer<? super Location> observable;

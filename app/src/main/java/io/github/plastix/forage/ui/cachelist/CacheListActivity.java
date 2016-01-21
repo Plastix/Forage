@@ -16,6 +16,10 @@ import io.github.plastix.forage.R;
 import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.PermissionUtils;
 
+/**
+ * Activity that represents the main Geocache list screen of the app. This is a container activity
+ * for {@link CacheListFragment}.
+ */
 public class CacheListActivity extends AppCompatActivity {
 
     private static final String CACHE_LIST_FRAG = "io.github.plastix.forage.ui.cachelist.cachelistfragment";
@@ -54,6 +58,11 @@ public class CacheListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Request location permissions every time the Activity is started. This is important because
+     * a user can disable the permission while the activity is running in the background and return
+     * to the activity.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -73,6 +82,15 @@ public class CacheListActivity extends AppCompatActivity {
     }
 
     private void showPermissionDialog() {
+        buildDialog();
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
+
+    }
+
+    private void buildDialog() {
         if (dialog == null) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.AppTheme_AlertDialog);
             dialogBuilder.setMessage(R.string.cachelist_nolocation);
@@ -91,13 +109,7 @@ public class CacheListActivity extends AppCompatActivity {
             });
             dialogBuilder.setCancelable(false);
             this.dialog = dialogBuilder.create();
-
         }
-
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
-
     }
 
     @Override

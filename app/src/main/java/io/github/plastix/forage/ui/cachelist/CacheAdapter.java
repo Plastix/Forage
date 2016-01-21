@@ -17,6 +17,9 @@ import io.github.plastix.forage.data.local.Cache;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
+/**
+ * RecyclerView adapter to get {@link Cache}s from Realm and display them.
+ */
 public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.CacheHolder> {
 
     private Resources resources;
@@ -41,16 +44,21 @@ public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.Cache
 
         holder.cacheName.setText(cache.getName());
 
-        holder.cacheType.setText(resources.getString(R.string.cache_item_type, cache.getType()));
+        holder.cacheType.setText(resources.getString(R.string.cacheitem_type, cache.getType()));
 
-        holder.cacheTerrain.setText(resources.getString(R.string.cache_item_terrain, cache.getTerrain()));
+        holder.cacheTerrain.setText(resources.getString(R.string.cacheitem_terrain, cache.getTerrain()));
 
-        holder.cacheDifficulty.setText(resources.getString(R.string.cache_item_difficulty, cache.getDifficulty()));
+        holder.cacheDifficulty.setText(resources.getString(R.string.cacheitem_difficulty, cache.getDifficulty()));
 
         holder.cacheSize.setText(resources.getString(R.string.cache_item_size, cache.getSize2()));
 
     }
 
+    /**
+     * Query to get data from Realm.
+     *
+     * @return RealmQuery to get Realm data with.
+     */
     @Override
     protected RealmQuery<Cache> getQuery() {
         return this.realm.where(Cache.class);

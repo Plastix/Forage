@@ -7,7 +7,7 @@ import retrofit2.http.Query;
 import rx.Single;
 
 /**
- * Retrofit service definition of the Open Caching API
+ * Retrofit service definition of the Open Caching API.
  * http://www.opencaching.us/okapi/introduction.html
  */
 public interface OkApiService {

@@ -1,12 +1,15 @@
 package io.github.plastix.forage.ui.cachelist;
 
 import android.content.res.Resources;
-import android.view.LayoutInflater;
 
 import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
 
+/**
+ * Dagger module that provides dependencies for {@link CacheListFragment} and {@link CacheListActivity}.
+ * This is used to inject the cache list presenter and view into each other.
+ */
 @Module
 public class CacheListModule {
 

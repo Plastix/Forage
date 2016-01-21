@@ -16,7 +16,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * A light Rx wrapper around {@link OkApiService}.
+ * A Reactive wrapper around {@link OkApiService}.
  */
 @Singleton
 public class OkApiInteractor {
@@ -28,6 +28,12 @@ public class OkApiInteractor {
         this.apiService = apiService;
     }
 
+    /**
+     * Gets a JSON array of Geocaches near the specified Location from {@link OkApiService}.
+     *
+     * @param location Center location.
+     * @return A rx.Single JsonArray.
+     */
     public Single<JsonArray> getNearbyCaches(Location location) {
         return apiService.searchAndRetrieve(
                 OkApiService.ENDPOINT_NEAREST,

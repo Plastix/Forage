@@ -4,13 +4,15 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
-import android.support.v4.content.ContextCompat;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * Dagger module that provides (singleton) application wide dependencies.
+ */
 @Module
 public class ApplicationModule {
 
@@ -45,7 +47,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    public ConnectivityManager provideConnectivityManager(@ForApplication Context context){
+    public ConnectivityManager provideConnectivityManager(@ForApplication Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 }

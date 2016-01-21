@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Remap theme colors-->
-    <color name="colorPrimary">@color/cyan</color>
-    <color name="colorPrimaryDark">@color/cyan_dark</color>
-    <color name="colorAccent">@color/pink</color>
+    <color name="color_primary">@color/cyan</color>
+    <color name="color_primary_dark">@color/cyan_dark</color>
+    <color name="color_accent">@color/pink</color>
 
     <!-- Grayscale-->
     <color name="white">#FFFFFF</color>

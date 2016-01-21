@@ -13,8 +13,8 @@ import io.github.plastix.forage.ForApplication;
 import io.github.plastix.forage.R;
 
 /**
- * Simple divider decorator for a RecyclerView
- * Based on https://gist.github.com/polbins/e37206fbc444207c0e92
+ * Simple divider decorator for a RecyclerView.
+ * Based on https://gist.github.com/polbins/e37206fbc444207c0e92.
  */
 public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
 

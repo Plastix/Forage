@@ -9,8 +9,8 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
- * A RecyclerView adapter for use with Realm
- * Based on from http://stackoverflow.com/questions/28995380/best-practices-to-use-realm-with-a-recycler-view
+ * A RecyclerView adapter for use with Realm.
+ * Based on http://stackoverflow.com/questions/28995380/best-practices-to-use-realm-with-a-recycler-view
  */
 public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> implements RealmChangeListener {
@@ -24,7 +24,12 @@ public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends Rec
         loadData();
     }
 
+    /**
+     * Loads data asynchronously from Realm into the adapter.
+     * Data is queried using {@link #getQuery()} from the subtype.
+     */
     public void loadData() {
+        // The query must be reset every time because Realm's findAllAsync "consumes" the query
         setQuery();
         this.data = query.findAllAsync();
         this.data.addChangeListener(this);
@@ -34,21 +39,46 @@ public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends Rec
         this.query = getQuery();
     }
 
+    /**
+     * Gets the RealmQuery to load data from.
+     *
+     * @return RealmQuery to load data from.
+     */
     protected abstract RealmQuery<T> getQuery();
 
+    /**
+     * Called automatically by Realm when the data updates.
+     */
     @Override
     public void onChange() {
         notifyDataSetChanged();
     }
 
+    /**
+     * Gets the RealmObject at the specified position in the adapter's RealmResults.
+     *
+     * @param position Position to query.
+     * @return Realm object at the specified location.
+     * @throws IndexOutOfBoundsException if {@code position < 0 || position >= getItemCount()}.
+     */
     public T getItem(int position) {
         return data.get(position);
     }
 
+    /**
+     * Returns whether the adapter currently has any items.
+     *
+     * @return True if empty, else false.
+     */
     public boolean isEmpty() {
         return getItemCount() == 0;
     }
 
+    /**
+     * Returns the number of items currently in the adapter.
+     *
+     * @return Number of items.
+     */
     @Override
     public final int getItemCount() {
         if (!data.isLoaded()) {
@@ -58,6 +88,9 @@ public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends Rec
         }
     }
 
+    /**
+     * Closes the realm instance held by the adapter.
+     */
     public void closeRealm() {
         this.realm.close();
     }

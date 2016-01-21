@@ -9,6 +9,9 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 import retrofit2.RxJavaCallAdapterFactory;
 
+/**
+ * Dagger module that provides dependencies for {@link OkApiService} and {@link OkApiInteractor}.
+ */
 @Module
 public class OkApiModule {
 

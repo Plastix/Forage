@@ -3,6 +3,9 @@ package io.github.plastix.forage.data.local;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
+/**
+ * Realm model of a Geocache object.
+ */
 public class Cache extends RealmObject {
 
     @PrimaryKey
@@ -18,7 +21,8 @@ public class Cache extends RealmObject {
     private String description; //HTML Description of the cache
 
 
-    // Getters and Setters used by Realm Proxy Classes
+    // IDE generated Getters and Setters used by Realm Proxy Classes
+    // These are REQUIRED!
 
     public String getCode() {
         return code;
