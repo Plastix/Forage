@@ -4,9 +4,19 @@
              android:layout_height="match_parent"
              tools:context="io.github.plastix.forage.ui.cachelist.CacheListFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/cachelist_rv"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/cachelist_swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cachelist_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include layout="@layout/empty_view"/>
 
 </FrameLayout>

@@ -4,9 +4,9 @@ package io.github.plastix.forage.ui.cachelist;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +22,7 @@ import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.SimpleDividerItemDecoration;
 
-public class CacheListFragment extends Fragment implements CacheListView {
+public class CacheListFragment extends Fragment implements CacheListView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     CacheListPresenter presenter;
@@ -33,8 +33,14 @@ public class CacheListFragment extends Fragment implements CacheListView {
     @Inject
     SimpleDividerItemDecoration itemDecorator;
 
-    @Bind(R.id.cachelist_rv)
+    @Bind(R.id.cachelist_recyclerview)
     RecyclerView recyclerView;
+
+    @Bind(R.id.cachelist_swiperefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    @Bind(R.id.empty_view)
+    View emptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,20 +79,59 @@ public class CacheListFragment extends Fragment implements CacheListView {
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
-                Log.d(getTag(), "List data changed!");
+                updateEmptyView();
             }
         });
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void updateEmptyView() {
+        stopRefresh();
+        if (adapter.isEmpty()) {
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void stopRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
-    public void onError() {
-        Snackbar.make(recyclerView, "Error", Snackbar.LENGTH_LONG)
-                .setAction("Retry", new View.OnClickListener() {
+    public void onErrorInternet() {
+        stopRefresh();
+        Snackbar.make(recyclerView, R.string.cachelist_error_no_internet, Snackbar.LENGTH_LONG)
+                .setAction(R.string.cachelist_retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        presenter.getCaches();
+                        downloadGeocaches();
                     }
                 }).show();
+    }
+
+    @Override
+    public void onErrorLocation() {
+        stopRefresh();
+        Snackbar.make(recyclerView, R.string.cachelist_error_no_location, Snackbar.LENGTH_LONG)
+                .setAction(R.string.cachelist_retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        downloadGeocaches();
+                    }
+                }).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        downloadGeocaches();
+    }
+
+    private void downloadGeocaches() {
+        swipeRefreshLayout.setRefreshing(true);
+        presenter.getCaches();
     }
 
     @Override
@@ -101,7 +146,7 @@ public class CacheListFragment extends Fragment implements CacheListView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_fetch:
-                presenter.getCaches();
+                downloadGeocaches();
                 return true;
             case R.id.action_clear:
                 presenter.clearCaches();

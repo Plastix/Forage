@@ -30,7 +30,7 @@ public class CacheListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.cachelist_toolbar);
         setSupportActionBar(toolbar);
 
         fragmentManager = getSupportFragmentManager();
