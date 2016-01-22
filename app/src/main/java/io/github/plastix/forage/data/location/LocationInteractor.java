@@ -50,6 +50,15 @@ public class LocationInteractor implements LifecycleCallbacks {
     }
 
     /**
+     * Returns whether location is available on the device using Google Play Location Services.
+     *
+     * @return True if location is available, else false.
+     */
+    public boolean isLocationAvailable() {
+        return LocationServices.FusedLocationApi.getLocationAvailability(apiClient).isLocationAvailable();
+    }
+
+    /**
      * Lifecycle callback used to connect to Google Play Services.
      */
     @Override

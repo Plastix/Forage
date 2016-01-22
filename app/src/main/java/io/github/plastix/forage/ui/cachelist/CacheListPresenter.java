@@ -47,8 +47,9 @@ public class CacheListPresenter implements LifecycleCallbacks {
 
         if (!NetworkUtils.hasInternetConnection(connectivityManager)) {
             view.onErrorInternet();
+        } else if (!locationInteractor.isLocationAvailable()) {
+            view.onErrorLocation();
         } else {
-
             this.subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Single<JSONArray>>() {
                 @Override
                 public Single<JSONArray> call(Location location) {
