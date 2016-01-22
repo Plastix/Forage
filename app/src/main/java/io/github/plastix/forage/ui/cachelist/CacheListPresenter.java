@@ -1,7 +1,6 @@
 package io.github.plastix.forage.ui.cachelist;
 
 import android.location.Location;
-import android.net.ConnectivityManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -11,8 +10,8 @@ import javax.inject.Inject;
 import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.location.LocationInteractor;
+import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.LifecycleCallbacks;
-import io.github.plastix.forage.util.NetworkUtils;
 import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
@@ -25,7 +24,7 @@ public class CacheListPresenter implements LifecycleCallbacks {
     private OkApiInteractor apiInteractor;
     private DatabaseInteractor databaseInteractor;
     private LocationInteractor locationInteractor;
-    private ConnectivityManager connectivityManager;
+    private NetworkInteractor networkInteractor;
     private Subscription subscription;
 
 
@@ -33,19 +32,23 @@ public class CacheListPresenter implements LifecycleCallbacks {
     public CacheListPresenter(CacheListView view, OkApiInteractor apiInteractor,
                               DatabaseInteractor databaseInteractor,
                               LocationInteractor locationInteractor,
-                              ConnectivityManager connectivityManager) {
+                              NetworkInteractor networkInteractor) {
         this.view = view;
         this.apiInteractor = apiInteractor;
         this.databaseInteractor = databaseInteractor;
         this.locationInteractor = locationInteractor;
-        this.connectivityManager = connectivityManager;
+        this.networkInteractor = networkInteractor;
+        initalizeSubscription();
+    }
+
+    private void initalizeSubscription() {
         this.subscription = Subscriptions.empty();
     }
 
     public void getCaches() {
         cancelRequest();
 
-        if (!NetworkUtils.hasInternetConnection(connectivityManager)) {
+        if (!networkInteractor.hasInternetConnection()) {
             view.onErrorInternet();
         } else if (!locationInteractor.isLocationAvailable()) {
             view.onErrorLocation();
