@@ -181,6 +181,11 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         adapter.closeRealm();
     }
 }
