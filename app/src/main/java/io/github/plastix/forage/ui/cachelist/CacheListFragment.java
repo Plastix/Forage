@@ -1,6 +1,7 @@
 package io.github.plastix.forage.ui.cachelist;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -20,12 +21,17 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
+import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.ui.RecyclerItemClickListener;
 import io.github.plastix.forage.ui.SimpleDividerItemDecoration;
+import io.github.plastix.forage.ui.cachedetail.CacheDetailActivity;
 
 /**
  * Fragment that is responsible for the Geocache list.
  */
-public class CacheListFragment extends Fragment implements CacheListView, SwipeRefreshLayout.OnRefreshListener {
+public class CacheListFragment extends Fragment implements CacheListView, SwipeRefreshLayout.OnRefreshListener, RecyclerItemClickListener.OnItemClickListener {
+
+    private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
 
     @Inject
     CacheListPresenter presenter;
@@ -66,6 +72,8 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cache_list, container, false);
+
+        // Inject Butterknife bindings
         ButterKnife.bind(this, view);
 
         return view;
@@ -78,6 +86,8 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(itemDecorator);
         recyclerView.setAdapter(adapter);
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), this));
 
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -101,6 +111,23 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
 
     private void stopRefresh() {
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    /**
+     * RecyclerView item click callback.
+     *
+     * @param view     View clicked.
+     * @param position Position of view clicked.
+     */
+    @Override
+    public void onItemClick(View view, int position) {
+        presenter.cancelRequest();
+        stopRefresh();
+
+        Cache cache = adapter.getItem(position);
+        Intent intent = new Intent(getActivity(), CacheDetailActivity.class);
+        intent.putExtra(EXTRA_CACHE_CODE, cache.getCode());
+        startActivity(intent);
     }
 
     @Override
@@ -132,6 +159,9 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
                 }).show();
     }
 
+    /**
+     * SwipeRefreshView callback.
+     */
     @Override
     public void onRefresh() {
         downloadGeocaches();
@@ -177,12 +207,19 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
         presenter.onStart();
     }
 
+    /**
+     * Remove Butterknife bindings when the view is destroyed.
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
 
+    /**
+     * Clean up the resources when the fragment is destroyed.
+     * e.g. Close the Realm instance held by the RecyclerView adapter.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

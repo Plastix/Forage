@@ -54,6 +54,7 @@ public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.Cache
 
     }
 
+
     /**
      * Query to get data from Realm.
      *

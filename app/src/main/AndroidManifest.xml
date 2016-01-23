@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="io.github.plastix.forage"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="io.github.plastix.forage"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <application
         android:name=".ForageApplication"
         android:allowBackup="false"
@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <activity android:name=".ui.cachedetail.CacheDetailActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -92,7 +92,6 @@ public class CacheListPresenter implements LifecycleCallbacks {
     @Override
     public void onStop() {
         locationInteractor.onStop();
-
     }
 
     @Override
