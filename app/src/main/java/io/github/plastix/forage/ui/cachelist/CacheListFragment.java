@@ -25,6 +25,7 @@ import io.github.plastix.forage.data.local.Cache;
 import io.github.plastix.forage.ui.RecyclerItemClickListener;
 import io.github.plastix.forage.ui.SimpleDividerItemDecoration;
 import io.github.plastix.forage.ui.cachedetail.CacheDetailActivity;
+import io.github.plastix.forage.util.ActivityUtils;
 
 /**
  * Fragment that is responsible for the Geocache list.
@@ -75,6 +76,8 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
 
         // Inject Butterknife bindings
         ButterKnife.bind(this, view);
+
+        ActivityUtils.setSupportActionBarTitle(getActivity(), R.string.cachelist_title);
 
         return view;
     }

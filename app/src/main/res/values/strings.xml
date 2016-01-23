@@ -14,4 +14,5 @@
     <string name="cachelist_error_no_internet">Unable to download Geocaches! No Internet connection.</string>
     <string name="cachelist_retry">Retry</string>
     <string name="cachelist_error_no_location">Unable to download Geocaches! No Location available.</string>
+    <string name="cachelist_title">Geocaches</string>
 </resources>
