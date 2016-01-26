@@ -37,10 +37,25 @@ public class DatabaseInteractor {
      * @param data JSON Array of Geocaches.
      */
     public void saveGeocachesFromJson(final JSONArray data) {
-
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
+                realm.createOrUpdateAllFromJson(Cache.class, data);
+            }
+        }, null);
+    }
+
+    /**
+     * Removes all caches from the database then updates the database with {@link Cache}s from the
+     * JSON array.
+     *
+     * @param data JSON Array of Geocaches.
+     */
+    public void clearAndSaveGeocaches(final JSONArray data) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(Cache.class).findAll().clear();
                 realm.createOrUpdateAllFromJson(Cache.class, data);
             }
         }, null);

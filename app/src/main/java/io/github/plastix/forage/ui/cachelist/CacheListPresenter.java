@@ -63,7 +63,7 @@ public class CacheListPresenter implements LifecycleCallbacks {
             }).subscribe(new SingleSubscriber<JSONArray>() {
                 @Override
                 public void onSuccess(JSONArray value) {
-                    databaseInteractor.saveGeocachesFromJson(value);
+                    databaseInteractor.clearAndSaveGeocaches(value);
                 }
 
                 @Override
