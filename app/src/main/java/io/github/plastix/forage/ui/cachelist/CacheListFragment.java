@@ -100,6 +100,8 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
         });
 
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        updateEmptyView();
     }
 
     private void updateEmptyView() {
