@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 
 import io.github.plastix.forage.BuildConfig;
 import io.github.plastix.forage.util.JsonUtils;
+import io.github.plastix.forage.util.UnitUtils;
 import rx.Single;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -34,10 +35,10 @@ public class OkApiInteractor {
      * @param location Center location.
      * @return A rx.Single JsonArray.
      */
-    public Single<JSONArray> getNearbyCaches(Location location) {
+    public Single<JSONArray> getNearbyCaches(Location location, Double radius) {
         return apiService.searchAndRetrieve(
                 OkApiService.ENDPOINT_NEAREST,
-                String.format("{\"center\":\"%s|%s\"}", location.getLatitude(), location.getLongitude()),
+                String.format("{\"center\":\"%s|%s\", \"radius\":\"%s\"}", location.getLatitude(), location.getLongitude(), UnitUtils.milesToKilometer(radius)),
                 OkApiService.ENDPOINT_GEOCACHES,
                 "{\"fields\":\"code|name|location|type|status|terrain|difficulty|size2|description\"}",
                 false,

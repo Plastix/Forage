@@ -20,6 +20,8 @@ import rx.subscriptions.Subscriptions;
 
 public class CacheListPresenter implements LifecycleCallbacks {
 
+    private static final double NEARBY_CACHE_RADIUS_MILES = 15;
+
     private CacheListView view;
     private OkApiInteractor apiInteractor;
     private DatabaseInteractor databaseInteractor;
@@ -56,7 +58,7 @@ public class CacheListPresenter implements LifecycleCallbacks {
             this.subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Single<JSONArray>>() {
                 @Override
                 public Single<JSONArray> call(Location location) {
-                    return apiInteractor.getNearbyCaches(location);
+                    return apiInteractor.getNearbyCaches(location, NEARBY_CACHE_RADIUS_MILES);
                 }
             }).subscribe(new SingleSubscriber<JSONArray>() {
                 @Override
