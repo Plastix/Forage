@@ -3,6 +3,8 @@ package io.github.plastix.forage;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import io.github.plastix.forage.ui.cachedetail.CacheDetailComponent;
+import io.github.plastix.forage.ui.cachedetail.CacheDetailModule;
 import io.github.plastix.forage.ui.cachelist.CacheListComponent;
 import io.github.plastix.forage.ui.cachelist.CacheListModule;
 
@@ -13,4 +15,6 @@ import io.github.plastix.forage.ui.cachelist.CacheListModule;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
     CacheListComponent plus(CacheListModule module);
+
+    CacheDetailComponent plus(CacheDetailModule module);
 }

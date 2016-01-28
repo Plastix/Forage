@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import javax.inject.Inject;
 
 import io.realm.Realm;
+import rx.Single;
 
 /**
  * Wrapper around Realm DB operations.
@@ -59,6 +60,13 @@ public class DatabaseInteractor {
                 realm.createOrUpdateAllFromJson(Cache.class, data);
             }
         }, null);
+    }
+
+
+    public Single<Cache> getGeocache(final String cacheCode) {
+        return realm.where(Cache.class).contains("code", cacheCode).findFirstAsync()
+                .<Cache>asObservable().take(1).toSingle();
+
     }
 
 }

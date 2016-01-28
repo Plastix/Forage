@@ -36,6 +36,9 @@ public class OkApiInteractor {
      * @return A rx.Single JsonArray.
      */
     public Single<JSONArray> getNearbyCaches(Location location, Double radius) {
+
+//        JSONObject searchParams = new JSONObject();
+//        searchParams.put("center", String.format("%s|%s", location.getLatitude(), location.getLongitude()));
         return apiService.searchAndRetrieve(
                 OkApiService.ENDPOINT_NEAREST,
                 String.format("{\"center\":\"%s|%s\", \"radius\":\"%s\"}", location.getLatitude(), location.getLongitude(), UnitUtils.milesToKilometer(radius)),
