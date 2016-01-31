@@ -6,6 +6,8 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 import rx.Single;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 
 /**
  * Wrapper around Realm DB operations.
@@ -63,9 +65,24 @@ public class DatabaseInteractor {
     }
 
 
+    /**
+     * Returns a rx.Single of the Geocache with the specified OpenCaching cache code. If the geocache
+     * does not exist in the database then the Single's onError method is called.
+     *
+     * @param cacheCode Cache code of the geocache to query.
+     * @return rx.Single with the Geocache.
+     */
     public Single<Cache> getGeocache(final String cacheCode) {
         return realm.where(Cache.class).contains("code", cacheCode).findFirstAsync()
-                .<Cache>asObservable().take(1).toSingle();
+                // Must filter by loaded objects because findFirstAsync returns a "Future"
+                .<Cache>asObservable().filter(new Func1<Cache, Boolean>() {
+                    @Override
+                    public Boolean call(Cache cache) {
+                        return cache.isLoaded();
+                    }
+                })
+                .take(1).toSingle()
+                .observeOn(AndroidSchedulers.mainThread());
 
     }
 

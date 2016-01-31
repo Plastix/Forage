@@ -1,5 +1,7 @@
 package io.github.plastix.forage.ui.cachedetail;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.local.Cache;
@@ -21,11 +23,12 @@ public class CacheDetailPresenter {
         databaseInteractor.getGeocache(cacheCode).subscribe(new SingleSubscriber<Cache>() {
             @Override
             public void onSuccess(Cache value) {
-                view.populateViews(value);
+                view.returnedGeocache(value);
             }
 
             @Override
             public void onError(Throwable error) {
+                Log.e("Error", error.getMessage(), error);
                 view.onError();
             }
         });

@@ -3,6 +3,9 @@ package io.github.plastix.forage.ui.cachedetail;
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * Dagger module that provides dependencies for {@link CacheDetailFragment} and {@link CacheDetailActivity}.
+ */
 @Module
 public class CacheDetailModule {
 
@@ -15,11 +18,6 @@ public class CacheDetailModule {
     @Provides
     public CacheDetailView provideCacheDetailView() {
         return cacheDetailView;
-    }
-
-    @Provides
-    public CacheDetailFragment provideCacheDetailFragment() {
-        return new CacheDetailFragment();
     }
 
 }

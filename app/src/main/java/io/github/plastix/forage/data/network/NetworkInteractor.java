@@ -5,6 +5,9 @@ import android.net.NetworkInfo;
 
 import javax.inject.Inject;
 
+/**
+ * Wrapper around Android network services.
+ */
 public class NetworkInteractor {
 
     private ConnectivityManager connectivityManager;

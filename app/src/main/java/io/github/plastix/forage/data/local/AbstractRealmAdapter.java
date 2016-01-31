@@ -81,6 +81,8 @@ public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends Rec
      */
     @Override
     public final int getItemCount() {
+        // Realm async queries return a "Future" so we have to check if our data is loaded first.
+        // If our Realm data isn't loaded, tell the client we have no items.
         if (!data.isLoaded()) {
             return 0;
         } else {

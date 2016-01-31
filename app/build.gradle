@@ -35,6 +35,10 @@ android {
         versionName "1.0"
 
         buildConfigField("String", "OKAPI_US_CONSUMER_KEY", getProps("okapi_us_consumer_key"))
+
+        // Use res value so we can access the Google API key in the AndroidManifest.xml
+        resValue("string", "GOOGLE_MAPS_API_KEY", getProps("google_maps_api_key"))
+
     }
     buildTypes {
         release {
@@ -79,6 +83,7 @@ dependencies {
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-location:8.4.0'
+    compile 'com.google.android.gms:play-services-maps:8.4.0'
 
     // RxJava
     compile 'io.reactivex:rxjava:1.1.0'
