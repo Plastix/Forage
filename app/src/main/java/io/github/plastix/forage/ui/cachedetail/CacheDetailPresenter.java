@@ -28,7 +28,6 @@ public class CacheDetailPresenter {
 
             @Override
             public void onError(Throwable error) {
-                Log.e("Error", error.getMessage(), error);
                 view.onError();
             }
         });

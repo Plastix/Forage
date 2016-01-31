@@ -20,7 +20,7 @@ import rx.subscriptions.Subscriptions;
 
 public class CacheListPresenter implements LifecycleCallbacks {
 
-    private static final double NEARBY_CACHE_RADIUS_MILES = 15;
+    private static final double NEARBY_CACHE_RADIUS_MILES = 100;
 
     private CacheListView view;
     private OkApiInteractor apiInteractor;

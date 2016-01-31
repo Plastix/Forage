@@ -5,4 +5,6 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="cachedetail_backdrop_height">256dp</dimen>
+    <dimen name="sheet_text_scrim_height_top">88dp</dimen>
+    <dimen name="sheet_text_scrim_height_bottom">88dp</dimen>
 </resources>

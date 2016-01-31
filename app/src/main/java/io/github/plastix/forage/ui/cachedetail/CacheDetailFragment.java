@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +53,9 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
     @Bind(R.id.cachedetail_description)
     TextView description;
 
+    @Bind(R.id.cachedetail_type)
+    TextView type;
+
     @Bind(R.id.cachedetail_map)
     MapView map;
 
@@ -68,6 +70,7 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
         setRetainInstance(true);
 
         this.cacheCode = getArguments().getString(EXTRA_CACHE_CODE);
+        ;
 
         injectDependencies();
     }
@@ -93,20 +96,28 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AppCompatActivity parent = ((AppCompatActivity) getActivity());
-        parent.setSupportActionBar(toolbar);
-        // TODO Potential NPE?
-        parent.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        parent.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setActivityActionBar();
 
-        fab.setImageDrawable(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_navigation).color(Color.WHITE));
+        setFab();
 
         // TODO Hacky fix for Google Maps
         map.onCreate(null);
         map.setVisibility(View.GONE);
 
-        // Query presenter for cache
         presenter.getGeocache(cacheCode);
+    }
+
+    private void setActivityActionBar() {
+        AppCompatActivity parent = ((AppCompatActivity) getActivity());
+        parent.setSupportActionBar(toolbar);
+
+        parent.getDelegate().getSupportActionBar().setDisplayShowHomeEnabled(true);
+        parent.getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setFab() {
+        fab.setImageDrawable(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_navigation).color(Color.WHITE));
+        // TODO Fab clicks
     }
 
     @Override
@@ -114,42 +125,59 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
         collapsingToolbarLayout.setTitle(cache.getName());
         description.setText(Html.fromHtml(cache.getDescription()).toString());
 
-        final String[] parts = cache.getLocation().split("\\|");
-        final double lat = Double.parseDouble(parts[0]);
-        final double log = Double.parseDouble(parts[1]);
+        type.setText(cache.getType());
 
-        map.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-
-                map.setVisibility(View.VISIBLE);
-                AlphaAnimation animation = new AlphaAnimation(0.0f, 1.0f);
-                animation.setDuration(500);
-                map.startAnimation(animation);
-
-                LatLng markerPos = new LatLng(lat, log);
-                System.out.println(markerPos);
-                googleMap.addMarker(new MarkerOptions()
-                        .position(markerPos));
-                CameraPosition camerPosition = new CameraPosition.Builder()
-                        .target(markerPos)
-                        .zoom(13).build();
-
-                googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerPosition));
-
-            }
-        });
+        MapBuilder mapBuilder = new MapBuilder(cache.getLocation());
+        map.getMapAsync(mapBuilder);
     }
 
     @Override
     public void onError() {
-        Log.d(getTag(), "error getting cache!");
+        getActivity().finish();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(getActivity());
+    }
+
+    private class MapBuilder implements OnMapReadyCallback {
+
+        private double lat;
+        private double lon;
+
+        public MapBuilder(String location) {
+            final String[] parts = location.split("\\|");
+            this.lat = Double.parseDouble(parts[0]);
+            this.lon = Double.parseDouble(parts[1]);
+        }
+
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            googleMap.getUiSettings().setMapToolbarEnabled(false);
+
+            // Add marker for geocache and move camera
+            LatLng markerPos = new LatLng(lat, lon);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(markerPos));
+
+            CameraPosition camerPosition = new CameraPosition.Builder()
+                    .target(markerPos)
+                    .zoom(13).build();
+
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerPosition));
+
+            animateView();
+        }
+
+        private void animateView() {
+            map.setVisibility(View.VISIBLE);
+            AlphaAnimation animation = new AlphaAnimation(0.0f, 1.0f);
+            animation.setDuration(500);
+            map.startAnimation(animation);
+        }
+
     }
 
 }
