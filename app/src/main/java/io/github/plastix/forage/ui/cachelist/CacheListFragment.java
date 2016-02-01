@@ -132,7 +132,7 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
 
         Cache cache = adapter.getItem(position);
         Intent intent = new Intent(getActivity(), CacheDetailActivity.class);
-        intent.putExtra(EXTRA_CACHE_CODE, cache.getCode());
+        intent.putExtra(EXTRA_CACHE_CODE, cache.getCacheCode());
         startActivity(intent);
     }
 

@@ -1,7 +1,5 @@
 package io.github.plastix.forage.ui.cachedetail;
 
-import android.util.Log;
-
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.local.Cache;

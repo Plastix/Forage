@@ -50,7 +50,7 @@ public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.Cache
 
         holder.cacheDifficulty.setText(resources.getString(R.string.cacheitem_difficulty, cache.getDifficulty()));
 
-        holder.cacheSize.setText(resources.getString(R.string.cache_item_size, cache.getSize2()));
+        holder.cacheSize.setText(resources.getString(R.string.cache_item_size, cache.getSize()));
 
     }
 

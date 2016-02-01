@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +122,7 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
     @Override
     public void returnedGeocache(Cache cache) {
         collapsingToolbarLayout.setTitle(cache.getName());
-        description.setText(Html.fromHtml(cache.getDescription()).toString());
+        description.setText(cache.getDescription());
 
         type.setText(cache.getType());
 

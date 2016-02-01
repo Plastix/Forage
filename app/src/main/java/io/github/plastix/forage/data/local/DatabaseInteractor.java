@@ -59,7 +59,7 @@ public class DatabaseInteractor {
      * @return rx.Single with the Geocache.
      */
     public Single<Cache> getGeocache(final String cacheCode) {
-        return realm.where(Cache.class).contains("code", cacheCode).findFirstAsync()
+        return realm.where(Cache.class).contains("cacheCode", cacheCode).findFirstAsync()
                 // Must filter by loaded objects because findFirstAsync returns a "Future"
                 .<Cache>asObservable().filter(new Func1<Cache, Boolean>() {
                     @Override

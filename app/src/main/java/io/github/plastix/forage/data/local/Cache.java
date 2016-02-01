@@ -1,5 +1,9 @@
 package io.github.plastix.forage.data.local;
 
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+
+import io.github.plastix.forage.data.api.gson.HtmlAdapter;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -9,27 +13,33 @@ import io.realm.annotations.PrimaryKey;
 public class Cache extends RealmObject {
 
     @PrimaryKey
-    private String code; // Opencaching ID
+    @SerializedName("code")
+    private String cacheCode; // Opencaching ID
 
     private String name; //Name of the Cache
-    private String location; //String "lat|lon" of the
+    private String location;
+
     private String type; // Cache type such as "Traditional, Multi, Quiz, Virtual"
     private String status; //Cache Status "Available, etc"
     private float terrain; //Terrain rating of cache
     private float difficulty; //Difficulty rating of cache
-    private String size2; // String size of container "none, nano"
+
+    @SerializedName("size2")
+    private String size; // String size of container "none, nano"
+
+    @JsonAdapter(HtmlAdapter.class)
     private String description; //HTML Description of the cache
 
 
     // IDE generated Getters and Setters used by Realm Proxy Classes
     // These are REQUIRED!
 
-    public String getCode() {
-        return code;
+    public String getCacheCode() {
+        return cacheCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCacheCode(String cacheCode) {
+        this.cacheCode = cacheCode;
     }
 
     public String getName() {
@@ -80,12 +90,12 @@ public class Cache extends RealmObject {
         this.difficulty = difficulty;
     }
 
-    public String getSize2() {
-        return size2;
+    public String getSize() {
+        return size;
     }
 
-    public void setSize2(String size2) {
-        this.size2 = size2;
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public String getDescription() {

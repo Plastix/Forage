@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.github.plastix.forage.data.api.gson.HtmlAdapter;
 import io.github.plastix.forage.data.api.gson.ListTypeAdapterFactory;
 import io.realm.RealmObject;
 import retrofit2.GsonConverterFactory;
@@ -53,7 +54,7 @@ public class OkApiModule {
      */
     @Provides
     @Singleton
-    public Gson provideGson(ListTypeAdapterFactory jsonArrayTypeAdapterFactory) {
+    public Gson provideGson(ListTypeAdapterFactory jsonArrayTypeAdapterFactory, HtmlAdapter htmlAdapter) {
         return new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
@@ -67,6 +68,7 @@ public class OkApiModule {
                     }
                 })
                 .registerTypeAdapterFactory(jsonArrayTypeAdapterFactory)
+                .registerTypeAdapter(String.class, htmlAdapter)
                 .create();
     }
 

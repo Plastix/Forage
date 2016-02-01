@@ -26,6 +26,9 @@ public class ForageApplication extends Application {
                 .build();
 
         // TODO Move instantiation out of here?
-        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(getApplicationContext()).build());
+        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(getApplicationContext())
+                        .deleteRealmIfMigrationNeeded()
+                        .build()
+        );
     }
 }
