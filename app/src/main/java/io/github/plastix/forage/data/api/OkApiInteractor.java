@@ -2,20 +2,20 @@ package io.github.plastix.forage.data.api;
 
 import android.location.Location;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.github.plastix.forage.BuildConfig;
-import io.github.plastix.forage.util.JsonUtils;
+import io.github.plastix.forage.data.local.Cache;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
 import rx.Single;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -39,7 +39,7 @@ public class OkApiInteractor {
      * @param location Center location.
      * @return A rx.Single JsonArray.
      */
-    public Single<JSONArray> getNearbyCaches(Location location, Double radius) {
+    public Single<List<Cache>> getNearbyCaches(Location location, Double radius) {
         try {
 
             JSONObject searchParams = new JSONObject();
@@ -56,12 +56,7 @@ public class OkApiInteractor {
                     returnParams.toString(),
                     false,
                     BuildConfig.OKAPI_US_CONSUMER_KEY
-            ).map(new Func1<JSONObject, JSONArray>() {
-                @Override
-                public JSONArray call(JSONObject jsonObject) {
-                    return JsonUtils.jsonObjectToArray(jsonObject);
-                }
-            }).subscribeOn(Schedulers.newThread())
+            ).subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread());
 
         } catch (JSONException e) {

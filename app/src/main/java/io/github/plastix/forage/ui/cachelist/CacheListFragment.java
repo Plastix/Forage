@@ -3,6 +3,7 @@ package io.github.plastix.forage.ui.cachelist;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -137,8 +138,12 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
 
     @Override
     public void onErrorInternet() {
+        makeErrorSnackbar(R.string.cachelist_error_no_internet);
+    }
+
+    private void makeErrorSnackbar(@StringRes int resID) {
         stopRefresh();
-        Snackbar.make(recyclerView, R.string.cachelist_error_no_internet, Snackbar.LENGTH_LONG)
+        Snackbar.make(recyclerView, resID, Snackbar.LENGTH_LONG)
                 .setAction(R.string.cachelist_retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -153,15 +158,13 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
     }
 
     @Override
+    public void onErrorFetch() {
+        makeErrorSnackbar(R.string.cachelist_error_failed_parse);
+    }
+
+    @Override
     public void onErrorLocation() {
-        stopRefresh();
-        Snackbar.make(recyclerView, R.string.cachelist_error_no_location, Snackbar.LENGTH_LONG)
-                .setAction(R.string.cachelist_retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        downloadGeocaches();
-                    }
-                }).show();
+        makeErrorSnackbar(R.string.cachelist_error_no_location);
     }
 
     /**

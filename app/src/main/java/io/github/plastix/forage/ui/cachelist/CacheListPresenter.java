@@ -5,9 +5,12 @@ import android.util.Log;
 
 import org.json.JSONArray;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.api.OkApiInteractor;
+import io.github.plastix.forage.data.local.Cache;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
@@ -55,14 +58,14 @@ public class CacheListPresenter implements LifecycleCallbacks {
         } else if (!locationInteractor.isLocationAvailable()) {
             view.onErrorLocation();
         } else {
-            this.subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Single<JSONArray>>() {
+            this.subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Single<List<Cache>>>() {
                 @Override
-                public Single<JSONArray> call(Location location) {
+                public Single<List<Cache>> call(Location location) {
                     return apiInteractor.getNearbyCaches(location, NEARBY_CACHE_RADIUS_MILES);
                 }
-            }).subscribe(new SingleSubscriber<JSONArray>() {
+            }).subscribe(new SingleSubscriber<List<Cache>>() {
                 @Override
-                public void onSuccess(JSONArray value) {
+                public void onSuccess(List<Cache> value) {
                     databaseInteractor.clearAndSaveGeocaches(value);
                 }
 

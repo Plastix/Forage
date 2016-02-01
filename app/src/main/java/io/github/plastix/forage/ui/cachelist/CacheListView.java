@@ -8,6 +8,8 @@ public interface CacheListView {
 
     void onErrorInternet();
 
+    void onErrorFetch();
+
     void onErrorLocation();
 
 }

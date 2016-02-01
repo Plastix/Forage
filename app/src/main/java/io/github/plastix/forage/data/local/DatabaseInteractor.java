@@ -1,6 +1,6 @@
 package io.github.plastix.forage.data.local;
 
-import org.json.JSONArray;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -33,33 +33,19 @@ public class DatabaseInteractor {
         }, null); // Passing a null callback makes this transaction async which doesn't block other writes
     }
 
-    /**
-     * Creates or updates all {@link Cache} objects in the Realm database using the JSON array.
-     * Geocaches are updated if they have the same primary key.
-     *
-     * @param data JSON Array of Geocaches.
-     */
-    public void saveGeocachesFromJson(final JSONArray data) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.createOrUpdateAllFromJson(Cache.class, data);
-            }
-        }, null);
-    }
 
     /**
      * Removes all caches from the database then updates the database with {@link Cache}s from the
-     * JSON array.
+     * specified list.
      *
      * @param data JSON Array of Geocaches.
      */
-    public void clearAndSaveGeocaches(final JSONArray data) {
+    public void clearAndSaveGeocaches(final List<Cache> data) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.where(Cache.class).findAll().clear();
-                realm.createOrUpdateAllFromJson(Cache.class, data);
+                realm.copyToRealmOrUpdate(data);
             }
         }, null);
     }

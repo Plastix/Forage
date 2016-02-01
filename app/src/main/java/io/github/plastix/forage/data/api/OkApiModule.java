@@ -1,11 +1,19 @@
 package io.github.plastix.forage.data.api;
 
+
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.plastix.forage.data.api.converter.JsonObjectConverterFactory;
+import io.github.plastix.forage.data.api.gson.ListTypeAdapterFactory;
+import io.realm.RealmObject;
+import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 import retrofit2.RxJavaCallAdapterFactory;
 
@@ -26,18 +34,40 @@ public class OkApiModule {
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(@Named("BASE_ENDPOINT") String baseUrl, JsonObjectConverterFactory jsonConverter, RxJavaCallAdapterFactory rxAdapter) {
+    public Retrofit provideRetrofit(@Named("BASE_ENDPOINT") String baseUrl, GsonConverterFactory gsonConverter, RxJavaCallAdapterFactory rxAdapter) {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(jsonConverter)
+                .addConverterFactory(gsonConverter)
                 .addCallAdapterFactory(rxAdapter)
                 .build();
     }
 
     @Provides
     @Singleton
-    public JsonObjectConverterFactory provideJsonObjectConverterFactory() {
-        return new JsonObjectConverterFactory();
+    public GsonConverterFactory provideGsonConverterFactory(Gson gson) {
+        return GsonConverterFactory.create(gson);
+    }
+
+    /**
+     * Custom Gson to make Retrofit Gson adapter work with Realm objects
+     */
+    @Provides
+    @Singleton
+    public Gson provideGson(ListTypeAdapterFactory jsonArrayTypeAdapterFactory) {
+        return new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        return f.getDeclaringClass().equals(RealmObject.class);
+                    }
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .registerTypeAdapterFactory(jsonArrayTypeAdapterFactory)
+                .create();
     }
 
     @Provides
