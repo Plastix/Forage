@@ -1,5 +1,6 @@
 package io.github.plastix.forage.util;
 
+import android.location.Location;
 import android.text.Html;
 
 public class StringUtils {
@@ -31,11 +32,28 @@ public class StringUtils {
      *
      * @param input String in HTML form
      * @return Plain text string
-     * <p>
+     * <p/>
      * Based on http://stackoverflow.com/questions/8560045/android-getting-obj-using-textview-settextcharactersequence
      */
     public static String stripHtml(String input) {
         return Html.fromHtml(input).toString()
                 .replace((char) 160, (char) 32).replace((char) 65532, (char) 32).trim();
+    }
+
+    /**
+     * Converts OkApi's String location format to an Android Location format.
+     *
+     * @param raw String location in "lat|lon"
+     * @return Android location object.
+     */
+    public static Location stringToLocation(String raw) {
+        Location location = new Location("");
+
+        final String[] parts = raw.split("\\|");
+        location.setLatitude(Double.parseDouble(parts[0]));
+        location.setLongitude(Double.parseDouble(parts[1]));
+
+        return location;
+
     }
 }

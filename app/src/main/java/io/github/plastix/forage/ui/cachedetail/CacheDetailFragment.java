@@ -2,6 +2,7 @@ package io.github.plastix.forage.ui.cachedetail;
 
 
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -31,6 +32,7 @@ import butterknife.ButterKnife;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.util.StringUtils;
 
 
 /**
@@ -125,8 +127,8 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
 
         type.setText(cache.getType());
 
-        MapBuilder mapBuilder = new MapBuilder(cache.getLocation());
-        map.getMapAsync(mapBuilder);
+        MapListener mapListener = new MapListener(cache.getLocation());
+        map.getMapAsync(mapListener);
     }
 
     @Override
@@ -140,15 +142,15 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
         ButterKnife.unbind(getActivity());
     }
 
-    private class MapBuilder implements OnMapReadyCallback {
+    /**
+     * Class to encapsulate Google Map config logic.
+     */
+    private class MapListener implements OnMapReadyCallback {
 
-        private double lat;
-        private double lon;
+        private Location location;
 
-        public MapBuilder(String location) {
-            final String[] parts = location.split("\\|");
-            this.lat = Double.parseDouble(parts[0]);
-            this.lon = Double.parseDouble(parts[1]);
+        public MapListener(String location) {
+            this.location = StringUtils.stringToLocation(location);
         }
 
         @Override
@@ -156,7 +158,7 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
             googleMap.getUiSettings().setMapToolbarEnabled(false);
 
             // Add marker for geocache and move camera
-            LatLng markerPos = new LatLng(lat, lon);
+            LatLng markerPos = new LatLng(location.getLatitude(), location.getLongitude());
             googleMap.addMarker(new MarkerOptions()
                     .position(markerPos));
 
@@ -166,10 +168,10 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
 
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerPosition));
 
-            animateView();
+            animateIntoView();
         }
 
-        private void animateView() {
+        private void animateIntoView() {
             map.setVisibility(View.VISIBLE);
             AlphaAnimation animation = new AlphaAnimation(0.0f, 1.0f);
             animation.setDuration(500);
