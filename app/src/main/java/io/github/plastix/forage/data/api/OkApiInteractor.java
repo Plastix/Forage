@@ -3,6 +3,7 @@ package io.github.plastix.forage.data.api;
 import android.location.Location;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.inject.Inject;
@@ -10,6 +11,7 @@ import javax.inject.Singleton;
 
 import io.github.plastix.forage.BuildConfig;
 import io.github.plastix.forage.util.JsonUtils;
+import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
 import rx.Single;
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,6 +25,8 @@ import rx.schedulers.Schedulers;
 public class OkApiInteractor {
 
     private OkApiService apiService;
+    private String[] geocacheFields = {"code", "name", "location", "type", "status", "terrain",
+            "difficulty", "size2", "description"};
 
     @Inject
     public OkApiInteractor(OkApiService apiService) {
@@ -36,22 +40,33 @@ public class OkApiInteractor {
      * @return A rx.Single JsonArray.
      */
     public Single<JSONArray> getNearbyCaches(Location location, Double radius) {
+        try {
 
-//        JSONObject searchParams = new JSONObject();
-//        searchParams.put("center", String.format("%s|%s", location.getLatitude(), location.getLongitude()));
-        return apiService.searchAndRetrieve(
-                OkApiService.ENDPOINT_NEAREST,
-                String.format("{\"center\":\"%s|%s\", \"radius\":\"%s\"}", location.getLatitude(), location.getLongitude(), UnitUtils.milesToKilometer(radius)),
-                OkApiService.ENDPOINT_GEOCACHES,
-                "{\"fields\":\"code|name|location|type|status|terrain|difficulty|size2|description\"}",
-                false,
-                BuildConfig.OKAPI_US_CONSUMER_KEY
-        ).map(new Func1<JSONObject, JSONArray>() {
-            @Override
-            public JSONArray call(JSONObject jsonObject) {
-                return JsonUtils.jsonObjectToArray(jsonObject);
-            }
-        }).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
+            JSONObject searchParams = new JSONObject();
+            searchParams.put("center", String.format("%s|%s", location.getLatitude(), location.getLongitude()));
+            searchParams.put("radius", UnitUtils.milesToKilometer(radius));
+
+            JSONObject returnParams = new JSONObject();
+            returnParams.put("fields", StringUtils.join("|", geocacheFields));
+
+            return apiService.searchAndRetrieve(
+                    OkApiService.ENDPOINT_NEAREST,
+                    searchParams.toString(),
+                    OkApiService.ENDPOINT_GEOCACHES,
+                    returnParams.toString(),
+                    false,
+                    BuildConfig.OKAPI_US_CONSUMER_KEY
+            ).map(new Func1<JSONObject, JSONArray>() {
+                @Override
+                public JSONArray call(JSONObject jsonObject) {
+                    return JsonUtils.jsonObjectToArray(jsonObject);
+                }
+            }).subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread());
+
+        } catch (JSONException e) {
+            // Let the subscriber handle the error
+            return Single.error(e);
+        }
     }
 }
