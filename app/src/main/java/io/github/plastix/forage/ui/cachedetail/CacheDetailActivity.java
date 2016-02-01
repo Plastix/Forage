@@ -1,6 +1,7 @@
 package io.github.plastix.forage.ui.cachedetail;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.BaseRetainedFragmentActivity;
@@ -12,6 +13,8 @@ import io.github.plastix.forage.ui.BaseRetainedFragmentActivity;
 public class CacheDetailActivity extends BaseRetainedFragmentActivity<CacheDetailFragment> {
 
     private static final String CACHE_DETAIL_FRAG = "io.github.plastix.forage.ui.cachelist.cachedetailfragment";
+
+    @IdRes
     private static final int CACHE_DETAIL_FRAME_ID = R.id.cachedetail_content_frame;
 
 

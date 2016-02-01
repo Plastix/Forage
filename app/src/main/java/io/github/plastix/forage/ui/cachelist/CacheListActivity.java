@@ -4,15 +4,17 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.github.plastix.forage.R;
+import io.github.plastix.forage.ui.BaseRetainedFragmentActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.PermissionUtils;
 
@@ -20,42 +22,30 @@ import io.github.plastix.forage.util.PermissionUtils;
  * Activity that represents the main Geocache list screen of the app. This is a container activity
  * for {@link CacheListFragment}.
  */
-public class CacheListActivity extends AppCompatActivity {
+public class CacheListActivity extends BaseRetainedFragmentActivity<CacheListFragment> {
 
     private static final String CACHE_LIST_FRAG = "io.github.plastix.forage.ui.cachelist.cachelistfragment";
+
+    @IdRes
+    private static final int CACHE_LIST_FRAME_ID = R.id.cachelist_content_frame;
+
     private static final int LOCATION_REQUEST_CODE = 0;
     private static final String LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION;
 
-    private FragmentManager fragmentManager;
-    private CacheListFragment cacheFragment;
+    @Bind(R.id.cachelist_toolbar)
+    Toolbar toolbar;
+
     private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.cachelist_toolbar);
+
+        // Inject Butterknife views
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
-
-        fragmentManager = getSupportFragmentManager();
-        addCacheListFragment();
-    }
-
-    private void addCacheListFragment() {
-        cacheFragment = (CacheListFragment) fragmentManager.findFragmentByTag(CACHE_LIST_FRAG);
-
-        if (cacheFragment == null) {
-
-            // Create a new Fragment to be placed in the activity layout
-            cacheFragment = new CacheListFragment();
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            cacheFragment.setArguments(getIntent().getExtras());
-
-            // Add the fragment to the 'fragment_container' FrameLayout
-            fragmentManager.beginTransaction().replace(R.id.cachelist_content_frame, cacheFragment, CACHE_LIST_FRAG).commit();
-        }
     }
 
     /**
@@ -132,5 +122,20 @@ public class CacheListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected String getFragmentTag() {
+        return CACHE_LIST_FRAG;
+    }
+
+    @Override
+    protected CacheListFragment getFragmentInstance() {
+        return new CacheListFragment();
+    }
+
+    @Override
+    protected int getContainerViewId() {
+        return CACHE_LIST_FRAME_ID;
     }
 }
