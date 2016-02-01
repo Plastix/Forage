@@ -4,7 +4,6 @@ import javax.inject.Singleton;
 
 import dagger.Subcomponent;
 import io.github.plastix.forage.data.local.DatabaseModule;
-import io.github.plastix.forage.ui.cachelist.CacheListFragment;
 
 /**
  * Dagger component to inject all required dependencies into {@link CacheDetailFragment}.

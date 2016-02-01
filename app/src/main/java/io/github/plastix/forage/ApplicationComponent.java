@@ -17,4 +17,6 @@ public interface ApplicationComponent {
     CacheListComponent plus(CacheListModule module);
 
     CacheDetailComponent plus(CacheDetailModule module);
+
+    void injectTo(ForageApplication forageApplication);
 }

@@ -69,7 +69,6 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
         setRetainInstance(true);
 
         this.cacheCode = getArguments().getString(EXTRA_CACHE_CODE);
-        ;
 
         injectDependencies();
     }

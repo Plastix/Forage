@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.RealmConfiguration;
 
 /**
  * Dagger module that provides (singleton) application wide dependencies.
@@ -49,5 +50,13 @@ public class ApplicationModule {
     @Singleton
     public ConnectivityManager provideConnectivityManager(@ForApplication Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    @Provides
+    @Singleton
+    public RealmConfiguration provideDefaultRealmConfig(@ForApplication Context context) {
+        return new RealmConfiguration.Builder(context)
+                .deleteRealmIfMigrationNeeded()
+                .build();
     }
 }

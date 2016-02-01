@@ -3,11 +3,15 @@ package io.github.plastix.forage;
 import android.app.Application;
 import android.content.Context;
 
+import javax.inject.Inject;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class ForageApplication extends Application {
 
+    @Inject
+    RealmConfiguration defaultConfig;
     private ApplicationComponent component;
 
     public static ApplicationComponent getComponent(Context context) {
@@ -25,10 +29,13 @@ public class ForageApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
 
-        // TODO Move instantiation out of here?
-        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(getApplicationContext())
-                        .deleteRealmIfMigrationNeeded()
-                        .build()
-        );
+        // Inject requested dependencies
+        component.injectTo(this);
+
+        setRealmDefaultConfig();
+    }
+
+    private void setRealmDefaultConfig() {
+        Realm.setDefaultConfiguration(defaultConfig);
     }
 }
