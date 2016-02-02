@@ -107,7 +107,7 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
 
     private void updateEmptyView() {
         stopRefresh();
-        if (adapter.isEmpty()) {
+        if (recyclerView.getAdapter() == null || adapter.isEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
             emptyView.setVisibility(View.GONE);
@@ -221,6 +221,7 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        recyclerView.setAdapter(null);
         ButterKnife.unbind(this);
     }
 
