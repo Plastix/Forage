@@ -3,6 +3,8 @@ package io.github.plastix.forage;
 import android.app.Application;
 import android.content.Context;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import javax.inject.Inject;
 
 import io.realm.Realm;
@@ -31,6 +33,8 @@ public class ForageApplication extends Application {
 
         // Inject requested dependencies
         component.injectTo(this);
+
+        LeakCanary.install(this);
 
         setRealmDefaultConfig();
     }
