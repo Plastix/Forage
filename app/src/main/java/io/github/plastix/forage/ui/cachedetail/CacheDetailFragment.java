@@ -139,7 +139,7 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(getActivity());
+        ButterKnife.unbind(this);
     }
 
     /**
