@@ -17,19 +17,16 @@ import io.github.plastix.forage.R;
  */
 public abstract class BaseRetainedFragmentActivity<T extends Fragment> extends AppCompatActivity {
 
-    protected FragmentManager fragmentManager;
-    protected Fragment fragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.fragmentManager = getSupportFragmentManager();
         attachFragment();
     }
 
     private void attachFragment() {
-        fragment = fragmentManager.findFragmentByTag(getFragmentTag());
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(getFragmentTag());
 
         if (fragment == null) {
 
