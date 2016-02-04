@@ -1,9 +1,11 @@
 package io.github.plastix.forage.ui.cachedetail;
 
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -38,9 +40,13 @@ import io.github.plastix.forage.util.StringUtils;
 /**
  * Fragment that is responsible for showing the Geocache detail UI.
  */
-public class CacheDetailFragment extends Fragment implements CacheDetailView {
+public class CacheDetailFragment extends Fragment implements CacheDetailView, AppBarLayout.OnOffsetChangedListener {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
+    private static final int PERCENTAGE_TO_HIDE_FAB = 40;
+
+    @Bind(R.id.cachedetail_appbar)
+    AppBarLayout appBarLayout;
 
     @Bind(R.id.cachedetail_toolbar)
     Toolbar toolbar;
@@ -51,17 +57,23 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
     @Bind(R.id.cachedetail_fab)
     FloatingActionButton fab;
 
-    @Bind(R.id.cachedetail_description)
-    TextView description;
-
-    @Bind(R.id.cachedetail_type)
-    TextView type;
-
     @Bind(R.id.cachedetail_map)
     MapView map;
 
+    @Bind(R.id.cachedetail_description)
+    TextView description;
+
+    @Bind(R.id.cachedetail_difficulty)
+    TextView difficulty;
+
+    @Bind(R.id.cachedetail_terrain)
+    TextView terrain;
+
     @Inject
     CacheDetailPresenter presenter;
+
+    @Inject
+    Resources resources;
 
     private String cacheCode;
 
@@ -98,7 +110,7 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
 
         setActivityActionBar();
 
-        setFab();
+        setupFab();
 
         // TODO Hacky fix for Google Maps
         map.onCreate(null);
@@ -115,8 +127,10 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
         parent.getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setFab() {
-        fab.setImageDrawable(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_navigation).color(Color.WHITE));
+    private void setupFab() {
+        appBarLayout.addOnOffsetChangedListener(this);
+
+        fab.setImageDrawable(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_compass).color(Color.WHITE));
         // TODO Fab clicks
     }
 
@@ -125,7 +139,8 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
         collapsingToolbarLayout.setTitle(cache.getName());
         description.setText(cache.getDescription());
 
-        type.setText(cache.getType());
+        difficulty.setText(resources.getString(R.string.cachedetail_difficulty, cache.getDifficulty()));
+        terrain.setText(resources.getString(R.string.cachedetail_terrain, cache.getTerrain()));
 
         MapListener mapListener = new MapListener(cache.getLocation());
         map.getMapAsync(mapListener);
@@ -140,6 +155,20 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    /**
+     * Callback to animate the FAB in and out depending on the scroll
+     */
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        int currentScrollPercentage = (Math.abs(i)) * 100 / appBarLayout.getTotalScrollRange();
+
+        if (currentScrollPercentage >= PERCENTAGE_TO_HIDE_FAB) {
+            fab.hide();
+        } else {
+            fab.show();
+        }
     }
 
     /**

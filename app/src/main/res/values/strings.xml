@@ -16,4 +16,7 @@
     <string name="cachelist_retry">Retry</string>
     <string name="cachelist_error_no_location">Unable to download Geocaches! No Location available.</string>
     <string name="cachelist_title">Geocaches</string>
+
+    <string name="cachedetail_difficulty">%s Difficulty</string>
+    <string name="cachedetail_terrain">%s Terrain</string>
 </resources>
