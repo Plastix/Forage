@@ -40,13 +40,9 @@ import io.github.plastix.forage.util.StringUtils;
 /**
  * Fragment that is responsible for showing the Geocache detail UI.
  */
-public class CacheDetailFragment extends Fragment implements CacheDetailView, AppBarLayout.OnOffsetChangedListener {
+public class CacheDetailFragment extends Fragment implements CacheDetailView {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
-    private static final int PERCENTAGE_TO_HIDE_FAB = 40;
-
-    @Bind(R.id.cachedetail_appbar)
-    AppBarLayout appBarLayout;
 
     @Bind(R.id.cachedetail_toolbar)
     Toolbar toolbar;
@@ -131,8 +127,6 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView, Ap
     }
 
     private void setupFab() {
-        appBarLayout.addOnOffsetChangedListener(this);
-
         fab.setImageDrawable(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_compass).color(Color.WHITE));
         // TODO Fab clicks
     }
@@ -141,7 +135,6 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView, Ap
     public void returnedGeocache(Cache cache) {
         collapsingToolbarLayout.setTitle(cache.getName());
         description.setText(cache.getDescription());
-
         difficulty.setText(String.valueOf(cache.getDifficulty()));
         terrain.setText(String.valueOf(cache.getTerrain()));
         size.setText(cache.getSize());
@@ -159,20 +152,6 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView, Ap
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    /**
-     * Callback to animate the FAB in and out depending on the scroll
-     */
-    @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-        int currentScrollPercentage = (Math.abs(i)) * 100 / appBarLayout.getTotalScrollRange();
-
-        if (currentScrollPercentage >= PERCENTAGE_TO_HIDE_FAB) {
-            fab.hide();
-        } else {
-            fab.show();
-        }
     }
 
     /**
