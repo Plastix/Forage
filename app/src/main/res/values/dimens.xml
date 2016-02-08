@@ -7,4 +7,10 @@
     <dimen name="cachedetail_backdrop_height">256dp</dimen>
     <dimen name="sheet_text_scrim_height_top">88dp</dimen>
     <dimen name="sheet_text_scrim_height_bottom">88dp</dimen>
+
+    <!-- spacing -->
+    <dimen name="spacing_huge">32dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
 </resources>

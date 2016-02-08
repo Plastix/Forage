@@ -66,6 +66,9 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView, Ap
     @Bind(R.id.cachedetail_difficulty)
     TextView difficulty;
 
+    @Bind(R.id.cachedetail_size)
+    TextView size;
+
     @Bind(R.id.cachedetail_terrain)
     TextView terrain;
 
@@ -139,8 +142,9 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView, Ap
         collapsingToolbarLayout.setTitle(cache.getName());
         description.setText(cache.getDescription());
 
-        difficulty.setText(resources.getString(R.string.cachedetail_difficulty, cache.getDifficulty()));
-        terrain.setText(resources.getString(R.string.cachedetail_terrain, cache.getTerrain()));
+        difficulty.setText(String.valueOf(cache.getDifficulty()));
+        terrain.setText(String.valueOf(cache.getTerrain()));
+        size.setText(cache.getSize());
 
         MapListener mapListener = new MapListener(cache.getLocation());
         map.getMapAsync(mapListener);
