@@ -86,7 +86,7 @@
                         style="@style/Text.Header.Min"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Difficulty" />
+                        android:text="@string/cachedetail_difficulty" />
 
                     <TextView
                         android:id="@+id/cachedetail_difficulty"
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_small"
                         android:textSize="20sp"
-                        tools:text="1" />
+                        tools:text="3.5" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -109,14 +109,15 @@
                         style="@style/Text.Header.Min"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Terrain" />
+                        android:text="@string/cachedetail_terrain" />
 
                     <TextView
                         android:id="@+id/cachedetail_terrain"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
                         android:textSize="20sp"
-                        tools:text="0" />
+                        tools:text="2.5" />
 
                 </LinearLayout>
 
@@ -138,6 +139,7 @@
                         android:id="@+id/cachedetail_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
                         android:textSize="20sp"
                         tools:text="Large" />
                 </LinearLayout>
