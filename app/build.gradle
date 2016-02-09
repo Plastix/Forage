@@ -80,7 +80,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-location:8.4.0'
@@ -101,7 +100,7 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
 
     // LeakCanary
-    // 1.4-beta1 required for Android Mw
+    // 1.4-beta1 required for Android M
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'

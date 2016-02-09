@@ -138,8 +138,8 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
     public void returnedGeocache(Cache cache) {
         collapsingToolbarLayout.setTitle(cache.getName());
         description.setText(cache.getDescription());
-        difficulty.setText(String.valueOf(cache.getDifficulty()));
-        terrain.setText(String.valueOf(cache.getTerrain()));
+        difficulty.setText(resources.getString(R.string.cachedetail_rating, cache.getDifficulty()));
+        terrain.setText(resources.getString(R.string.cachedetail_rating, cache.getTerrain()));
         size.setText(cache.getSize());
 
         MapListener mapListener = new MapListener(cache.getLocation());
