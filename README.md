@@ -1,4 +1,4 @@
-Forage (In Development)
+Forage (In Development) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
 ======
 A geocaching Android app using MVP architecture and modern libraries 
 
@@ -13,6 +13,20 @@ Libraries
 * [Google Support Libraries](http://developer.android.com/tools/support-library/index.html)
 * [Google Play Location Services](https://developers.google.com/android/reference/com/google/android/gms/location/package-summary)
 * [Google Play Maps](https://developers.google.com/maps/documentation/android-api/)
+
+Requirements
+-------
+API keys are not stored in the repo! If you want to build the project yourself you need the following:
+
+1. OkApi (US) key
+2. Google Maps Android API key
+
+Create a `local.properties` file in the root directory of the project and add the following to it:
+```
+okapi_us_consumer_key=PUT OKAPI CONSUMER KEY HERE
+okapi_us_consumer_secret=PUT OKAPI CONSUMER SECRET HERE
+google_maps_api_key=PUT GOOGLE MAPS KEY HERE
+```
 
 
 License
