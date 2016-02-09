@@ -4,6 +4,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import io.github.plastix.forage.data.api.gson.HtmlAdapter;
+import io.github.plastix.forage.data.api.gson.StringCapitalizer;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -19,8 +20,12 @@ public class Cache extends RealmObject {
     private String name; //Name of the Cache
     private String location;
 
+    @JsonAdapter(StringCapitalizer.class)
     private String type; // Cache type such as "Traditional, Multi, Quiz, Virtual"
+
+    @JsonAdapter(StringCapitalizer.class)
     private String status; //Cache Status "Available, etc"
+
     private float terrain; //Terrain rating of cache
     private float difficulty; //Difficulty rating of cache
 
