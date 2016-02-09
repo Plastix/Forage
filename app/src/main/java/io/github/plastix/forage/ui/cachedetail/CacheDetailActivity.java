@@ -12,7 +12,7 @@ import io.github.plastix.forage.ui.BaseRetainedFragmentActivity;
  */
 public class CacheDetailActivity extends BaseRetainedFragmentActivity<CacheDetailFragment> {
 
-    private static final String CACHE_DETAIL_FRAG = "io.github.plastix.forage.ui.cachelist.cachedetailfragment";
+    private static final String CACHE_DETAIL_FRAG = "io.github.plastix.forage.ui.cachedetail.cachedetailfragment";
 
     @IdRes
     private static final int CACHE_DETAIL_FRAME_ID = R.id.cachedetail_content_frame;
