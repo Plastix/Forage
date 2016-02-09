@@ -11,10 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.BaseRetainedFragmentActivity;
+import io.github.plastix.forage.ui.map.MapActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.PermissionUtils;
 
@@ -112,22 +116,24 @@ public class CacheListActivity extends BaseRetainedFragmentActivity<CacheListFra
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_cache_list, menu);
+
+        menu.findItem(R.id.cachelist_action_map).setIcon(
+                new IconicsDrawable(this, CommunityMaterial.Icon.cmd_map)
+                        .actionBar().colorRes(R.color.white)
+        );
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.cachelist_action_map:
+                startActivity(new Intent(this, MapActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

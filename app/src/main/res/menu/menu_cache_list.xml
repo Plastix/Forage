@@ -1,11 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context=".ui.cachelist.CacheListActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.cachelist.CacheListActivity">
+
+    <item
+        android:id="@+id/cachelist_action_map"
+        android:title="@string/cachelist_action_map_title"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 </menu>

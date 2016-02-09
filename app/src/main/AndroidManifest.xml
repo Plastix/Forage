@@ -42,6 +42,10 @@
         <activity
             android:name=".ui.compass.CompassActivity"
             android:label="@string/compass_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.map.MapActivity"
+            android:label="@string/map_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
