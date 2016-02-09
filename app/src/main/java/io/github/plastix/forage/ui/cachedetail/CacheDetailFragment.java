@@ -1,6 +1,7 @@
 package io.github.plastix.forage.ui.cachedetail;
 
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
@@ -31,9 +32,11 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.ui.compass.CompassActivity;
 import io.github.plastix.forage.util.StringUtils;
 
 
@@ -109,7 +112,7 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
 
         setActivityActionBar();
 
-        setupFab();
+        fab.setImageDrawable(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_compass).color(Color.WHITE));
 
         // TODO Hacky fix for Google Maps
         map.onCreate(null);
@@ -126,9 +129,9 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
         parent.getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setupFab() {
-        fab.setImageDrawable(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_compass).color(Color.WHITE));
-        // TODO Fab clicks
+    @OnClick(R.id.cachedetail_fab)
+    public void onFabClick() {
+        startActivity(new Intent(getContext(), CompassActivity.class));
     }
 
     @Override

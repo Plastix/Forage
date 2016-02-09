@@ -21,4 +21,6 @@
     <string name="cachedetail_terrain">Terrain</string>
 
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor augue nec odio mattis maximus. Nunc convallis lorem ut dui dapibus, a egestas sem consequat. Praesent fermentum lacus at justo scelerisque, sed blandit elit posuere. Suspendisse nisi ante, accumsan ac malesuada eget, euismod sit amet ipsum. Pellentesque sed sem laoreet, pellentesque metus sed, elementum neque. Fusce magna odio, dapibus a sagittis vel, efficitur eget dui. Maecenas volutpat luctus metus sed laoreet. Nam laoreet egestas pharetra. Sed pulvinar tincidunt tincidunt. Aenean quis nisi ac sapien tempus porttitor non sit amet lectus. Donec mollis, neque eget eleifend convallis, velit diam interdum augue, ac lobortis nisi enim sed elit. Pellentesque nec blandit mi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin quis velit a nisi ultricies convallis. Sed ut tellus vel orci mollis congue.</string>
+
+    <string name="compass_title">CompassActivity</string>
 </resources>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="io.github.plastix.forage"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.github.plastix.forage">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".ForageApplication"
@@ -13,35 +12,37 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.cachelist.CacheListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.cachedetail.CacheDetailActivity"
+            android:label=""
             android:parentActivityName=".ui.cachelist.CacheListActivity"
-            android:theme="@style/AppTheme.NoActionBar.Transparent"
-            android:label="">
+            android:theme="@style/AppTheme.NoActionBar.Transparent">
+
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.cachelist.CacheListActivity"/>
-
+                android:value=".ui.cachelist.CacheListActivity" />
         </activity>
 
         <!-- Register Google Maps API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/GOOGLE_MAPS_API_KEY"/>
+            android:value="@string/GOOGLE_MAPS_API_KEY" />
 
+        <activity
+            android:name=".ui.compass.CompassActivity"
+            android:label="@string/compass_title"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
