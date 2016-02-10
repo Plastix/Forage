@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-feature android:name="android.hardware.sensor.compass" />
+
     <application
         android:name=".ForageApplication"
         android:allowBackup="false"
@@ -34,19 +36,22 @@
                 android:value=".ui.cachelist.CacheListActivity" />
         </activity>
 
+        <activity
+            android:name=".ui.compass.CompassActivity"
+            android:label="@string/compass_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.map.MapActivity"
+            android:label="@string/map_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
         <!-- Register Google Maps API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/GOOGLE_MAPS_API_KEY" />
 
-        <activity
-            android:name=".ui.compass.CompassActivity"
-            android:label="@string/compass_title"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.map.MapActivity"
-            android:label="@string/map_title"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
