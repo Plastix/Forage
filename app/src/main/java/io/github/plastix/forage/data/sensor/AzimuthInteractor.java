@@ -1,10 +1,10 @@
 package io.github.plastix.forage.data.sensor;
 
-import android.hardware.SensorManager;
-
 import com.fernandocejas.frodo.annotation.RxLogObservable;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
 
 import rx.Observable;
 
@@ -12,17 +12,18 @@ import rx.Observable;
 /**
  * A Reactive wrapper around the Android compass sensor.
  */
+@Singleton
 public class AzimuthInteractor {
 
-    private SensorManager sensorManager;
+    private Provider<AzimuthObserver> azimuthProvider;
 
     @Inject
-    public AzimuthInteractor(SensorManager sensorManager) {
-        this.sensorManager = sensorManager;
+    public AzimuthInteractor(Provider<AzimuthObserver> azimuthProvider) {
+        this.azimuthProvider = azimuthProvider;
     }
 
     @RxLogObservable
     public Observable<Float> getAzimuthObservable() {
-        return Observable.create(new AzimuthProvider(sensorManager));
+        return Observable.create(azimuthProvider.get());
     }
 }
