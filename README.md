@@ -1,6 +1,8 @@
 Forage (In Development) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
 ======
-A geocaching Android app using MVP architecture and modern libraries 
+> A geocaching Android app using MVP architecture and modern libraries 
+
+This is my first Android project in order to learn the Android SDK and relevant Android libraries. Please critique my code! If you are just starting with Android check out [this wiki page](https://github.com/Plastix/Forage/wiki/Android-Learning-Resources) for a comphrensive list of learning resources that I used. 
 
 Libraries
 -------
