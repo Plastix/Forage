@@ -3,12 +3,17 @@ package io.github.plastix.forage.ui.compass;
 import javax.inject.Singleton;
 
 import dagger.Subcomponent;
+import io.github.plastix.forage.data.sensor.SensorModule;
 
 /**
  * Dagger component to inject all required dependencies into {@link CompassFragment}.
  */
 @Singleton
-@Subcomponent(modules = {CompassModule.class})
+@Subcomponent(modules = {
+        CompassModule.class,
+        SensorModule.class
+    }
+)
 public interface CompassComponent {
     void injectTo(CompassFragment compassFragment);
 }

@@ -46,24 +46,4 @@ public class ApplicationModule {
     public Resources provideResources(@ForApplication Context context) {
         return context.getResources();
     }
-
-    @Provides
-    @Singleton
-    public ConnectivityManager provideConnectivityManager(@ForApplication Context context) {
-        return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-    }
-
-    @Provides
-    @Singleton
-    public SensorManager provideSensorManager(@ForApplication Context context) {
-        return (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-    }
-
-    @Provides
-    @Singleton
-    public RealmConfiguration provideDefaultRealmConfig(@ForApplication Context context) {
-        return new RealmConfiguration.Builder(context)
-                .deleteRealmIfMigrationNeeded()
-                .build();
-    }
 }

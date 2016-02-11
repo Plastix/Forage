@@ -14,6 +14,7 @@ public class ForageApplication extends Application {
 
     @Inject
     RealmConfiguration defaultConfig;
+
     private ApplicationComponent component;
 
     public static ApplicationComponent getComponent(Context context) {
