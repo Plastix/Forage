@@ -3,6 +3,7 @@ package io.github.plastix.forage.data.local;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.realm.Realm;
 import rx.Single;
@@ -12,6 +13,7 @@ import rx.functions.Func1;
 /**
  * Wrapper around Realm DB operations.
  */
+@Singleton
 public class DatabaseInteractor {
 
     private Realm realm;
