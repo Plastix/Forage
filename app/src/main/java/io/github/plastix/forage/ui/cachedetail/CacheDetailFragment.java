@@ -46,6 +46,7 @@ import io.github.plastix.forage.util.StringUtils;
 public class CacheDetailFragment extends Fragment implements CacheDetailView {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
+    private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
 
     @Bind(R.id.cachedetail_toolbar)
     Toolbar toolbar;
@@ -129,21 +130,29 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
         parent.getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @OnClick(R.id.cachedetail_fab)
-    public void onFabClick() {
-        startActivity(new Intent(getContext(), CompassActivity.class));
-    }
-
     @Override
-    public void returnedGeocache(Cache cache) {
+    public void returnedGeocache(final Cache cache) {
         collapsingToolbarLayout.setTitle(cache.getName());
         description.setText(cache.getDescription());
         difficulty.setText(resources.getString(R.string.cachedetail_rating, cache.getDifficulty()));
         terrain.setText(resources.getString(R.string.cachedetail_rating, cache.getTerrain()));
         size.setText(cache.getSize());
 
+        setFabClickListener(cache);
+
         MapListener mapListener = new MapListener(cache.getLocation());
         map.getMapAsync(mapListener);
+    }
+
+    public void setFabClickListener(final Cache cache) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CompassActivity.class);
+                intent.putExtra(EXTRA_CACHE_LOCATION, cache.getLocation());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

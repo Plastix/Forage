@@ -50,6 +50,22 @@ public class LocationInteractor implements LifecycleCallbacks {
     }
 
     /**
+     * Returns an Observable that emits Location events at the specified interval. This uses the Google
+     * Play Services Location API.
+     * The caller must have location permissions before calling this method!
+     *
+     * @param intervalInMillis Time between location events in milliseconds.
+     * @return Location observable.
+     */
+    public Observable<Location> getLocationObservable(long intervalInMillis) {
+        LocationRequest request = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setFastestInterval(intervalInMillis);
+
+        return Observable.create(new LocationOnSubscribe(request));
+    }
+
+    /**
      * Returns whether location is available on the device using Google Play Location Services.
      *
      * @return True if location is available, else false.

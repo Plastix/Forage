@@ -40,8 +40,8 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
 
         registerSensors();
 
-    subscriber.add(buildUnsubscriber());
-}
+        subscriber.add(buildUnsubscriber());
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {

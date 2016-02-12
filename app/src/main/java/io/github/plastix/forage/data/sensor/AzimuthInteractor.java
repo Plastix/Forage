@@ -22,7 +22,6 @@ public class AzimuthInteractor {
         this.azimuthProvider = azimuthProvider;
     }
 
-    @RxLogObservable
     public Observable<Float> getAzimuthObservable() {
         return Observable.create(azimuthProvider.get());
     }
