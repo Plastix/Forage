@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.sensor.AzimuthInteractor;
 import io.github.plastix.forage.ui.LifecycleCallbacks;
+import io.github.plastix.forage.util.LocationUtils;
 import rx.Notification;
 import rx.Observable;
 import rx.Subscription;
@@ -48,14 +49,7 @@ public class CompassPresenter implements LifecycleCallbacks {
                 new Func2<Float, Location, Float>() {
                     @Override
                     public Float call(Float azimuth, Location location) {
-                        // TODO Factor this out
-                        GeomagneticField geoField = new GeomagneticField(
-                                (float) location.getLatitude(),
-                                (float) location.getLongitude(),
-                                (float) location.getAltitude(),
-                                System.currentTimeMillis()
-                        );
-                        azimuth += geoField.getDeclination();
+                        azimuth += (float) LocationUtils.getMagneticDeclination(location);
                         float bearing = location.bearingTo(target);
                         return azimuth - bearing;
                     }

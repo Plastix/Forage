@@ -20,7 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.util.StringUtils;
+import io.github.plastix.forage.util.LocationUtils;
 
 /**
  * Fragment that is responsible for the geocache compass.
@@ -45,7 +45,7 @@ public class CompassFragment extends Fragment implements CompassView {
         this.setRetainInstance(true);
 
         String raw_location = getArguments().getString(EXTRA_CACHE_LOCATION);
-        this.target = StringUtils.stringToLocation(raw_location);
+        this.target = LocationUtils.stringToLocation(raw_location);
 
         injectDependencies();
         initializePresenter();

@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -32,12 +31,11 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.Cache;
 import io.github.plastix.forage.ui.compass.CompassActivity;
-import io.github.plastix.forage.util.StringUtils;
+import io.github.plastix.forage.util.LocationUtils;
 
 
 /**
@@ -174,7 +172,7 @@ public class CacheDetailFragment extends Fragment implements CacheDetailView {
         private Location location;
 
         public MapListener(String location) {
-            this.location = StringUtils.stringToLocation(location);
+            this.location = LocationUtils.stringToLocation(location);
         }
 
         @Override
