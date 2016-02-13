@@ -1,6 +1,8 @@
 package io.github.plastix.forage.data.local;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -18,9 +20,11 @@ public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends Rec
     protected RealmResults<T> data;
     protected RealmQuery<T> query;
     protected Realm realm;
+    protected View.OnClickListener onClickListener;
 
     public AbstractRealmAdapter(Realm realm) {
         this.realm = realm;
+        this.onClickListener = null;
         loadData();
     }
 
@@ -95,5 +99,14 @@ public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends Rec
      */
     public void closeRealm() {
         this.realm.close();
+    }
+
+    /**
+     * Sets the click listeners for items in the RecyclerView.
+     *
+     * @param onClickListener Click listener to set.
+     */
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 }

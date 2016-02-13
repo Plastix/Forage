@@ -50,7 +50,7 @@ public class CacheListPresenter implements LifecycleCallbacks {
         this.subscription = Subscriptions.empty();
     }
 
-    public void getCaches() {
+    public void fetchGeocaches() {
         cancelRequest();
 
         if (!networkInteractor.hasInternetConnection()) {
@@ -72,7 +72,7 @@ public class CacheListPresenter implements LifecycleCallbacks {
                 @Override
                 public void onError(Throwable error) {
                     Log.e("error", error.getMessage(), error);
-                    view.onErrorInternet();
+                    view.onErrorFetch();
                 }
             });
 

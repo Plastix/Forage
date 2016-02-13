@@ -15,6 +15,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+
+import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
@@ -23,7 +26,6 @@ import butterknife.ButterKnife;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.Cache;
-import io.github.plastix.forage.ui.RecyclerItemClickListener;
 import io.github.plastix.forage.ui.SimpleDividerItemDecoration;
 import io.github.plastix.forage.ui.cachedetail.CacheDetailActivity;
 import io.github.plastix.forage.util.ActivityUtils;
@@ -31,7 +33,7 @@ import io.github.plastix.forage.util.ActivityUtils;
 /**
  * Fragment that is responsible for the Geocache list.
  */
-public class CacheListFragment extends Fragment implements CacheListView, SwipeRefreshLayout.OnRefreshListener, RecyclerItemClickListener.OnItemClickListener {
+public class CacheListFragment extends Fragment implements CacheListView, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
 
@@ -52,6 +54,8 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
 
     @Bind(R.id.empty_view)
     View emptyView;
+
+    private RecyclerView.AdapterDataObserver dataChangeListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,17 +95,11 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
         recyclerView.addItemDecoration(itemDecorator);
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), this));
-
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                updateEmptyView();
-            }
-        });
+        this.dataChangeListener = new DataChangeListener(this);
+        adapter.registerAdapterDataObserver(dataChangeListener);
+        adapter.setOnClickListener(this);
 
         swipeRefreshLayout.setOnRefreshListener(this);
-
         updateEmptyView();
     }
 
@@ -119,17 +117,18 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
         swipeRefreshLayout.setRefreshing(false);
     }
 
+
     /**
-     * RecyclerView item click callback.
+     * Called when an item is clicked in the RecyclerView
      *
-     * @param view     View clicked.
-     * @param position Position of view clicked.
+     * @param v View clicked.
      */
     @Override
-    public void onItemClick(View view, int position) {
+    public void onClick(View v) {
         presenter.cancelRequest();
         stopRefresh();
 
+        int position = recyclerView.getChildLayoutPosition(v);
         Cache cache = adapter.getItem(position);
         Intent intent = new Intent(getActivity(), CacheDetailActivity.class);
         intent.putExtra(EXTRA_CACHE_CODE, cache.getCacheCode());
@@ -154,7 +153,7 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
 
     private void downloadGeocaches() {
         swipeRefreshLayout.setRefreshing(true);
-        presenter.getCaches();
+        presenter.fetchGeocaches();
     }
 
     @Override
@@ -222,6 +221,10 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
     public void onDestroyView() {
         super.onDestroyView();
         recyclerView.setAdapter(null);
+        adapter.unregisterAdapterDataObserver(dataChangeListener);
+        adapter.setOnClickListener(null);
+        this.dataChangeListener = null;
+
         ButterKnife.unbind(this);
     }
 
@@ -234,4 +237,25 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
         super.onDestroy();
         adapter.closeRealm();
     }
+
+    private static class DataChangeListener extends RecyclerView.AdapterDataObserver {
+
+        private final WeakReference<CacheListFragment> fragmentWeakReference;
+
+        public DataChangeListener(CacheListFragment fragmentWeakReference) {
+            this.fragmentWeakReference = new WeakReference<>(fragmentWeakReference);
+        }
+
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            CacheListFragment fragment = fragmentWeakReference.get();
+            if (fragment != null) {
+                fragment.updateEmptyView();
+            }
+
+        }
+    }
+
+
 }

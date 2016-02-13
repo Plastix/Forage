@@ -22,12 +22,9 @@ import io.realm.RealmQuery;
  */
 public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.CacheHolder> {
 
-    private Resources resources;
-
     @Inject
-    public CacheAdapter(Realm realm, Resources resources) {
+    public CacheAdapter(Realm realm) {
         super(realm);
-        this.resources = resources;
     }
 
     @Override
@@ -39,8 +36,9 @@ public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.Cache
     }
 
     @Override
-    public void onBindViewHolder(CacheHolder holder, int position) {
+    public void onBindViewHolder(final CacheHolder holder, int position) {
         Cache cache = getItem(position);
+        Resources resources = holder.itemView.getContext().getResources();
 
         holder.cacheName.setText(cache.getName());
 
@@ -52,6 +50,7 @@ public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.Cache
 
         holder.cacheSize.setText(resources.getString(R.string.cache_item_size, cache.getSize()));
 
+        holder.itemView.setOnClickListener(onClickListener);
     }
 
 
