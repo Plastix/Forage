@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.TextView;
 
 import com.mikepenz.iconics.view.IconicsImageView;
 
@@ -20,6 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
+import io.github.plastix.forage.util.AngleUtils;
 import io.github.plastix.forage.util.LocationUtils;
 
 /**
@@ -32,6 +34,9 @@ public class CompassFragment extends Fragment implements CompassView {
 
     @Bind(R.id.compass_arrow)
     IconicsImageView arrow;
+
+    @Bind(R.id.compass_distance)
+    TextView distance;
 
     @Inject
     CompassPresenter compassPresenter;
@@ -74,19 +79,18 @@ public class CompassFragment extends Fragment implements CompassView {
     }
 
     @Override
-    public void rotateCompass(Float degrees) {
-        // TODO Compass "snaps" to first rotation
+    public void rotateCompass(final Float degrees) {
         // Rotate by negative degrees because Android rotates counter-clockwise
-        Animation an = new RotateAnimation(-currentAzimuth, -degrees,
-                Animation.RELATIVE_TO_SELF, CENTER, Animation.RELATIVE_TO_SELF,
-                CENTER);
-        an.reset();
-        an.setDuration(200);
-        an.setInterpolator(new LinearInterpolator());
-        an.setFillAfter(true);
-        currentAzimuth = degrees;
+        arrow.animate()
+                .rotation(-degrees)
+                .setDuration(100)
+                .setInterpolator(new LinearInterpolator())
+                .start();
 
-        arrow.startAnimation(an);
+    }
+
+    public void updateDistance(double distance) {
+        this.distance.setText(String.valueOf(distance));
     }
 
     @Override

@@ -60,7 +60,8 @@ public class LocationInteractor implements LifecycleCallbacks {
     public Observable<Location> getLocationObservable(long intervalInMillis) {
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setFastestInterval(intervalInMillis);
+                .setFastestInterval(intervalInMillis)
+                .setInterval(intervalInMillis);
 
         return Observable.create(new LocationOnSubscribe(request));
     }

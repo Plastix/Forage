@@ -25,12 +25,14 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
     private Sensor compass;
     private float[] orientation;
     private float[] rMat;
+    private int sensorDelay;
 
     @Inject
     public AzimuthObserver(SensorManager sensorManager) {
         this.sensorManager = sensorManager;
         this.orientation = new float[3];
         this.rMat = new float[9];
+        this.sensorDelay = SensorManager.SENSOR_DELAY_GAME;
     }
 
     @Override
@@ -51,11 +53,20 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
 
             // Compass direction is result[0]
             float[] result = SensorManager.getOrientation(rMat, orientation);
-            float azimuth = (float) ((Math.toDegrees(result[0]) + 360) % 360);
+            float azimuth = (float) (Math.toDegrees(result[0]));
 
             observer.onNext(azimuth);
         }
 
+    }
+
+    /**
+     * Sets the delay that the Android sensor should update the observer.
+     *
+     * @param microSeconds Delay in microseconds.
+     */
+    public void setSensorDelay(int microSeconds) {
+        this.sensorDelay = microSeconds;
     }
 
     @Override
@@ -64,7 +75,7 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
     }
 
     private void registerSensors() {
-        sensorManager.registerListener(this, compass, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, compass, sensorDelay);
     }
 
     private Subscription buildUnsubscriber() {

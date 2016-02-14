@@ -8,4 +8,6 @@ public interface CompassView {
 
     void rotateCompass(Float degrees);
 
+    void updateDistance(double distance);
+
 }
