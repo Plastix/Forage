@@ -12,6 +12,10 @@ import android.view.WindowManager;
 
 public class ActivityUtils {
 
+    private ActivityUtils() {
+        // No instantiation
+    }
+
     /**
      * Returns an intent for launching the application settings for the app with the specified activity.
      *

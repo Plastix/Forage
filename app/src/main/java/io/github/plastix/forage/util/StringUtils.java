@@ -4,6 +4,10 @@ import android.text.Html;
 
 public class StringUtils {
 
+    private StringUtils(){
+        // No instantiation
+    }
+
     /**
      * Joins an array of strings into a single string separated by the specified delimiter.
      *

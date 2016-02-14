@@ -5,6 +5,10 @@ import android.location.Location;
 
 public class LocationUtils {
 
+    private LocationUtils(){
+        // No instantiation
+    }
+
     /**
      * Converts OkApi's String location format to an Android Location format.
      *

@@ -2,6 +2,10 @@ package io.github.plastix.forage.util;
 
 public class UnitUtils {
 
+    private UnitUtils() {
+        // No instantiation
+    }
+
     public static final double MILES_PER_KILOMETER = 0.621371;
 
     /**

@@ -12,6 +12,10 @@ import android.support.v4.content.ContextCompat;
  */
 public class PermissionUtils {
 
+    private PermissionUtils(){
+        // No instantiation
+    }
+
     /**
      * Checks if specified permissions are granted and requests them if not.
      *
