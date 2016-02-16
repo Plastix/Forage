@@ -6,10 +6,10 @@ import dagger.Subcomponent;
 import io.github.plastix.forage.data.local.DatabaseModule;
 
 /**
- * Dagger component to inject all required dependencies into {@link CacheDetailFragment}.
+ * Dagger component to inject all required dependencies into {@link CacheDetailActivity}.
  */
 @Singleton
 @Subcomponent(modules = {CacheDetailModule.class, DatabaseModule.class})
 public interface CacheDetailComponent {
-    void injectTo(CacheDetailFragment cacheDetailFragment);
+    void injectTo(CacheDetailActivity cacheDetailActivity);
 }

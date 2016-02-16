@@ -61,3 +61,10 @@
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
 }
+
+# Ice Pick
+-dontwarn icepick.**
+-keep class **$$Icepick { *; }
+-keepclasseswithmembernames class * {
+    @icepick.* <fields>;
+}

@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
@@ -132,7 +136,13 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
         Cache cache = adapter.getItem(position);
         Intent intent = new Intent(getActivity(), CacheDetailActivity.class);
         intent.putExtra(EXTRA_CACHE_CODE, cache.getCacheCode());
-        startActivity(intent);
+
+        // TODO Clean up
+        Pair<View, String> one = Pair.create(v.findViewById(R.id.cache_name), "cache_title");
+        Pair<View, String> two = Pair.create(v.findViewById(R.id.cache_type), "cache_type");
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), one, two);
+        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
     }
 
     @Override

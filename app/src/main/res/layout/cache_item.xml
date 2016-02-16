@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingBottom="16dp"
-                android:paddingTop="16dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp">
 
 
     <TextView
@@ -23,8 +23,9 @@
         android:paddingRight="16dp"
         android:textColor="@color/gray_dark"
         android:textSize="20sp"
+        android:transitionName="cache_title"
         android:typeface="sans"
-        tools:text="Cache Name"/>
+        tools:text="Cache Name" />
 
     <TextView
         android:id="@+id/cache_type"
@@ -34,8 +35,9 @@
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="16dp"
         android:textSize="15sp"
+        android:transitionName="cache_type"
         android:typeface="sans"
-        tools:text="Traditional"/>
+        tools:text="Traditional" />
 
     <com.mikepenz.iconics.view.IconicsTextView
         android:id="@+id/cache_terrain"
@@ -45,7 +47,7 @@
         android:layout_marginLeft="16dp"
         android:textSize="15sp"
         android:typeface="sans"
-        tools:text="Terrain: 2.0"/>
+        tools:text="Terrain: 2.0" />
 
     <com.mikepenz.iconics.view.IconicsTextView
         android:id="@+id/cache_difficulty"
@@ -57,7 +59,7 @@
         android:layout_toRightOf="@+id/cache_terrain"
         android:textSize="15sp"
         android:typeface="sans"
-        tools:text="Difficulty: 2.5"/>
+        tools:text="Difficulty: 2.5" />
 
     <com.mikepenz.iconics.view.IconicsTextView
         android:id="@+id/cache_size"
@@ -70,7 +72,7 @@
         android:fontFeatureSettings="smcp"
         android:textSize="15sp"
         android:typeface="sans"
-        tools:text="Size: Micro"/>
+        tools:text="Size: Micro" />
 
     <TextView
         android:id="@+id/cache_distance"
@@ -81,7 +83,7 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         android:typeface="sans"
-        tools:text="150ft"/>
+        tools:text="150ft" />
 
 
 </RelativeLayout>
