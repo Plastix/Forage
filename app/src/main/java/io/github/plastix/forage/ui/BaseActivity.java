@@ -13,7 +13,7 @@ import icepick.Icepick;
  * AppCompatActivity base to extend all other activities from.
  * This provides hooks for Butterknife and Icepick automatically.
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
