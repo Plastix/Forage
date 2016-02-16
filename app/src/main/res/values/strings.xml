@@ -21,6 +21,7 @@
     <string name="cachedetail_difficulty_header">Difficulty</string>
     <string name="cachedetail_terrain_header">Terrain</string>
     <string name="cachedetail_description_header">Description</string>
+    <string name="cachedetail_cacheinfo_header">Cache Info</string>
     <string name="cachedetail_size_header">Size</string>
     <string name="cachedetail_rating">%s/5</string>
 

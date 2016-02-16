@@ -99,13 +99,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+            <TextView
+                android:id="@+id/cachedetail_info_header"
+                style="@style/TextComponent.ItemRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/cachedetail_cacheinfo_header"
+                android:textAppearance="@style/TextAppearance.Header" />
+
+
             <LinearLayout
                 android:id="@+id/cachedetail_info_container"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:paddingTop="16dp">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/cachedetail_difficulty_container"
@@ -116,19 +126,20 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/Text.Header.Min"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cachedetail_difficulty_header" />
-
-                    <TextView
                         android:id="@+id/cachedetail_difficulty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginBottom="@dimen/spacing_small"
                         android:textColor="@color/color_accent"
                         android:textSize="20sp"
                         tools:text="3.5/5" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cachedetail_difficulty_header"
+                        android:textSize="16sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -140,19 +151,20 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/Text.Header.Min"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cachedetail_terrain_header" />
-
-                    <TextView
                         android:id="@+id/cachedetail_terrain"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginBottom="@dimen/spacing_small"
                         android:textColor="@color/color_accent"
                         android:textSize="20sp"
                         tools:text="2.5/5" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cachedetail_terrain_header"
+                        android:textSize="16sp" />
+
 
                 </LinearLayout>
 
@@ -165,23 +177,30 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/Text.Header.Min"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cachedetail_size_header" />
-
-                    <TextView
                         android:id="@+id/cachedetail_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginBottom="@dimen/spacing_small"
                         android:textColor="@color/color_accent"
                         android:textSize="20sp"
                         tools:text="Large" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cachedetail_size_header"
+                        android:textSize="16sp" />
+
+
                 </LinearLayout>
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/gray_lightest" />
 
             <TextView
                 android:id="@+id/cachedetail_description_header"
@@ -196,7 +215,6 @@
                 android:id="@+id/cachedetail_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
                 android:lineSpacingExtra="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"

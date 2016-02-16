@@ -121,8 +121,8 @@ public class CacheDetailActivity extends BaseActivity implements CacheDetailView
 
         fab.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_compass).color(Color.WHITE));
 
-        map.onCreate(savedInstanceState);
         map.setVisibility(View.INVISIBLE);
+        map.onCreate(savedInstanceState);
     }
 
 
