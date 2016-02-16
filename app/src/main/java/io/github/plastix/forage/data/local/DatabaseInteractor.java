@@ -69,8 +69,7 @@ public class DatabaseInteractor {
                         return cache.isLoaded();
                     }
                 })
-                .take(1).toSingle()
-                .observeOn(AndroidSchedulers.mainThread());
+                .take(1).toSingle();
 
     }
 
