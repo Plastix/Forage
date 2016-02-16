@@ -10,8 +10,9 @@ import android.view.View;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.github.plastix.forage.R;
+import io.github.plastix.forage.ui.BaseActivity;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends BaseActivity {
 
     @Bind(R.id.map_toolbar)
     Toolbar toolbar;
@@ -21,16 +22,7 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        // Inject Butterknife views
-        ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
 }

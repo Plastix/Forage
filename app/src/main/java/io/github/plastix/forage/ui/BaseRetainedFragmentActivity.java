@@ -15,7 +15,7 @@ import io.github.plastix.forage.R;
  *
  * @param <T> Fragment type to attach.
  */
-public abstract class BaseRetainedFragmentActivity<T extends Fragment> extends AppCompatActivity {
+public abstract class BaseRetainedFragmentActivity<T extends Fragment> extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -46,9 +46,6 @@ public class CacheListActivity extends BaseRetainedFragmentActivity<CacheListFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache_list);
 
-        // Inject Butterknife views
-        ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
     }
 
@@ -104,12 +101,6 @@ public class CacheListActivity extends BaseRetainedFragmentActivity<CacheListFra
             dialogBuilder.setCancelable(false);
             this.dialog = dialogBuilder.create();
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override

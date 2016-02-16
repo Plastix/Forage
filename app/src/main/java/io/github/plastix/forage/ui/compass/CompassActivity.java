@@ -29,16 +29,7 @@ public class CompassActivity extends BaseRetainedFragmentActivity<CompassFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compass);
 
-        // Inject Butterknife views
-        ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override
