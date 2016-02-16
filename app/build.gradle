@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.fernandocejas.frodo'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 buildscript {
     repositories {
@@ -9,6 +10,7 @@ buildscript {
     dependencies {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath "com.fernandocejas.frodo:frodo-plugin:0.8.2" // Test logging of Observables
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.4.2'
     }
 }
 
