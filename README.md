@@ -14,6 +14,7 @@ Libraries
 * [Butterknife](http://jakewharton.github.io/butterknife/)
 * [Realm](https://realm.io/)
 * [Android Iconics](https://github.com/mikepenz/Android-Iconics)
+* [Icepick](https://github.com/frankiesardo/icepick)
 * [Google Support Libraries](http://developer.android.com/tools/support-library/index.html)
 * [Google Play Location Services](https://developers.google.com/android/reference/com/google/android/gms/location/package-summary)
 * [Google Play Maps](https://developers.google.com/maps/documentation/android-api/)
