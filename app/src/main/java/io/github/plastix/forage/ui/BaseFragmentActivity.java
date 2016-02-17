@@ -9,13 +9,13 @@ import android.view.MenuItem;
 import io.github.plastix.forage.R;
 
 /**
- * Base Activity to reduce boilerplate code for attaching retained fragments.
+ * Base Activity to reduce boilerplate code for attaching fragments.
  * Only extend this activity if you want a retained fragment to be automatically attached to the
  * specified layout in the activity.
  *
  * @param <T> Fragment type to attach.
  */
-public abstract class BaseRetainedFragmentActivity<T extends Fragment> extends BaseActivity {
+public abstract class BaseFragmentActivity<T extends Fragment> extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

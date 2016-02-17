@@ -11,4 +11,7 @@ public interface LifecycleCallbacks {
     void onStop();
 
     void onResume();
+
+    void onPause();
+
 }

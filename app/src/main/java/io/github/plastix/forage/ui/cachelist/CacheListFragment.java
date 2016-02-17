@@ -12,14 +12,13 @@ import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
@@ -30,6 +29,7 @@ import butterknife.ButterKnife;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.ui.PresenterFragment;
 import io.github.plastix.forage.ui.SimpleDividerItemDecoration;
 import io.github.plastix.forage.ui.cachedetail.CacheDetailActivity;
 import io.github.plastix.forage.util.ActivityUtils;
@@ -37,12 +37,9 @@ import io.github.plastix.forage.util.ActivityUtils;
 /**
  * Fragment that is responsible for the Geocache list.
  */
-public class CacheListFragment extends Fragment implements CacheListView, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class CacheListFragment extends PresenterFragment<CacheListPresenter> implements CacheListView, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
-
-    @Inject
-    CacheListPresenter presenter;
 
     @Inject
     CacheAdapter adapter;
@@ -64,7 +61,6 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
 
         // Tell the activity we have menu items to contribute to the toolbar
         setHasOptionsMenu(true);
@@ -121,6 +117,17 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
         swipeRefreshLayout.setRefreshing(false);
     }
 
+    @Override
+    public void setRefreshing() {
+        // Required hacky fix for some reason
+        // http://stackoverflow.com/questions/26484907/setrefreshingtrue-does-not-show-indicator
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+    }
 
     /**
      * Called when an item is clicked in the RecyclerView
@@ -129,7 +136,7 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
      */
     @Override
     public void onClick(View v) {
-        presenter.cancelRequest();
+        presenter.unsubscribe();
         stopRefresh();
 
         int position = recyclerView.getChildLayoutPosition(v);
@@ -204,24 +211,6 @@ public class CacheListFragment extends Fragment implements CacheListView, SwipeR
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    /**
-     * Call the onStop() lifecycle callback of the presenter.
-     */
-    @Override
-    public void onStop() {
-        super.onStop();
-        presenter.onStop();
-    }
-
-    /**
-     * Call the onStart() lifecycle callback of the presenter.
-     */
-    @Override
-    public void onStart() {
-        super.onStart();
-        presenter.onStart();
     }
 
     /**

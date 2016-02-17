@@ -15,9 +15,8 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.ui.BaseRetainedFragmentActivity;
+import io.github.plastix.forage.ui.BaseFragmentActivity;
 import io.github.plastix.forage.ui.map.MapActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.PermissionUtils;
@@ -26,7 +25,7 @@ import io.github.plastix.forage.util.PermissionUtils;
  * Activity that represents the main Geocache list screen of the app. This is a container activity
  * for {@link CacheListFragment}.
  */
-public class CacheListActivity extends BaseRetainedFragmentActivity<CacheListFragment> {
+public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
 
     private static final String CACHE_LIST_FRAG = "io.github.plastix.forage.ui.cachelist.cachelistfragment";
 

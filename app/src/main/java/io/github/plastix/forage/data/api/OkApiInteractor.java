@@ -14,6 +14,7 @@ import io.github.plastix.forage.BuildConfig;
 import io.github.plastix.forage.data.local.Cache;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
+import rx.Observable;
 import rx.Single;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -39,7 +40,7 @@ public class OkApiInteractor {
      * @param location Center location.
      * @return A rx.Single JsonArray.
      */
-    public Single<List<Cache>> getNearbyCaches(Location location, Double radius) {
+    public Observable<List<Cache>> getNearbyCaches(Location location, Double radius) {
         try {
 
             JSONObject searchParams = new JSONObject();
@@ -61,7 +62,7 @@ public class OkApiInteractor {
 
         } catch (JSONException e) {
             // Let the subscriber handle the error
-            return Single.error(e);
+            return Observable.error(e);
         }
     }
 }

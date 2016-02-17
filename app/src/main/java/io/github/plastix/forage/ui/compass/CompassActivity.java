@@ -5,16 +5,14 @@ import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.ui.BaseRetainedFragmentActivity;
-import io.github.plastix.forage.ui.cachelist.CacheListFragment;
+import io.github.plastix.forage.ui.BaseFragmentActivity;
 
 /**
  * Activity that represents the compass screen of the app. This is a container activity
  * for {@link CompassFragment}.
  */
-public class CompassActivity extends BaseRetainedFragmentActivity<CompassFragment> {
+public class CompassActivity extends BaseFragmentActivity<CompassFragment> {
 
     private static final String COMPASS_FRAG = "io.github.plastix.forage.ui.compass.compassfragment";
 

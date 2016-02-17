@@ -83,6 +83,11 @@ public class CompassPresenter implements LifecycleCallbacks {
     }
 
     @Override
+    public void onPause() {
+
+    }
+
+    @Override
     public void onStop() {
         unSubscribe();
     }

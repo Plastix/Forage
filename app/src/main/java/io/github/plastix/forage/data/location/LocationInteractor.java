@@ -40,13 +40,13 @@ public class LocationInteractor implements LifecycleCallbacks {
      *
      * @return A rx.Single Location.
      */
-    public Single<Location> getUpdatedLocation() {
+    public Observable<Location> getUpdatedLocation() {
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setNumUpdates(1)
                 .setExpirationDuration(2500);
 
-        return Observable.create(new LocationOnSubscribe(request)).take(1).toSingle();
+        return Observable.create(new LocationOnSubscribe(request)).take(1);
     }
 
     /**
@@ -106,6 +106,11 @@ public class LocationInteractor implements LifecycleCallbacks {
     @Override
     public void onResume() {
         // Unused
+    }
+
+    @Override
+    public void onPause() {
+
     }
 
     /**
