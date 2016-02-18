@@ -29,7 +29,6 @@ import rx.subscriptions.Subscriptions;
 /**
  * Reactive wrapper around Google Play Location Services.
  */
-@Singleton
 public class LocationInteractor {
 
     private LocationObservableFactory observableFactory;

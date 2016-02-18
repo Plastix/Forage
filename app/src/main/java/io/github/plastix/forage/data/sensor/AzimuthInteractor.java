@@ -14,7 +14,6 @@ import rx.schedulers.Schedulers;
 /**
  * A Reactive wrapper around the Android compass sensor.
  */
-@Singleton
 public class AzimuthInteractor {
 
     private Provider<AzimuthObserver> azimuthProvider;

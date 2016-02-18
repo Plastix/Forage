@@ -22,7 +22,6 @@ import rx.schedulers.Schedulers;
 /**
  * A Reactive wrapper around {@link OkApiService}.
  */
-@Singleton
 public class OkApiInteractor {
 
     private OkApiService apiService;

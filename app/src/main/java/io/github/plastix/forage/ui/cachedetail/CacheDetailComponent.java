@@ -1,12 +1,12 @@
 package io.github.plastix.forage.ui.cachedetail;
 
 import dagger.Subcomponent;
-import io.github.plastix.forage.ui.PerActivity;
+import io.github.plastix.forage.ui.ActivityScope;
 
 /**
  * Dagger component to inject all required dependencies into {@link CacheDetailActivity}.
  */
-@PerActivity
+@ActivityScope
 @Subcomponent(
         modules = {
                 CacheDetailModule.class

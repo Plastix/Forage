@@ -13,7 +13,6 @@ import rx.functions.Func1;
 /**
  * Wrapper around Realm DB operations.
  */
-@Singleton
 public class DatabaseInteractor {
 
     private Realm realm;

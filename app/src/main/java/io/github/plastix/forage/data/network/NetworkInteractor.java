@@ -11,7 +11,6 @@ import rx.Completable;
 /**
  * Wrapper around Android network services.
  */
-@Singleton
 public class NetworkInteractor {
 
     private ConnectivityManager connectivityManager;
