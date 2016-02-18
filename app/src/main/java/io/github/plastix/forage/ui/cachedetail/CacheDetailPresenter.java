@@ -4,16 +4,15 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.data.local.Cache;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
+import io.github.plastix.forage.ui.Presenter;
 import rx.SingleSubscriber;
 
-public class CacheDetailPresenter {
+public class CacheDetailPresenter extends Presenter<CacheDetailView> {
 
-    private CacheDetailView view;
     private DatabaseInteractor databaseInteractor;
 
     @Inject
-    public CacheDetailPresenter(CacheDetailView view, DatabaseInteractor databaseInteractor) {
-        this.view = view;
+    public CacheDetailPresenter(DatabaseInteractor databaseInteractor) {
         this.databaseInteractor = databaseInteractor;
     }
 

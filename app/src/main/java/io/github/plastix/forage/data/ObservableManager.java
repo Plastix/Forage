@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
-import rx.functions.Action0;
 
 /**
  * Singleton instance to store Rx Observables outside of the Activity/Fragment lifecycle.
@@ -32,13 +31,7 @@ public class ObservableManager {
      * @param observable Observable to store.
      */
     public void storeObservable(final String id, Observable<?> observable) {
-        // Automatically remove the observable once it is completed
-        observable = observable.doOnTerminate(new Action0() {
-            @Override
-            public void call() {
-                removeObservable(id);
-            }
-        }).cache();
+        observable = observable.cache();
 
         observableMap.put(id, observable);
     }

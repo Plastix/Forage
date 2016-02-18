@@ -31,13 +31,14 @@ import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.Cache;
 import io.github.plastix.forage.ui.BaseActivity;
+import io.github.plastix.forage.ui.PresenterActivity;
 import io.github.plastix.forage.ui.compass.CompassActivity;
 import io.github.plastix.forage.util.LocationUtils;
 
 /**
  * Activity that represents the Geocache detail view screen of the app.
  */
-public class CacheDetailActivity extends BaseActivity implements CacheDetailView {
+public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter> implements CacheDetailView {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
     private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
@@ -74,9 +75,6 @@ public class CacheDetailActivity extends BaseActivity implements CacheDetailView
 
     @Bind(R.id.cachedetail_type)
     TextView type;
-
-    @Inject
-    CacheDetailPresenter presenter;
 
     @Inject
     Resources resources;

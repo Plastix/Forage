@@ -10,8 +10,10 @@ import javax.inject.Inject;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.sensor.AzimuthInteractor;
 import io.github.plastix.forage.ui.LifecycleCallbacks;
+import io.github.plastix.forage.ui.Presenter;
 import io.github.plastix.forage.util.AngleUtils;
 import io.github.plastix.forage.util.LocationUtils;
+import io.github.plastix.forage.util.RxUtils;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,11 +21,10 @@ import rx.functions.Action1;
 import rx.functions.Func2;
 import rx.subscriptions.Subscriptions;
 
-public class CompassPresenter implements LifecycleCallbacks {
+public class CompassPresenter extends Presenter<CompassView> {
 
     private static long LOCATION_UPDATE_INTERVAL = 500;
 
-    private CompassView view;
     private AzimuthInteractor azimuthInteractor;
     private LocationInteractor locationInteractor;
 
@@ -31,8 +32,7 @@ public class CompassPresenter implements LifecycleCallbacks {
     private Location target;
 
     @Inject
-    public CompassPresenter(CompassView view, AzimuthInteractor azimuthInteractor, LocationInteractor locationInteractor) {
-        this.view = view;
+    public CompassPresenter(AzimuthInteractor azimuthInteractor, LocationInteractor locationInteractor) {
         this.azimuthInteractor = azimuthInteractor;
         this.locationInteractor = locationInteractor;
         this.subscription = Subscriptions.empty();
@@ -48,13 +48,7 @@ public class CompassPresenter implements LifecycleCallbacks {
     public void updateCompass() {
         this.subscription = Observable.combineLatest(
                 azimuthInteractor.getAzimuthObservable(),
-                locationInteractor.getLocationObservable(LOCATION_UPDATE_INTERVAL)
-                        .doOnNext(new Action1<Location>() {
-                            @Override
-                            public void call(Location location) {
-                                view.updateDistance(target.distanceTo(location));
-                            }
-                        }),
+                locationInteractor.getLocationObservable(LOCATION_UPDATE_INTERVAL),
                 new Func2<Float, Location, Float>() {
                     @Override
                     public Float call(Float azimuth, Location location) {
@@ -71,30 +65,13 @@ public class CompassPresenter implements LifecycleCallbacks {
         });
     }
 
-    private void unSubscribe() {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
     @Override
     public void onStop() {
-        unSubscribe();
+        RxUtils.safeUnsubscribe(subscription);
     }
 
     @Override
     public void onResume() {
-        unSubscribe();
         updateCompass();
     }
 }

@@ -4,7 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Dagger module that provides dependencies for {@link CacheDetailFragment} and {@link CacheDetailActivity}.
+ * Dagger module that provides dependencies for {@link CacheDetailPresenter} and {@link CacheDetailActivity}.
  */
 @Module
 public class CacheDetailModule {

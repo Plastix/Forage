@@ -5,14 +5,19 @@ import android.os.Bundle;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.PendingResults;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import io.github.plastix.forage.ui.LifecycleCallbacks;
+import rx.Completable;
 import rx.Observable;
 import rx.Observer;
 import rx.Single;
@@ -25,20 +30,22 @@ import rx.subscriptions.Subscriptions;
  * Reactive wrapper around Google Play Location Services.
  */
 @Singleton
-public class LocationInteractor implements LifecycleCallbacks {
+public class LocationInteractor {
 
-    private GoogleApiClient apiClient;
+    private LocationObservableFactory observableFactory;
+    private LocationCompletableFactory completableFactory;
 
     @Inject
-    public LocationInteractor(GoogleApiClient apiClient) {
-        this.apiClient = apiClient;
+    public LocationInteractor(LocationObservableFactory observableFactory, LocationCompletableFactory completableFactory) {
+        this.observableFactory = observableFactory;
+        this.completableFactory = completableFactory;
     }
 
     /**
      * Gets the updated location using Google Play Location Services.
      * The caller must have location permissions before calling this method!
      *
-     * @return A rx.Single Location.
+     * @return An rx.Observable that emits one Location object.
      */
     public Observable<Location> getUpdatedLocation() {
         LocationRequest request = LocationRequest.create()
@@ -46,7 +53,7 @@ public class LocationInteractor implements LifecycleCallbacks {
                 .setNumUpdates(1)
                 .setExpirationDuration(2500);
 
-        return Observable.create(new LocationOnSubscribe(request)).take(1);
+        return observableFactory.buildObservable(request).take(1);
     }
 
     /**
@@ -63,115 +70,18 @@ public class LocationInteractor implements LifecycleCallbacks {
                 .setFastestInterval(intervalInMillis)
                 .setInterval(intervalInMillis);
 
-        return Observable.create(new LocationOnSubscribe(request));
+
+        return observableFactory.buildObservable(request);
     }
 
     /**
-     * Returns whether location is available on the device using Google Play Location Services.
+     * Returns whether location is available on the device using Google Play Location Services using an
+     * RxJava Completable.
      *
-     * @return True if location is available, else false.
+     * @return Completable calls onComplete() when location is available, and onError() when not.
      */
-    public boolean isLocationAvailable() {
-        return LocationServices.FusedLocationApi.getLocationAvailability(apiClient).isLocationAvailable();
+    public Completable isLocationAvailable() {
+        return completableFactory.buldLocationCompletable();
     }
-
-    /**
-     * Lifecycle callback used to connect to Google Play Services.
-     */
-    @Override
-    public void onStart() {
-        connectToGoogleApi();
-    }
-
-    private void connectToGoogleApi() {
-        if (!isGoogleApiConnected()) {
-            apiClient.connect();
-        }
-    }
-
-    private boolean isGoogleApiConnected() {
-        return apiClient.isConnected() || apiClient.isConnecting();
-    }
-
-    /**
-     * Lifecycle callback used to disconnect from Google Play Services.
-     */
-    @Override
-    public void onStop() {
-        if (isGoogleApiConnected()) {
-            this.apiClient.disconnect();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        // Unused
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    /**
-     * Observable subscriber wrapper around GoogleAPI connection callbacks.
-     */
-    private class LocationOnSubscribe implements Observable.OnSubscribe<Location>, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
-
-        private Observer<? super Location> observable;
-        private LocationListener listener;
-        private LocationRequest locationRequest;
-
-        public LocationOnSubscribe(LocationRequest locationRequest) {
-            this.locationRequest = locationRequest;
-        }
-
-        @Override
-        public void call(Subscriber<? super Location> subscriber) {
-            this.observable = subscriber;
-            apiClient.registerConnectionCallbacks(this);
-            apiClient.registerConnectionFailedListener(this);
-
-            connectToGoogleApi();
-
-            subscriber.add(buildUnsubscriber());
-        }
-
-        private Subscription buildUnsubscriber() {
-            return Subscriptions.create(new Action0() {
-                @Override
-                public void call() {
-                    LocationServices.FusedLocationApi.removeLocationUpdates(apiClient, listener);
-                }
-            });
-        }
-
-        @Override
-        public void onConnected(Bundle bundle) {
-            listener = buildListener();
-            LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locationRequest, listener);
-        }
-
-        private LocationListener buildListener() {
-            return new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    observable.onNext(location);
-                }
-            };
-        }
-
-        @Override
-        public void onConnectionSuspended(int i) {
-            observable.onError(new Throwable("Connection lost to Google Play Services"));
-        }
-
-        @Override
-        public void onConnectionFailed(ConnectionResult connectionResult) {
-            observable.onError(new Throwable("Failed to connect to Google Play Services!"));
-
-        }
-    }
-
 
 }

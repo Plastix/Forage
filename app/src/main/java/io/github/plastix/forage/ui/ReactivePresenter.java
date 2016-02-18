@@ -7,6 +7,7 @@ import io.github.plastix.forage.util.RxUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.functions.Action0;
 import rx.subscriptions.Subscriptions;
 
 /**
@@ -41,7 +42,7 @@ public abstract class ReactivePresenter<T extends View, O> extends Presenter<T> 
      * Caches and subscribes to the observable.
      */
     protected void subscribe() {
-        cache.storeObservable(getRequestId(), request);
+        cache.storeObservable(getObservableId(), request);
         this.subscription = request.subscribe(buildSubscription());
     }
 
@@ -52,9 +53,9 @@ public abstract class ReactivePresenter<T extends View, O> extends Presenter<T> 
 
     @Override
     public void onResume() {
-        Observable<O> observable = cache.getObservable(getRequestId());
+        Observable<O> observable = cache.getObservable(getObservableId());
+        // Existing cached observable was found
         if (observable != null) {
-            // Existing observable was found
             // Attach, and resubscribe
             this.request = observable;
             subscribe();
@@ -63,7 +64,13 @@ public abstract class ReactivePresenter<T extends View, O> extends Presenter<T> 
 
         } else {
             // Create a brand new observable
-            this.request = buildObservable();
+            // Don't forget to remove from the cache when the observable terminates!
+            this.request = buildObservable().doOnTerminate(new Action0() {
+                @Override
+                public void call() {
+                    cache.removeObservable(getObservableId());
+                }
+            });
         }
     }
 
@@ -90,7 +97,7 @@ public abstract class ReactivePresenter<T extends View, O> extends Presenter<T> 
 
     }
 
-    protected abstract String getRequestId();
+    protected abstract String getObservableId();
 
     protected abstract Subscriber<O> buildSubscription();
 

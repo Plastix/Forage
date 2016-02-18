@@ -22,4 +22,23 @@ public abstract class Presenter<T extends View> implements LifecycleCallbacks {
 
     }
 
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
 }

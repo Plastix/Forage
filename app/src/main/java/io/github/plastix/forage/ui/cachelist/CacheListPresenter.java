@@ -15,6 +15,8 @@ import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.ReactivePresenter;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.functions.Func1;
 
 public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Cache>> {
@@ -45,13 +47,32 @@ public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Ca
         // Cancel any currently running request
         unsubscribe();
 
-        if (!networkInteractor.hasInternetConnection()) {
-            view.onErrorInternet();
-        } else if (!locationInteractor.isLocationAvailable()) {
-            view.onErrorLocation();
-        } else {
-            subscribe();
-        }
+        networkInteractor.hasInternetConnectionCompletable()
+                .subscribe(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        view.onErrorInternet();
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+                        locationInteractor.isLocationAvailable()
+                                .subscribe(new Action1<Throwable>() {
+                                               @Override
+                                               public void call(Throwable throwable) {
+                                                   view.onErrorLocation();
+                                               }
+                                           }, new Action0() {
+                                               @Override
+                                               public void call() {
+                                                   // Run the ReactivePresenter observable
+                                                   subscribe();
+                                               }
+                                           }
+                                );
+                    }
+                });
+
     }
 
     @Override
@@ -91,25 +112,11 @@ public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Ca
         };
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        locationInteractor.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        locationInteractor.onStop();
-    }
-
-
     public void clearCaches() {
         databaseInteractor.clearGeocaches();
     }
 
-    protected String getRequestId() {
+    protected String getObservableId() {
         return REQUEST_ID;
     }
 
