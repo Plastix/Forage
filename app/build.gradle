@@ -85,6 +85,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:gridlayout-v7:23.1.1'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-location:8.4.0'

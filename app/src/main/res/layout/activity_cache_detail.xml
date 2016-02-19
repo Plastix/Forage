@@ -93,12 +93,10 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <TextView
                 android:id="@+id/cachedetail_info_header"
@@ -110,91 +108,85 @@
                 android:textAppearance="@style/TextAppearance.Header" />
 
 
-            <LinearLayout
+            <android.support.v7.widget.GridLayout
                 android:id="@+id/cachedetail_info_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+                app:columnCount="3">
 
-                <LinearLayout
-                    android:id="@+id/cachedetail_difficulty_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/cachedetail_difficulty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:textColor="@color/color_accent"
+                    android:textSize="20sp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="center_horizontal"
+                    app:layout_row="0"
+                    tools:text="3.5/5" />
 
-                    <TextView
-                        android:id="@+id/cachedetail_difficulty"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_small"
-                        android:textColor="@color/color_accent"
-                        android:textSize="20sp"
-                        tools:text="3.5/5" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cachedetail_difficulty_header"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/cachedetail_terrain_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/cachedetail_terrain"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_small"
-                        android:textColor="@color/color_accent"
-                        android:textSize="20sp"
-                        tools:text="2.5/5" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cachedetail_terrain_header"
-                        android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cachedetail_difficulty_header"
+                    android:textSize="16sp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="center_horizontal"
+                    app:layout_row="1" />
 
 
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/cachedetail_terrain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:textColor="@color/color_accent"
+                    android:textSize="20sp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="center_horizontal"
+                    app:layout_row="0"
+                    tools:text="2.5/5" />
 
-                <LinearLayout
-                    android:id="@+id/cachedetail_size_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/cachedetail_size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_small"
-                        android:textColor="@color/color_accent"
-                        android:textSize="20sp"
-                        tools:text="Large" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cachedetail_size_header"
-                        android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cachedetail_terrain_header"
+                    android:textSize="16sp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="center_horizontal"
+                    app:layout_row="1" />
 
 
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/cachedetail_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:textColor="@color/color_accent"
+                    android:textSize="20sp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="center_horizontal"
+                    app:layout_row="0"
+                    tools:text="Large" />
 
-            </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cachedetail_size_header"
+                    android:textSize="16sp"
+                    app:layout_column="2"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="center_horizontal"
+                    app:layout_row="1" />
+
+
+            </android.support.v7.widget.GridLayout>
 
             <View
                 android:layout_width="match_parent"
