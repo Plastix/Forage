@@ -1,5 +1,9 @@
 package io.github.plastix.forage.util;
 
+import android.annotation.SuppressLint;
+import android.view.Surface;
+import android.view.WindowManager;
+
 public class AngleUtils {
 
     private AngleUtils() {
@@ -14,6 +18,20 @@ public class AngleUtils {
      */
     public static float normalize(final float angle) {
         return (angle >= 0 ? angle : (360 - ((-angle) % 360))) % 360;
+    }
+
+    @SuppressLint("SwitchIntDef")
+    public static int getRotationOffset(WindowManager windowManager) {
+        switch (windowManager.getDefaultDisplay().getRotation()) {
+            case Surface.ROTATION_90:
+                return 90;
+            case Surface.ROTATION_180:
+                return 180;
+            case Surface.ROTATION_270:
+                return 270;
+            default:
+                return 0;
+        }
     }
 
 }

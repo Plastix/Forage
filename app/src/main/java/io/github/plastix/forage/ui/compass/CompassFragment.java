@@ -33,7 +33,6 @@ import io.github.plastix.forage.util.LocationUtils;
 public class CompassFragment extends PresenterFragment<CompassPresenter> implements CompassView {
 
     private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
-    private static float CENTER = 0.5f;
 
     @Bind(R.id.compass_arrow)
     IconicsImageView arrow;
@@ -41,7 +40,8 @@ public class CompassFragment extends PresenterFragment<CompassPresenter> impleme
     @Bind(R.id.compass_distance)
     TextView distance;
 
-    private int currentAzimuth = 0;
+    @State
+    float currentAzimuth;
 
     @State
     Location target;
@@ -81,6 +81,13 @@ public class CompassFragment extends PresenterFragment<CompassPresenter> impleme
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        arrow.setRotation(currentAzimuth);
+    }
+
+    @Override
     public void rotateCompass(final Float degrees) {
         // Rotate by negative degrees because Android rotates counter-clockwise
         arrow.animate()
@@ -89,6 +96,7 @@ public class CompassFragment extends PresenterFragment<CompassPresenter> impleme
                 .setInterpolator(new LinearInterpolator())
                 .start();
 
+        currentAzimuth = -degrees;
     }
 
     public void updateDistance(double distance) {

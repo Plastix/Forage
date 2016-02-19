@@ -4,9 +4,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.view.WindowManager;
 
 import javax.inject.Inject;
 
+import io.github.plastix.forage.util.AngleUtils;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -22,14 +24,16 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
 
     private Observer<? super Float> observer;
     private SensorManager sensorManager;
+    private WindowManager windowManager;
     private Sensor compass;
     private float[] orientation;
     private float[] rMat;
     private int sensorDelay;
 
     @Inject
-    public AzimuthObserver(SensorManager sensorManager) {
+    public AzimuthObserver(SensorManager sensorManager, WindowManager windowManager) {
         this.sensorManager = sensorManager;
+        this.windowManager = windowManager;
         this.orientation = new float[3];
         this.rMat = new float[9];
         this.sensorDelay = SensorManager.SENSOR_DELAY_GAME;
@@ -54,6 +58,7 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
             // Compass direction is result[0]
             float[] result = SensorManager.getOrientation(rMat, orientation);
             float azimuth = (float) (Math.toDegrees(result[0]));
+            azimuth += AngleUtils.getRotationOffset(windowManager);
 
             observer.onNext(azimuth);
         }
