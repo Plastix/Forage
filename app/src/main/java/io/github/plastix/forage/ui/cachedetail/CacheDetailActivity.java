@@ -110,7 +110,6 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
         fab.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_compass).color(Color.WHITE));
 
-        map.setVisibility(View.INVISIBLE);
         map.onCreate(savedInstanceState);
     }
 
@@ -183,9 +182,12 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
         }
 
         private void animateIntoView() {
-            map.setVisibility(View.VISIBLE);
-            map.setAlpha(0f);
-            map.animate().alpha(1f)
+            map.animate().withStartAction(new Runnable() {
+                @Override
+                public void run() {
+                    map.setVisibility(View.VISIBLE);
+                }
+            }).alpha(1f)
                     .setDuration(500);
         }
 

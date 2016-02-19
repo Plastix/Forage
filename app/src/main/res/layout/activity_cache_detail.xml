@@ -32,6 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/cachedetail_backdrop_height"
                     android:fitsSystemWindows="true"
+                    android:visibility="invisible"
+                    android:alpha="0"
                     app:layout_collapseMode="parallax"
                     map:liteMode="true"
                     map:mapType="normal" />
