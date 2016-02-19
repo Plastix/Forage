@@ -183,10 +183,10 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
         }
 
         private void animateIntoView() {
-            AlphaAnimation animation = new AlphaAnimation(0.0f, 1.0f);
-            animation.setDuration(500);
-            animation.setFillAfter(true);
-            map.startAnimation(animation);
+            map.setVisibility(View.VISIBLE);
+            map.setAlpha(0f);
+            map.animate().alpha(1f)
+                    .setDuration(500);
         }
 
     }
