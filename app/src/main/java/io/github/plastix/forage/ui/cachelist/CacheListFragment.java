@@ -7,25 +7,20 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.Cache;
@@ -74,22 +69,15 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter> imp
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_cache_list, container, false);
-
-        // Inject Butterknife bindings
-        ButterKnife.bind(this, view);
-
-        ActivityUtils.setSupportActionBarTitle(getActivity(), R.string.cachelist_title);
-
-        return view;
+    protected int getFragmentLayout() {
+        return R.layout.fragment_cache_list;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ActivityUtils.setSupportActionBarTitle(getActivity(), R.string.cachelist_title);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(itemDecorator);
@@ -218,13 +206,12 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter> imp
      */
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         recyclerView.setAdapter(null);
         adapter.unregisterAdapterDataObserver(dataChangeListener);
         adapter.setOnClickListener(null);
         this.dataChangeListener = null;
 
-        ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 
     /**

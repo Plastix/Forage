@@ -1,7 +1,5 @@
 package io.github.plastix.forage.ui;
 
-import android.support.v4.app.Fragment;
-
 import javax.inject.Inject;
 
 /**
@@ -9,7 +7,7 @@ import javax.inject.Inject;
  *
  * @param <T> Type of Presenter.
  */
-public abstract class PresenterFragment<T extends Presenter> extends Fragment {
+public abstract class PresenterFragment<T extends Presenter> extends BaseFragment {
 
     protected T presenter;
 
