@@ -4,7 +4,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import rx.Completable;
 

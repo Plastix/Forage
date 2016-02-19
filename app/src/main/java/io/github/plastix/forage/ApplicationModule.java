@@ -3,14 +3,11 @@ package io.github.plastix.forage;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
-import android.hardware.SensorManager;
-import android.net.ConnectivityManager;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.realm.RealmConfiguration;
 
 /**
  * Dagger module that provides (singleton) application wide dependencies.

@@ -10,7 +10,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,7 +29,6 @@ import icepick.State;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.Cache;
-import io.github.plastix.forage.ui.BaseActivity;
 import io.github.plastix.forage.ui.PresenterActivity;
 import io.github.plastix.forage.ui.compass.CompassActivity;
 import io.github.plastix.forage.util.LocationUtils;

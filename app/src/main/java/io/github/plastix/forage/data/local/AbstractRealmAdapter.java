@@ -2,7 +2,6 @@ package io.github.plastix.forage.data.local;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;

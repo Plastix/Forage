@@ -1,30 +1,13 @@
 package io.github.plastix.forage.data.location;
 
 import android.location.Location;
-import android.os.Bundle;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.PendingResults;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
-import javax.inject.Singleton;
 
-import io.github.plastix.forage.ui.LifecycleCallbacks;
 import rx.Completable;
 import rx.Observable;
-import rx.Observer;
-import rx.Single;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.functions.Action0;
-import rx.subscriptions.Subscriptions;
 
 /**
  * Reactive wrapper around Google Play Location Services.

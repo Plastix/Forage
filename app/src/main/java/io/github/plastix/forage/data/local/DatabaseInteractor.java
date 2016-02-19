@@ -3,11 +3,9 @@ package io.github.plastix.forage.data.local;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.realm.Realm;
 import rx.Single;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 
 /**

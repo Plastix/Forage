@@ -8,14 +8,12 @@ import org.json.JSONObject;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.github.plastix.forage.BuildConfig;
 import io.github.plastix.forage.data.local.Cache;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
 import rx.Observable;
-import rx.Single;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

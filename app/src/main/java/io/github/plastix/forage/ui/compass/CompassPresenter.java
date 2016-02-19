@@ -1,22 +1,17 @@
 package io.github.plastix.forage.ui.compass;
 
 import android.location.Location;
-import android.util.Log;
-
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.sensor.AzimuthInteractor;
-import io.github.plastix.forage.ui.LifecycleCallbacks;
 import io.github.plastix.forage.ui.Presenter;
 import io.github.plastix.forage.util.AngleUtils;
 import io.github.plastix.forage.util.LocationUtils;
 import io.github.plastix.forage.util.RxUtils;
 import rx.Observable;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func2;
 import rx.subscriptions.Subscriptions;
