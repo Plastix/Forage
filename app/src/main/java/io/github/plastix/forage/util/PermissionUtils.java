@@ -12,7 +12,7 @@ import android.support.v4.content.ContextCompat;
  */
 public class PermissionUtils {
 
-    private PermissionUtils(){
+    private PermissionUtils() {
         // No instantiation
     }
 
@@ -62,7 +62,7 @@ public class PermissionUtils {
      */
     public static boolean hasAllPermissionsGranted(@NonNull int[] grantResults) {
         // If the request is canceled the results array will be empty
-        if (grantResults.length == 0) {
+        if (isPermissionRequestCancelled(grantResults)) {
             return false;
         }
 
@@ -72,6 +72,16 @@ public class PermissionUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * Returns whether the permission request has been cancelled.
+     *
+     * @param grantResults Permission grant results.
+     * @return True if request has been cancelled, else false.
+     */
+    public static boolean isPermissionRequestCancelled(@NonNull int[] grantResults) {
+        return grantResults.length == 0;
     }
 
 }

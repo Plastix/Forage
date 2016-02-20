@@ -64,20 +64,26 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case LOCATION_REQUEST_CODE: {
-                if (!PermissionUtils.hasAllPermissionsGranted(grantResults)) {
-                    showPermissionDialog();
+                if (!PermissionUtils.isPermissionRequestCancelled(grantResults) && !PermissionUtils.hasAllPermissionsGranted(grantResults)) {
+                    showPermissionRationaleDialog();
                 }
             }
         }
     }
 
-    private void showPermissionDialog() {
+    private void showPermissionRationaleDialog() {
         buildDialog();
 
         if (!dialog.isShowing()) {
             dialog.show();
         }
 
+    }
+
+    private void dismissRationaleDialog() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     private void buildDialog() {
@@ -100,6 +106,12 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
             dialogBuilder.setCancelable(false);
             this.dialog = dialogBuilder.create();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dismissRationaleDialog();
     }
 
     @Override
