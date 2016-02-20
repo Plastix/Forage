@@ -47,6 +47,5 @@ public abstract class BaseFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @IdRes
     protected abstract int getFragmentLayout();
 }
