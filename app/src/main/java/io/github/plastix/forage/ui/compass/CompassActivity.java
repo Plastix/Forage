@@ -28,6 +28,9 @@ public class CompassActivity extends BaseFragmentActivity<CompassFragment> {
         setContentView(R.layout.activity_compass);
 
         setSupportActionBar(toolbar);
+
+        getDelegate().getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

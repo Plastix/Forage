@@ -24,21 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.cachedetail.CacheDetailActivity"
             android:label=""
             android:parentActivityName=".ui.cachelist.CacheListActivity"
-            android:theme="@style/AppTheme.NoActionBar.Transparent">
-
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.cachelist.CacheListActivity" />
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.Transparent" />
 
         <activity
             android:name=".ui.compass.CompassActivity"
             android:label="@string/compass_title"
+            android:parentActivityName=".ui.cachedetail.CacheDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity

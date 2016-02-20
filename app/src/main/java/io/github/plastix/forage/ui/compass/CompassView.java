@@ -8,8 +8,10 @@ import io.github.plastix.forage.ui.View;
  */
 public interface CompassView extends View {
 
-    void rotateCompass(Float degrees);
+    void rotateCompass(float degrees);
 
-    void updateDistance(double distance);
+    void updateDistance(float distanceInMeters);
+
+    void updateAccuracy(float accuracyInMeters);
 
 }

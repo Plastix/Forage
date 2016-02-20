@@ -1,6 +1,7 @@
 package io.github.plastix.forage.ui.compass;
 
 import android.location.Location;
+import android.util.Pair;
 
 import javax.inject.Inject;
 
@@ -44,18 +45,25 @@ public class CompassPresenter extends Presenter<CompassView> {
         this.subscription = Observable.combineLatest(
                 azimuthInteractor.getAzimuthObservable(),
                 locationInteractor.getLocationObservable(LOCATION_UPDATE_INTERVAL),
-                new Func2<Float, Location, Float>() {
+                new Func2<Float, Location, Pair<Float, Location>>() {
                     @Override
-                    public Float call(Float azimuth, Location location) {
-                        azimuth += (float) LocationUtils.getMagneticDeclination(location);
-                        float bearing = location.bearingTo(target);
-                        return AngleUtils.normalize(azimuth - bearing);
+                    public Pair<Float, Location> call(Float azimuth, Location location) {
+                        return new Pair<Float, Location>(azimuth, location);
                     }
                 }
-        ).subscribe(new Action1<Float>() {
+        ).subscribe(new Action1<Pair<Float, Location>>() {
             @Override
-            public void call(Float degrees) {
-                view.rotateCompass(degrees);
+            public void call(Pair<Float, Location> pair) {
+                float azimuth = pair.first;
+                Location location = pair.second;
+
+
+                azimuth += (float) LocationUtils.getMagneticDeclination(location);
+                float bearing = location.bearingTo(target);
+
+                view.rotateCompass(AngleUtils.normalize(azimuth - bearing));
+                view.updateDistance(location.distanceTo(target));
+                view.updateAccuracy(location.getAccuracy());
             }
         });
     }
