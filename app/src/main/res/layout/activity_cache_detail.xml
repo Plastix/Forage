@@ -24,16 +24,17 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_primary"
                 android:fitsSystemWindows="true">
 
                 <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/cachedetail_map"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/cachedetail_backdrop_height"
+                    android:alpha="0"
                     android:fitsSystemWindows="true"
                     android:visibility="invisible"
-                    android:alpha="0"
                     app:layout_collapseMode="parallax"
                     map:liteMode="true"
                     map:mapType="normal" />
@@ -44,35 +45,31 @@
                     android:background="@drawable/scrim_top"
                     app:layout_collapseMode="pin" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/cachedetail_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cachedetail_map"
-                    android:background="@color/color_primary"
                     android:fitsSystemWindows="true"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:transitionName="cache_title"
+                    tools:text="Cache Name" />
 
-                    <TextView
-                        android:id="@+id/cachedetail_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fitsSystemWindows="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                        android:transitionName="cache_title"
-                        tools:text="Cache Name" />
-
-                    <TextView
-                        android:id="@+id/cachedetail_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fitsSystemWindows="true"
-                        android:textStyle="bold"
-                        android:transitionName="cache_type"
-                        tools:text="Traditional Cache" />
-
-                </LinearLayout>
-
+                <TextView
+                    android:id="@+id/cachedetail_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cachedetail_title"
+                    android:fitsSystemWindows="true"
+                    android:paddingBottom="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textStyle="bold"
+                    android:transitionName="cache_type"
+                    tools:text="Traditional Cache" />
 
             </RelativeLayout>
 
@@ -95,10 +92,12 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+
+        <android.support.v7.widget.GridLayout
+            android:id="@+id/cachedetail_info_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:columnCount="3">
 
             <TextView
                 android:id="@+id/cachedetail_info_header"
@@ -107,94 +106,87 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="@string/cachedetail_cacheinfo_header"
-                android:textAppearance="@style/TextAppearance.Header" />
+                android:textAppearance="@style/TextAppearance.Header"
+                app:layout_columnSpan="3"
+                app:layout_row="0" />
 
-
-            <android.support.v7.widget.GridLayout
-                android:id="@+id/cachedetail_info_container"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/cachedetail_difficulty"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:columnCount="3">
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:textColor="@color/color_accent"
+                android:textSize="20sp"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
+                app:layout_gravity="center_horizontal"
+                app:layout_row="1"
+                tools:text="3.5/5" />
 
-                <TextView
-                    android:id="@+id/cachedetail_difficulty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_small"
-                    android:textColor="@color/color_accent"
-                    android:textSize="20sp"
-                    app:layout_column="0"
-                    app:layout_columnWeight="1"
-                    app:layout_gravity="center_horizontal"
-                    app:layout_row="0"
-                    tools:text="3.5/5" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cachedetail_difficulty_header"
-                    android:textSize="16sp"
-                    app:layout_column="0"
-                    app:layout_columnWeight="1"
-                    app:layout_gravity="center_horizontal"
-                    app:layout_row="1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cachedetail_difficulty_header"
+                android:textSize="16sp"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
+                app:layout_gravity="center_horizontal"
+                app:layout_row="2" />
 
 
-                <TextView
-                    android:id="@+id/cachedetail_terrain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_small"
-                    android:textColor="@color/color_accent"
-                    android:textSize="20sp"
-                    app:layout_column="1"
-                    app:layout_columnWeight="1"
-                    app:layout_gravity="center_horizontal"
-                    app:layout_row="0"
-                    tools:text="2.5/5" />
+            <TextView
+                android:id="@+id/cachedetail_terrain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:textColor="@color/color_accent"
+                android:textSize="20sp"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_gravity="center_horizontal"
+                app:layout_row="1"
+                tools:text="2.5/5" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cachedetail_terrain_header"
-                    android:textSize="16sp"
-                    app:layout_column="1"
-                    app:layout_columnWeight="1"
-                    app:layout_gravity="center_horizontal"
-                    app:layout_row="1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cachedetail_terrain_header"
+                android:textSize="16sp"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_gravity="center_horizontal"
+                app:layout_row="2" />
 
+            <TextView
+                android:id="@+id/cachedetail_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:textColor="@color/color_accent"
+                android:textSize="20sp"
+                app:layout_column="2"
+                app:layout_columnWeight="1"
+                app:layout_gravity="center_horizontal"
+                app:layout_row="1"
+                tools:text="Large" />
 
-                <TextView
-                    android:id="@+id/cachedetail_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_small"
-                    android:textColor="@color/color_accent"
-                    android:textSize="20sp"
-                    app:layout_column="2"
-                    app:layout_columnWeight="1"
-                    app:layout_gravity="center_horizontal"
-                    app:layout_row="0"
-                    tools:text="Large" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cachedetail_size_header"
-                    android:textSize="16sp"
-                    app:layout_column="2"
-                    app:layout_columnWeight="1"
-                    app:layout_gravity="center_horizontal"
-                    app:layout_row="1" />
-
-
-            </android.support.v7.widget.GridLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cachedetail_size_header"
+                android:textSize="16sp"
+                app:layout_column="2"
+                app:layout_columnWeight="1"
+                app:layout_gravity="center_horizontal"
+                app:layout_row="2" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="16dp"
-                android:background="@color/gray_lightest" />
+                android:background="@color/gray_lightest"
+                app:layout_columnSpan="3"
+                app:layout_row="3" />
 
             <TextView
                 android:id="@+id/cachedetail_description_header"
@@ -203,7 +195,9 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="@string/cachedetail_description_header"
-                android:textAppearance="@style/TextAppearance.Header" />
+                android:textAppearance="@style/TextAppearance.Header"
+                app:layout_columnSpan="3"
+                app:layout_row="4" />
 
             <TextView
                 android:id="@+id/cachedetail_description"
@@ -213,9 +207,12 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:textSize="16sp"
+                app:layout_columnSpan="3"
+                app:layout_row="5"
                 tools:text="@string/lorem" />
 
-        </LinearLayout>
+
+        </android.support.v7.widget.GridLayout>
 
 
     </android.support.v4.widget.NestedScrollView>
