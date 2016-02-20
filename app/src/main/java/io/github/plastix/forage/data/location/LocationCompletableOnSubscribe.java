@@ -40,12 +40,17 @@ public class LocationCompletableOnSubscribe implements Completable.CompletableOn
 
     @Override
     public void onConnected(Bundle bundle) {
-        boolean locationAvailable = LocationServices.FusedLocationApi.getLocationAvailability(googleApiClient).isLocationAvailable();
+        try {
+            boolean locationAvailable = LocationServices.FusedLocationApi.getLocationAvailability(googleApiClient).isLocationAvailable();
 
-        if (locationAvailable) {
-            completableSubscriber.onCompleted();
-        } else {
-            completableSubscriber.onError(new Throwable("Location not available!"));
+            if (locationAvailable) {
+                completableSubscriber.onCompleted();
+            } else {
+                completableSubscriber.onError(new Throwable("Location not available!"));
+            }
+
+        } catch (SecurityException e) {
+            completableSubscriber.onError(new Throwable("Location permission not available?"));
         }
     }
 
