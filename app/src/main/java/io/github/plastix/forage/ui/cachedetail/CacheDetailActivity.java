@@ -40,6 +40,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
     private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
+    private final static String BUNDLE_KEY_MAP_STATE = "BUNDLE_KEY_MAP_STATE";
 
     @Bind(R.id.cachedetail_appbar)
     AppBarLayout appBarLayout;
@@ -108,7 +109,13 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
         fab.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_compass).color(Color.WHITE));
 
-        map.onCreate(savedInstanceState);
+        Bundle mapState = null;
+        if (savedInstanceState != null) {
+            // Load the map state bundle from the main savedInstanceState
+            mapState = savedInstanceState.getBundle(BUNDLE_KEY_MAP_STATE);
+        }
+
+        map.onCreate(mapState);
     }
 
 
@@ -148,6 +155,39 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
     @Override
     public void onError() {
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        map.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        map.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        map.onResume();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        map.onLowMemory();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Bundle mapState = new Bundle();
+        map.onSaveInstanceState(mapState);
+        // Put the map bundle in the main outState
+        outState.putBundle(BUNDLE_KEY_MAP_STATE, mapState);
+        super.onSaveInstanceState(outState);
     }
 
     /**
