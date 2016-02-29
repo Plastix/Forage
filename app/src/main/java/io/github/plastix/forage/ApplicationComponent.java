@@ -14,6 +14,8 @@ import io.github.plastix.forage.ui.cachelist.CacheListComponent;
 import io.github.plastix.forage.ui.cachelist.CacheListModule;
 import io.github.plastix.forage.ui.compass.CompassComponent;
 import io.github.plastix.forage.ui.compass.CompassModule;
+import io.github.plastix.forage.ui.map.MapComponent;
+import io.github.plastix.forage.ui.map.MapModule;
 
 /**
  * A component whose lifetime is the life of the application.
@@ -36,6 +38,8 @@ public interface ApplicationComponent {
     CacheDetailComponent plus(CacheDetailModule module);
 
     CompassComponent plus(CompassModule module);
+
+    MapComponent plus(MapModule module);
 
     void injectTo(ForageApplication forageApplication);
 }

@@ -31,9 +31,9 @@
     <string name="compass_title">Compass</string>
     <string name="compass_distance_label">Distance</string>
     <string name="compass_accuracy">+/- %s</string>
-    <string name="compass_loading">Loading...</string>
+    <string name="compass_loading">Loading…</string>
 
-    <string name="map_title">MapActivity</string>
+    <string name="map_title">Geocache Map</string>
 
     <string name="unit_feet">ft</string>
     <string name="unit_miles">mi</string>

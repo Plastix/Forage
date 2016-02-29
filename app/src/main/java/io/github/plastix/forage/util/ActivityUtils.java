@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.StringRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 
 public class ActivityUtils {
 
@@ -47,4 +48,16 @@ public class ActivityUtils {
             actionBar.setTitle(title);
         }
     }
+
+    /**
+     * Sets the support action bar back button. The activity still has to manage the back button
+     * event correctly!
+     *
+     * @param delegate AppCompatDelegate for the AppCompatActiivty you want to modify.
+     */
+    public static void setSupportActionBarBack(AppCompatDelegate delegate) {
+        delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
 }

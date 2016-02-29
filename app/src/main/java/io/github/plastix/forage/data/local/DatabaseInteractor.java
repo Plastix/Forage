@@ -1,10 +1,12 @@
 package io.github.plastix.forage.data.local;
 
+import java.util.AbstractList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Single;
 import rx.functions.Func1;
 
@@ -64,6 +66,29 @@ public class DatabaseInteractor {
                     @Override
                     public Boolean call(Cache cache) {
                         return cache.isLoaded();
+                    }
+                })
+                .take(1).toSingle();
+
+    }
+
+    /**
+     * Returns a rx.Single of all the geocaches currently stored locally in the database.
+     *
+     * @return rx.Single with List of geocaches.
+     */
+    public Single<List<Cache>> getGeocaches() {
+        return realm.where(Cache.class).findAllAsync()
+                .<List<Cache>>asObservable()
+                .filter(new Func1<RealmResults<Cache>, Boolean>() {
+                    @Override
+                    public Boolean call(RealmResults<Cache> caches) {
+                        return caches.isLoaded();
+                    }
+                }).map(new Func1<RealmResults<Cache>, List<Cache>>() {
+                    @Override
+                    public List<Cache> call(RealmResults<Cache> caches) {
+                        return caches;
                     }
                 })
                 .take(1).toSingle();
