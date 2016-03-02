@@ -5,6 +5,7 @@ import android.hardware.SensorManager;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import io.github.plastix.forage.util.RxUtils;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -31,7 +32,7 @@ public class AzimuthInteractor {
         AzimuthObserver observer = azimuthProvider.get();
         observer.setSensorDelay(SensorManager.SENSOR_DELAY_UI);
         return Observable.create(observer)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
+                .compose(RxUtils.<Float>observeOnUIThreadTransformer())
+                .compose(RxUtils.<Float>subscribeOnComputationThreadTransformer());
     }
 }

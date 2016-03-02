@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.BuildConfig;
 import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.util.RxUtils;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
 import rx.Observable;
@@ -54,8 +55,7 @@ public class OkApiInteractor {
                     returnParams.toString(),
                     false,
                     BuildConfig.OKAPI_US_CONSUMER_KEY
-            ).subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread());
+            ).compose(RxUtils.<List<Cache>>applySchedulers());
 
         } catch (JSONException e) {
             // Let the subscriber handle the error
