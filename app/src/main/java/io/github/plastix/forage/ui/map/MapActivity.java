@@ -1,14 +1,14 @@
 package io.github.plastix.forage.ui.map;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
 
 import butterknife.Bind;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.ui.BaseActivity;
 import io.github.plastix.forage.ui.BaseFragmentActivity;
-import io.github.plastix.forage.ui.compass.CompassFragment;
 import io.github.plastix.forage.util.ActivityUtils;
 
 /**
@@ -32,6 +32,17 @@ public class MapActivity extends BaseFragmentActivity<MapFragment> {
 
         setSupportActionBar(toolbar);
         ActivityUtils.setSupportActionBarBack(getDelegate());
+    }
+
+    /**
+     * Static factory method that returns a new intent for opening a {@link MapActivity}.
+     *
+     * @param context A context
+     * @return A new intent.
+     */
+    public static Intent newIntent(Context context) {
+        Intent intent = new Intent(context, MapActivity.class);
+        return intent;
     }
 
     @Override

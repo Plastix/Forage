@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.mikepenz.iconics.view.IconicsImageView;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import icepick.State;
 import io.github.plastix.forage.ForageApplication;

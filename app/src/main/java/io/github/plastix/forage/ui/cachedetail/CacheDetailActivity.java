@@ -1,5 +1,6 @@
 package io.github.plastix.forage.ui.cachedetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -39,7 +40,6 @@ import io.github.plastix.forage.util.LocationUtils;
 public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter> implements CacheDetailView {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
-    private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
     private final static String BUNDLE_KEY_MAP_STATE = "BUNDLE_KEY_MAP_STATE";
 
     @Bind(R.id.cachedetail_appbar)
@@ -145,8 +145,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CacheDetailActivity.this, CompassActivity.class);
-                intent.putExtra(EXTRA_CACHE_LOCATION, cache.getLocation());
+                Intent intent = CompassActivity.newIntent(CacheDetailActivity.this, cache.getLocation());
                 startActivity(intent);
             }
         });
@@ -230,6 +229,21 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
         }
 
     }
+
+    /**
+     * Static factory method that returns a new intent for opening a {@link CacheDetailActivity}.
+     *
+     * @param context   A context
+     * @param cacheCode Cache code
+     * @return A new intent.
+     */
+    public static Intent newIntent(Context context, String cacheCode) {
+        Intent intent = new Intent(context, CacheDetailActivity.class);
+        intent.putExtra(EXTRA_CACHE_CODE, cacheCode);
+
+        return intent;
+    }
+
 }
 
 

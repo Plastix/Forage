@@ -34,8 +34,6 @@ import io.github.plastix.forage.util.ActivityUtils;
  */
 public class CacheListFragment extends PresenterFragment<CacheListPresenter> implements CacheListView, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
-    private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
-
     @Inject
     CacheAdapter adapter;
 
@@ -129,8 +127,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter> imp
 
         int position = recyclerView.getChildLayoutPosition(v);
         Cache cache = adapter.getItem(position);
-        Intent intent = new Intent(getActivity(), CacheDetailActivity.class);
-        intent.putExtra(EXTRA_CACHE_CODE, cache.getCacheCode());
+        Intent intent = CacheDetailActivity.newIntent(getContext(), cache.getCacheCode());
 
         // TODO Clean up
         Pair<View, String> one = Pair.create(v.findViewById(R.id.cache_name), "cache_title");

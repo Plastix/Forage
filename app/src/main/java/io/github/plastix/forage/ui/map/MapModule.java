@@ -2,8 +2,6 @@ package io.github.plastix.forage.ui.map;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.plastix.forage.ui.compass.CompassActivity;
-import io.github.plastix.forage.ui.compass.CompassFragment;
 
 /**
  * Dagger module that provides dependencies for {@link MapFragment} and {@link MapActivity}.

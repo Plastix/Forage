@@ -1,5 +1,7 @@
 package io.github.plastix.forage.ui.compass;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +17,7 @@ import io.github.plastix.forage.ui.BaseFragmentActivity;
 public class CompassActivity extends BaseFragmentActivity<CompassFragment> {
 
     private static final String COMPASS_FRAG = "io.github.plastix.forage.ui.compass.compassfragment";
+    private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
 
     @IdRes
     private static final int COMPASS_FRAME_ID = R.id.compass_content_frame;
@@ -31,6 +34,21 @@ public class CompassActivity extends BaseFragmentActivity<CompassFragment> {
 
         getDelegate().getSupportActionBar().setDisplayShowHomeEnabled(true);
         getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * Static factory method that returns a new intent for opening a {@link CompassActivity}.
+     *
+     * @param context  A context
+     * @param location Cache location (OkApi string format)
+     * @return A new intent.
+     */
+    public static Intent newIntent(Context context, String location) {
+        Intent intent = new Intent(context, CompassActivity.class);
+        intent.putExtra(EXTRA_CACHE_LOCATION, location);
+
+        return intent;
+
     }
 
     @Override

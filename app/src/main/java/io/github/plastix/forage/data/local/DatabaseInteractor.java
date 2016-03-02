@@ -1,6 +1,5 @@
 package io.github.plastix.forage.data.local;
 
-import java.util.AbstractList;
 import java.util.List;
 
 import javax.inject.Inject;

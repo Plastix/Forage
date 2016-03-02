@@ -130,7 +130,7 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cachelist_action_map:
-                startActivity(new Intent(this, MapActivity.class));
+                startActivity(MapActivity.newIntent(this));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

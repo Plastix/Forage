@@ -1,7 +1,6 @@
 package io.github.plastix.forage.ui.map;
 
 
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,12 +10,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import io.github.plastix.forage.ForageApplication;
