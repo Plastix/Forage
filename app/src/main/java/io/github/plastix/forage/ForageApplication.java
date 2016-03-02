@@ -6,11 +6,6 @@ import android.content.Context;
 import com.frogermcs.androiddevmetrics.AndroidDevMetrics;
 import com.squareup.leakcanary.LeakCanary;
 
-import javax.inject.Inject;
-
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-
 public class ForageApplication extends Application {
 
     private ApplicationComponent component;
@@ -30,7 +25,7 @@ public class ForageApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
 
-        //Use it only in debug builds
+        //Use debug tools only in debug builds
         if (BuildConfig.DEBUG) {
             LeakCanary.install(this);
             AndroidDevMetrics.initWith(this);
