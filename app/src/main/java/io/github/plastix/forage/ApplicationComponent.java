@@ -40,6 +40,4 @@ public interface ApplicationComponent {
     CompassComponent plus(CompassModule module);
 
     MapComponent plus(MapModule module);
-
-    void injectTo(ForageApplication forageApplication);
 }

@@ -17,8 +17,8 @@ import io.realm.RealmConfiguration;
 public class DatabaseModule {
 
     @Provides
-    public Realm provideRealm() {
-        return Realm.getDefaultInstance();
+    public Realm provideRealm(RealmConfiguration realmConfiguration) {
+        return Realm.getInstance(realmConfiguration);
     }
 
     @Provides
@@ -26,6 +26,7 @@ public class DatabaseModule {
     public RealmConfiguration provideDefaultRealmConfig(@ForApplication Context context) {
         return new RealmConfiguration.Builder(context)
                 .deleteRealmIfMigrationNeeded()
+                .name(Realm.DEFAULT_REALM_NAME)
                 .build();
     }
 }
