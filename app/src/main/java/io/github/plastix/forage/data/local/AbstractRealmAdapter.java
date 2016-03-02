@@ -1,8 +1,12 @@
 package io.github.plastix.forage.data.local;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
+import javax.inject.Provider;
+
+import dagger.Lazy;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmObject;
@@ -18,10 +22,10 @@ public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends Rec
 
     protected RealmResults<T> data;
     protected RealmQuery<T> query;
-    protected Realm realm;
+    protected Provider<Realm> realm;
     protected View.OnClickListener onClickListener;
 
-    public AbstractRealmAdapter(Realm realm) {
+    public AbstractRealmAdapter(Provider<Realm> realm) {
         this.realm = realm;
         this.onClickListener = null;
         loadData();
@@ -97,7 +101,7 @@ public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends Rec
      * Closes the realm instance held by the adapter.
      */
     public void closeRealm() {
-        this.realm.close();
+        this.realm.get().close();
     }
 
     /**

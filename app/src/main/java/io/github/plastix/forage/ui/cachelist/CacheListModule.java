@@ -1,5 +1,8 @@
 package io.github.plastix.forage.ui.cachelist;
 
+import javax.inject.Provider;
+
+import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
@@ -23,7 +26,7 @@ public class CacheListModule {
     }
 
     @Provides
-    public CacheAdapter provideCacheAdapter(Realm realm) {
+    public CacheAdapter provideCacheAdapter(Provider<Realm> realm) {
         return new CacheAdapter(realm);
     }
 

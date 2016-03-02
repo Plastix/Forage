@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.Lazy;
 import io.github.plastix.forage.BuildConfig;
 import io.github.plastix.forage.data.local.Cache;
 import io.github.plastix.forage.util.RxUtils;
@@ -23,12 +24,12 @@ import rx.schedulers.Schedulers;
  */
 public class OkApiInteractor {
 
-    private OkApiService apiService;
+    private Lazy<OkApiService> apiService;
     private String[] geocacheFields = {"code", "name", "location", "type", "status", "terrain",
             "difficulty", "size2", "description"};
 
     @Inject
-    public OkApiInteractor(OkApiService apiService) {
+    public OkApiInteractor(Lazy<OkApiService> apiService) {
         this.apiService = apiService;
     }
 
@@ -48,7 +49,7 @@ public class OkApiInteractor {
             JSONObject returnParams = new JSONObject();
             returnParams.put("fields", StringUtils.join("|", geocacheFields));
 
-            return apiService.searchAndRetrieve(
+            return apiService.get().searchAndRetrieve(
                     OkApiService.ENDPOINT_NEAREST,
                     searchParams.toString(),
                     OkApiService.ENDPOINT_GEOCACHES,

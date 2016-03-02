@@ -3,7 +3,9 @@ package io.github.plastix.forage.data.local;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
+import io.github.plastix.forage.ui.LifecycleCallbacks;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Single;
@@ -12,12 +14,12 @@ import rx.functions.Func1;
 /**
  * Wrapper around Realm DB operations.
  */
-public class DatabaseInteractor {
+public class DatabaseInteractor implements LifecycleCallbacks {
 
-    private Realm realm;
+    private Provider<Realm> realm;
 
     @Inject
-    public DatabaseInteractor(Realm realm) {
+    public DatabaseInteractor(Provider<Realm> realm) {
         this.realm = realm;
     }
 
@@ -25,7 +27,7 @@ public class DatabaseInteractor {
      * Removes all {@link Cache} objects from the Realm database.
      */
     public void clearGeocaches() {
-        realm.executeTransaction(new Realm.Transaction() {
+        realm.get().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.where(Cache.class).findAll().clear();
@@ -41,7 +43,7 @@ public class DatabaseInteractor {
      * @param data JSON Array of Geocaches.
      */
     public void clearAndSaveGeocaches(final List<Cache> data) {
-        realm.executeTransaction(new Realm.Transaction() {
+        realm.get().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.where(Cache.class).findAll().clear();
@@ -59,7 +61,7 @@ public class DatabaseInteractor {
      * @return rx.Single with the Geocache.
      */
     public Single<Cache> getGeocache(final String cacheCode) {
-        return realm.where(Cache.class).contains("cacheCode", cacheCode).findFirstAsync()
+        return realm.get().where(Cache.class).contains("cacheCode", cacheCode).findFirstAsync()
                 // Must filter by loaded objects because findFirstAsync returns a "Future"
                 .<Cache>asObservable().filter(new Func1<Cache, Boolean>() {
                     @Override
@@ -77,7 +79,7 @@ public class DatabaseInteractor {
      * @return rx.Single with List of geocaches.
      */
     public Single<List<Cache>> getGeocaches() {
-        return realm.where(Cache.class).findAllAsync()
+        return realm.get().where(Cache.class).findAllAsync()
                 .<List<Cache>>asObservable()
                 .filter(new Func1<RealmResults<Cache>, Boolean>() {
                     @Override
@@ -94,4 +96,22 @@ public class DatabaseInteractor {
 
     }
 
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
+        this.realm.get().close();
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+    }
 }

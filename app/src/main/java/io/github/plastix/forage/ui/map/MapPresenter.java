@@ -32,4 +32,9 @@ public class MapPresenter extends Presenter<MapFragView> {
         });
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        databaseInteractor.onStop();
+    }
 }

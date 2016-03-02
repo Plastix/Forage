@@ -30,5 +30,9 @@ public class CacheDetailPresenter extends Presenter<CacheDetailView> {
         });
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        databaseInteractor.onStop();
+    }
 }

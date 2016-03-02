@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import dagger.Lazy;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.AbstractRealmAdapter;
 import io.github.plastix.forage.data.local.Cache;
@@ -23,7 +25,7 @@ import io.realm.RealmQuery;
 public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.CacheHolder> {
 
     @Inject
-    public CacheAdapter(Realm realm) {
+    public CacheAdapter(Provider<Realm> realm) {
         super(realm);
     }
 
@@ -61,7 +63,7 @@ public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.Cache
      */
     @Override
     protected RealmQuery<Cache> getQuery() {
-        return this.realm.where(Cache.class);
+        return this.realm.get().where(Cache.class);
     }
 
     public class CacheHolder extends RecyclerView.ViewHolder {

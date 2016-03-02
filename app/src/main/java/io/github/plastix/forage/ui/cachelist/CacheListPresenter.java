@@ -112,6 +112,12 @@ public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Ca
         };
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        databaseInteractor.onStop();
+    }
+
     public void clearCaches() {
         databaseInteractor.clearGeocaches();
     }
