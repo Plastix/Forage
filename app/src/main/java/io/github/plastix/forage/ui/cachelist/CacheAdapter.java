@@ -25,7 +25,7 @@ import io.realm.RealmQuery;
 public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.CacheHolder> {
 
     @Inject
-    public CacheAdapter(Provider<Realm> realm) {
+    public CacheAdapter(Lazy<Realm> realm) {
         super(realm);
     }
 

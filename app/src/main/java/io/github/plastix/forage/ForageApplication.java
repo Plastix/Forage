@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.frogermcs.androiddevmetrics.AndroidDevMetrics;
-import com.squareup.leakcanary.LeakCanary;
 
 public class ForageApplication extends Application {
 
@@ -27,7 +26,7 @@ public class ForageApplication extends Application {
 
         //Use debug tools only in debug builds
         if (BuildConfig.DEBUG) {
-            LeakCanary.install(this);
+//            LeakCanary.install(this);
             AndroidDevMetrics.initWith(this);
         }
     }

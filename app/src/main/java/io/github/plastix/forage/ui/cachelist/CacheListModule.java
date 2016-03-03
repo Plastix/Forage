@@ -1,11 +1,7 @@
 package io.github.plastix.forage.ui.cachelist;
 
-import javax.inject.Provider;
-
-import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
 
 /**
  * Dagger module that provides dependencies for {@link CacheListFragment} and {@link CacheListActivity}.
@@ -23,11 +19,6 @@ public class CacheListModule {
     @Provides
     public CacheListView provideCacheListView() {
         return cacheListView;
-    }
-
-    @Provides
-    public CacheAdapter provideCacheAdapter(Provider<Realm> realm) {
-        return new CacheAdapter(realm);
     }
 
 }

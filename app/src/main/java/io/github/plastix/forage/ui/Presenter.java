@@ -41,4 +41,9 @@ public abstract class Presenter<T extends View> implements LifecycleCallbacks {
     public void onPause() {
 
     }
+
+    @Override
+    public void onDestroy() {
+
+    }
 }

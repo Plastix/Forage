@@ -14,4 +14,6 @@ public interface LifecycleCallbacks {
 
     void onPause();
 
+    void onDestroy();
+
 }

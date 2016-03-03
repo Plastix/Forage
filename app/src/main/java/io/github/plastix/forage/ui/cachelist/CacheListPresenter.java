@@ -113,9 +113,9 @@ public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Ca
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        databaseInteractor.onStop();
+    public void onDestroy() {
+        super.onDestroy();
+        databaseInteractor.onDestroy();
     }
 
     public void clearCaches() {

@@ -45,4 +45,9 @@ public abstract class PresenterFragment<T extends Presenter> extends BaseFragmen
         presenter.onResume();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
 }

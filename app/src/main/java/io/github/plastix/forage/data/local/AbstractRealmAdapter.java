@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
 import dagger.Lazy;
@@ -22,10 +23,10 @@ public abstract class AbstractRealmAdapter<T extends RealmObject, VH extends Rec
 
     protected RealmResults<T> data;
     protected RealmQuery<T> query;
-    protected Provider<Realm> realm;
+    protected Lazy<Realm> realm;
     protected View.OnClickListener onClickListener;
 
-    public AbstractRealmAdapter(Provider<Realm> realm) {
+    public AbstractRealmAdapter(Lazy<Realm> realm) {
         this.realm = realm;
         this.onClickListener = null;
         loadData();

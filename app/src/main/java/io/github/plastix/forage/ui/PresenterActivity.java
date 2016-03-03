@@ -47,4 +47,10 @@ public abstract class PresenterActivity<T extends Presenter> extends BaseActivit
         super.onStart();
         presenter.onStart();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
 }

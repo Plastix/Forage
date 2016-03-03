@@ -3,8 +3,8 @@ package io.github.plastix.forage.data.local;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 
+import dagger.Lazy;
 import io.github.plastix.forage.ui.LifecycleCallbacks;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -16,10 +16,10 @@ import rx.functions.Func1;
  */
 public class DatabaseInteractor implements LifecycleCallbacks {
 
-    private Provider<Realm> realm;
+    private Lazy<Realm> realm;
 
     @Inject
-    public DatabaseInteractor(Provider<Realm> realm) {
+    public DatabaseInteractor(Lazy<Realm> realm) {
         this.realm = realm;
     }
 
@@ -103,7 +103,6 @@ public class DatabaseInteractor implements LifecycleCallbacks {
 
     @Override
     public void onStop() {
-        this.realm.get().close();
     }
 
     @Override
@@ -113,5 +112,10 @@ public class DatabaseInteractor implements LifecycleCallbacks {
 
     @Override
     public void onPause() {
+    }
+
+    @Override
+    public void onDestroy() {
+        this.realm.get().close();
     }
 }
