@@ -70,6 +70,9 @@ public class MapFragment extends PresenterFragment<MapPresenter> implements MapF
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.setMyLocationEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+
         this.googleMap = googleMap;
         presenter.getGeocaches();
     }
