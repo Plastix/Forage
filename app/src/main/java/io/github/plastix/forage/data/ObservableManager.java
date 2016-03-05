@@ -57,4 +57,14 @@ public class ObservableManager {
         return (Observable<T>) observableMap.get(id);
     }
 
+    /**
+     * Returns whether a Observable with the specified ID is stored in the manager.
+     *
+     * @param id Id to query
+     * @return True if there is an Observable cached, else false.
+     */
+    public boolean isStored(String id) {
+        return observableMap.containsKey(id);
+    }
+
 }

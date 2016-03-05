@@ -42,7 +42,9 @@ public abstract class ReactivePresenter<T extends View, O> extends Presenter<T> 
      * Caches and subscribes to the observable.
      */
     protected void subscribe() {
-        cache.storeObservable(getObservableId(), request);
+        if (!cache.isStored(getObservableId())) {
+            cache.storeObservable(getObservableId(), request);
+        }
         this.subscription = request.subscribe(buildSubscription());
     }
 
@@ -53,11 +55,11 @@ public abstract class ReactivePresenter<T extends View, O> extends Presenter<T> 
 
     @Override
     public void onResume() {
-        Observable<O> observable = cache.getObservable(getObservableId());
+        String id = getObservableId();
         // Existing cached observable was found
-        if (observable != null) {
+        if (cache.isStored(id)) {
             // Attach, and resubscribe
-            this.request = observable;
+            this.request = cache.getObservable(id);
             subscribe();
 
             onAttachObservable();
