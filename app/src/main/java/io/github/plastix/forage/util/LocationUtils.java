@@ -10,23 +10,6 @@ public class LocationUtils {
     }
 
     /**
-     * Converts OkApi's String location format to an Android Location format.
-     *
-     * @param raw String location in "lat|lon"
-     * @return Android location object.
-     */
-    public static Location stringToLocation(String raw) {
-        Location location = new Location("");
-
-        final String[] parts = raw.split("\\|");
-        location.setLatitude(Double.parseDouble(parts[0]));
-        location.setLongitude(Double.parseDouble(parts[1]));
-
-        return location;
-
-    }
-
-    /**
      * Gets the magnetic declination at the specified location.
      *
      * @param location Current location.

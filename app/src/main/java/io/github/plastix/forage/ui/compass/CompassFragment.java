@@ -46,8 +46,7 @@ public class CompassFragment extends PresenterFragment<CompassPresenter> impleme
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String raw_location = getArguments().getString(EXTRA_CACHE_LOCATION);
-        this.target = LocationUtils.stringToLocation(raw_location);
+        this.target = getArguments().getParcelable(EXTRA_CACHE_LOCATION);
 
         injectDependencies();
         initializePresenter();

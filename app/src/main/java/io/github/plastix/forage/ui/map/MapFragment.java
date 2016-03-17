@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.Bind;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.PresenterFragment;
 import io.github.plastix.forage.util.LocationUtils;
 
@@ -58,10 +58,9 @@ public class MapFragment extends PresenterFragment<MapPresenter> implements MapF
     public void populateMap(List<Cache> caches) {
         if (googleMap != null) {
             for (Cache cache : caches) {
-                Location location = LocationUtils.stringToLocation(cache.getLocation());
                 MarkerOptions markerOptions = new MarkerOptions()
-                        .position(new LatLng(location.getLatitude(), location.getLongitude()))
-                        .title(cache.getName());
+                        .position(new LatLng(cache.location.latitude, cache.location.longitude))
+                        .title(cache.name);
                 googleMap.addMarker(markerOptions);
             }
         }

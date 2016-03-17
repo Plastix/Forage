@@ -1,6 +1,6 @@
 package io.github.plastix.forage.ui.cachedetail;
 
-import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.View;
 
 /**

@@ -2,6 +2,7 @@ package io.github.plastix.forage.ui.compass;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
@@ -40,10 +41,10 @@ public class CompassActivity extends BaseFragmentActivity<CompassFragment> {
      * Static factory method that returns a new intent for opening a {@link CompassActivity}.
      *
      * @param context  A context
-     * @param location Cache location (OkApi string format)
+     * @param location Cache location (Android Location object)
      * @return A new intent.
      */
-    public static Intent newIntent(Context context, String location) {
+    public static Intent newIntent(Context context, Location location) {
         Intent intent = new Intent(context, CompassActivity.class);
         intent.putExtra(EXTRA_CACHE_LOCATION, location);
 

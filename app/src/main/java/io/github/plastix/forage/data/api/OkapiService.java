@@ -2,7 +2,7 @@ package io.github.plastix.forage.data.api;
 
 import java.util.List;
 
-import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.data.local.model.Cache;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.PresenterFragment;
 import io.github.plastix.forage.ui.SimpleDividerItemDecoration;
 import io.github.plastix.forage.ui.cachedetail.CacheDetailActivity;
@@ -127,7 +127,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter> imp
 
         int position = recyclerView.getChildLayoutPosition(v);
         Cache cache = adapter.getItem(position);
-        Intent intent = CacheDetailActivity.newIntent(getContext(), cache.getCacheCode());
+        Intent intent = CacheDetailActivity.newIntent(getContext(), cache.cacheCode);
 
         // TODO Clean up
         Pair<View, String> one = Pair.create(v.findViewById(R.id.cache_name), "cache_title");

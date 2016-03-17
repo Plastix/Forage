@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import dagger.Lazy;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.AbstractRealmAdapter;
-import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.data.local.model.Cache;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
@@ -42,15 +41,15 @@ public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.Cache
         Cache cache = getItem(position);
         Resources resources = holder.itemView.getContext().getResources();
 
-        holder.cacheName.setText(cache.getName());
+        holder.cacheName.setText(cache.name);
 
-        holder.cacheType.setText(resources.getString(R.string.cacheitem_type, cache.getType()));
+        holder.cacheType.setText(resources.getString(R.string.cacheitem_type, cache.type));
 
-        holder.cacheTerrain.setText(resources.getString(R.string.cacheitem_terrain, cache.getTerrain()));
+        holder.cacheTerrain.setText(resources.getString(R.string.cacheitem_terrain, cache.terrain));
 
-        holder.cacheDifficulty.setText(resources.getString(R.string.cacheitem_difficulty, cache.getDifficulty()));
+        holder.cacheDifficulty.setText(resources.getString(R.string.cacheitem_difficulty, cache.difficulty));
 
-        holder.cacheSize.setText(resources.getString(R.string.cache_item_size, cache.getSize()));
+        holder.cacheSize.setText(resources.getString(R.string.cache_item_size, cache.size));
 
         holder.itemView.setOnClickListener(onClickListener);
     }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.Lazy;
+import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.LifecycleCallbacks;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -27,12 +28,12 @@ public class DatabaseInteractor implements LifecycleCallbacks {
      * Removes all {@link Cache} objects from the Realm database.
      */
     public void clearGeocaches() {
-        realm.get().executeTransaction(new Realm.Transaction() {
+        realm.get().executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.where(Cache.class).findAll().clear();
             }
-        }, null); // Passing a null callback makes this transaction async which doesn't block other writes
+        });
     }
 
 
@@ -43,13 +44,13 @@ public class DatabaseInteractor implements LifecycleCallbacks {
      * @param data JSON Array of Geocaches.
      */
     public void clearAndSaveGeocaches(final List<Cache> data) {
-        realm.get().executeTransaction(new Realm.Transaction() {
+        realm.get().executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.where(Cache.class).findAll().clear();
                 realm.copyToRealmOrUpdate(data);
             }
-        }, null);
+        });
     }
 
 

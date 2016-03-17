@@ -29,7 +29,7 @@ import butterknife.Bind;
 import icepick.State;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.PresenterActivity;
 import io.github.plastix.forage.ui.compass.CompassActivity;
 import io.github.plastix.forage.util.LocationUtils;
@@ -128,16 +128,16 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
     @Override
     public void returnedGeocache(final Cache cache) {
-        title.setText(cache.getName());
-        type.setText(resources.getString(R.string.cacheitem_type, cache.getType()));
-        description.setText(cache.getDescription());
-        difficulty.setText(resources.getString(R.string.cachedetail_rating, cache.getDifficulty()));
-        terrain.setText(resources.getString(R.string.cachedetail_rating, cache.getTerrain()));
-        size.setText(cache.getSize());
+        title.setText(cache.name);
+        type.setText(resources.getString(R.string.cacheitem_type, cache.type));
+        description.setText(cache.description);
+        difficulty.setText(resources.getString(R.string.cachedetail_rating, cache.difficulty));
+        terrain.setText(resources.getString(R.string.cachedetail_rating, cache.terrain));
+        size.setText(cache.size);
 
         setFabClickListener(cache);
 
-        MapListener mapListener = new MapListener(cache.getLocation());
+        MapListener mapListener = new MapListener(cache.location.toLocation());
         map.getMapAsync(mapListener);
     }
 
@@ -145,7 +145,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = CompassActivity.newIntent(CacheDetailActivity.this, cache.getLocation());
+                Intent intent = CompassActivity.newIntent(CacheDetailActivity.this, cache.location.toLocation());
                 startActivity(intent);
             }
         });
@@ -196,8 +196,8 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
         private Location location;
 
-        public MapListener(String location) {
-            this.location = LocationUtils.stringToLocation(location);
+        public MapListener(Location location) {
+            this.location = location;
         }
 
         @Override

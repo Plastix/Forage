@@ -11,13 +11,11 @@ import javax.inject.Inject;
 
 import dagger.Lazy;
 import io.github.plastix.forage.BuildConfig;
-import io.github.plastix.forage.data.local.Cache;
+import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.util.RxUtils;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * A Reactive wrapper around {@link OkApiService}.
