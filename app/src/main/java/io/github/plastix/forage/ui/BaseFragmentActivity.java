@@ -9,7 +9,7 @@ import io.github.plastix.forage.R;
 
 /**
  * Base Activity to reduce boilerplate code for attaching fragments.
- * Only extend this activity if you want a retained fragment to be automatically attached to the
+ * Only extend this activity if you want a fragment to be automatically attached to the
  * specified layout in the activity.
  *
  * @param <T> Fragment type to attach.
