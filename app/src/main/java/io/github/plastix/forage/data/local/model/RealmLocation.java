@@ -2,6 +2,7 @@ package io.github.plastix.forage.data.local.model;
 
 import android.location.Location;
 
+import io.github.plastix.forage.util.LocationUtils;
 import io.realm.RealmObject;
 
 /**
@@ -19,9 +20,6 @@ public class RealmLocation extends RealmObject {
      * @return New Location object.
      */
     public Location toLocation() {
-        Location location = new Location("Realm");
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        return location;
+        return LocationUtils.buildLocation(latitude, longitude);
     }
 }
