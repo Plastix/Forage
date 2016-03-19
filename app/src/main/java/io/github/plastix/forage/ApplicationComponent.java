@@ -16,6 +16,8 @@ import io.github.plastix.forage.ui.compass.CompassComponent;
 import io.github.plastix.forage.ui.compass.CompassModule;
 import io.github.plastix.forage.ui.map.MapComponent;
 import io.github.plastix.forage.ui.map.MapModule;
+import io.github.plastix.forage.ui.navigate.NavigateComponent;
+import io.github.plastix.forage.ui.navigate.NavigateModule;
 
 /**
  * A component whose lifetime is the life of the application.
@@ -40,4 +42,6 @@ public interface ApplicationComponent {
     CompassComponent plus(CompassModule module);
 
     MapComponent plus(MapModule module);
+
+    NavigateComponent plus(NavigateModule module);
 }

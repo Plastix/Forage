@@ -53,11 +53,16 @@ public class ActivityUtils {
      * Sets the support action bar back button. The activity still has to manage the back button
      * event correctly!
      *
-     * @param delegate AppCompatDelegate for the AppCompatActiivty you want to modify.
+     * @param delegate AppCompatDelegate for the AppCompatActivity you want to modify.
      */
     public static void setSupportActionBarBack(AppCompatDelegate delegate) {
-        delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (delegate != null) {
+            ActionBar bar = delegate.getSupportActionBar();
+            if (bar != null) {
+                delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
+                delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        }
     }
 
 }

@@ -18,6 +18,7 @@ import butterknife.Bind;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.BaseFragmentActivity;
 import io.github.plastix.forage.ui.map.MapActivity;
+import io.github.plastix.forage.ui.navigate.NavigateActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.PermissionUtils;
 
@@ -131,6 +132,9 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
         switch (item.getItemId()) {
             case R.id.cachelist_action_map:
                 startActivity(MapActivity.newIntent(this));
+                return true;
+            case R.id.cachelist_action_navigate:
+                startActivity(NavigateActivity.newIntent(this));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
