@@ -14,12 +14,13 @@ import io.github.plastix.forage.util.RxUtils;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.subscriptions.Subscriptions;
 
 public class CompassPresenter extends Presenter<CompassView> {
 
-    private static long LOCATION_UPDATE_INTERVAL = 500;
+    private static long LOCATION_UPDATE_INTERVAL = 5000;
 
     private AzimuthInteractor azimuthInteractor;
     private LocationInteractor locationInteractor;
@@ -48,7 +49,7 @@ public class CompassPresenter extends Presenter<CompassView> {
                 new Func2<Float, Location, Pair<Float, Location>>() {
                     @Override
                     public Pair<Float, Location> call(Float azimuth, Location location) {
-                        return new Pair<Float, Location>(azimuth, location);
+                        return new Pair<>(azimuth, location);
                     }
                 }
         ).subscribe(new Action1<Pair<Float, Location>>() {

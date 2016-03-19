@@ -14,6 +14,8 @@ import rx.Observable;
  */
 public class LocationInteractor {
 
+    private static final int LOCATION_FASTEST_INTERVAL_MILLIS = 250;
+
     private LocationObservableFactory observableFactory;
     private LocationCompletableFactory completableFactory;
 
@@ -49,7 +51,7 @@ public class LocationInteractor {
     public Observable<Location> getLocationObservable(long intervalInMillis) {
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setFastestInterval(intervalInMillis)
+                .setFastestInterval(LOCATION_FASTEST_INTERVAL_MILLIS)
                 .setInterval(intervalInMillis);
 
 
