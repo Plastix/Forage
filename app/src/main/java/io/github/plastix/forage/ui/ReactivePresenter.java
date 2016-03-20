@@ -1,5 +1,7 @@
 package io.github.plastix.forage.ui;
 
+import android.support.annotation.NonNull;
+
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.ObservableManager;
@@ -33,7 +35,7 @@ public abstract class ReactivePresenter<T extends View, O> extends Presenter<T> 
      * @param manager Dependency from the graph.
      */
     @Inject
-    public void setCache(ObservableManager manager) {
+    public void setCache(@NonNull ObservableManager manager) {
         this.cache = manager;
     }
 

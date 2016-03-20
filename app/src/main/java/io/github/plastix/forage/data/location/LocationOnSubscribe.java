@@ -2,6 +2,8 @@ package io.github.plastix.forage.data.location;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,7 +31,7 @@ public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, Go
     private LocationRequest locationRequest;
 
     @Inject
-    public LocationOnSubscribe(GoogleApiClient googleApiClient) {
+    public LocationOnSubscribe(@NonNull  GoogleApiClient googleApiClient) {
         this.googleApiClient = googleApiClient;
     }
 

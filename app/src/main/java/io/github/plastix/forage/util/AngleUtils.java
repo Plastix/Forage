@@ -1,6 +1,7 @@
 package io.github.plastix.forage.util;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.view.Surface;
 import android.view.WindowManager;
 
@@ -21,7 +22,7 @@ public class AngleUtils {
     }
 
     @SuppressLint("SwitchIntDef")
-    public static int getRotationOffset(WindowManager windowManager) {
+    public static int getRotationOffset(@NonNull WindowManager windowManager) {
         switch (windowManager.getDefaultDisplay().getRotation()) {
             case Surface.ROTATION_90:
                 return 90;

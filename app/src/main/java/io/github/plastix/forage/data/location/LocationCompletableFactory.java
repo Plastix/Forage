@@ -1,5 +1,7 @@
 package io.github.plastix.forage.data.location;
 
+import android.support.annotation.NonNull;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -10,7 +12,7 @@ public class LocationCompletableFactory {
     private Provider<LocationCompletableOnSubscribe> completableOnSubscribeProvider;
 
     @Inject
-    public LocationCompletableFactory(Provider<LocationCompletableOnSubscribe> completableOnSubscribeProvider) {
+    public LocationCompletableFactory(@NonNull Provider<LocationCompletableOnSubscribe> completableOnSubscribeProvider) {
         this.completableOnSubscribeProvider = completableOnSubscribeProvider;
     }
 

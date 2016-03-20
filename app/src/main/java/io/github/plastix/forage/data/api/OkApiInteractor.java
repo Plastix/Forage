@@ -1,6 +1,7 @@
 package io.github.plastix.forage.data.api;
 
 import android.location.Location;
+import android.support.annotation.NonNull;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +28,7 @@ public class OkApiInteractor {
             "difficulty", "size2", "description"};
 
     @Inject
-    public OkApiInteractor(Lazy<OkApiService> apiService) {
+    public OkApiInteractor(@NonNull Lazy<OkApiService> apiService) {
         this.apiService = apiService;
     }
 
@@ -37,7 +38,7 @@ public class OkApiInteractor {
      * @param location Center location.
      * @return A rx.Single JsonArray.
      */
-    public Observable<List<Cache>> getNearbyCaches(Location location, Double radius) {
+    public Observable<List<Cache>> getNearbyCaches(@NonNull Location location, Double radius) {
         try {
 
             JSONObject searchParams = new JSONObject();

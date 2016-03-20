@@ -20,7 +20,7 @@ public class LocationCompletableOnSubscribe implements Completable.CompletableOn
     private GoogleApiClient googleApiClient;
 
     @Inject
-    public LocationCompletableOnSubscribe(GoogleApiClient googleApiClient) {
+    public LocationCompletableOnSubscribe(@NonNull GoogleApiClient googleApiClient) {
         this.googleApiClient = googleApiClient;
     }
 

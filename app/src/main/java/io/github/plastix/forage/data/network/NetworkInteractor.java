@@ -2,6 +2,7 @@ package io.github.plastix.forage.data.network;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
@@ -15,7 +16,7 @@ public class NetworkInteractor {
     private ConnectivityManager connectivityManager;
 
     @Inject
-    public NetworkInteractor(ConnectivityManager connectivityManager) {
+    public NetworkInteractor(@NonNull ConnectivityManager connectivityManager) {
         this.connectivityManager = connectivityManager;
     }
 
@@ -24,6 +25,7 @@ public class NetworkInteractor {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
+    @NonNull
     public Completable hasInternetConnectionCompletable() {
         if (hasInternetConnection()) {
             return Completable.complete();

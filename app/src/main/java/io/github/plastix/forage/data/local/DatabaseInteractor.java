@@ -1,5 +1,8 @@
 package io.github.plastix.forage.data.local;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,7 +23,7 @@ public class DatabaseInteractor implements LifecycleCallbacks {
     private Lazy<Realm> realm;
 
     @Inject
-    public DatabaseInteractor(Lazy<Realm> realm) {
+    public DatabaseInteractor(@NonNull Lazy<Realm> realm) {
         this.realm = realm;
     }
 
@@ -43,7 +46,7 @@ public class DatabaseInteractor implements LifecycleCallbacks {
      *
      * @param data JSON Array of Geocaches.
      */
-    public void clearAndSaveGeocaches(final List<Cache> data) {
+    public void clearAndSaveGeocaches(@Nullable final List<Cache> data) {
         realm.get().executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -61,7 +64,7 @@ public class DatabaseInteractor implements LifecycleCallbacks {
      * @param cacheCode Cache code of the geocache to query.
      * @return rx.Single with the Geocache.
      */
-    public Single<Cache> getGeocache(final String cacheCode) {
+    public Single<Cache> getGeocache(@NonNull final String cacheCode) {
         return realm.get().where(Cache.class).contains("cacheCode", cacheCode).findFirstAsync()
                 // Must filter by loaded objects because findFirstAsync returns a "Future"
                 .<Cache>asObservable().filter(new Func1<Cache, Boolean>() {

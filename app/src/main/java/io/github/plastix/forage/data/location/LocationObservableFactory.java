@@ -1,6 +1,7 @@
 package io.github.plastix.forage.data.location;
 
 import android.location.Location;
+import android.support.annotation.NonNull;
 
 import com.google.android.gms.location.LocationRequest;
 
@@ -14,11 +15,12 @@ public class LocationObservableFactory {
     private Provider<LocationOnSubscribe> provider;
 
     @Inject
-    public LocationObservableFactory(Provider<LocationOnSubscribe> provider) {
+    public LocationObservableFactory(@NonNull Provider<LocationOnSubscribe> provider) {
         this.provider = provider;
     }
 
-    public Observable<Location> buildObservable(LocationRequest locationRequest) {
+    @NonNull
+    public Observable<Location> buildObservable(@NonNull LocationRequest locationRequest) {
         LocationOnSubscribe onSubscribe = provider.get();
         onSubscribe.setLocationRequest(locationRequest);
         return Observable.create(onSubscribe);

@@ -1,9 +1,11 @@
 package io.github.plastix.forage.ui.map;
 
 
+import android.Manifest;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;

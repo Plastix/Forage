@@ -2,6 +2,7 @@ package io.github.plastix.forage;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.frogermcs.androiddevmetrics.AndroidDevMetrics;
 
@@ -9,10 +10,12 @@ public class ForageApplication extends Application {
 
     private ApplicationComponent component;
 
+    @NonNull
     public static ApplicationComponent getComponent(Context context) {
         return ((ForageApplication) context.getApplicationContext()).getComponent();
     }
 
+    @NonNull
     public ApplicationComponent getComponent() {
         return component;
     }
@@ -20,7 +23,8 @@ public class ForageApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        component = DaggerApplicationComponent.builder()
+
+        this.component = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
 

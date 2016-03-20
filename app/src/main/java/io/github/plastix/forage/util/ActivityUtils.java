@@ -3,6 +3,7 @@ package io.github.plastix.forage.util;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ public class ActivityUtils {
      * @param activity Activity of app to launch settings for.
      * @return Intent object.
      */
-    public static Intent getApplicationSettingsIntent(Activity activity) {
+    public static Intent getApplicationSettingsIntent(@NonNull Activity activity) {
         Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + activity.getPackageName()));
         return intent;
@@ -32,7 +33,7 @@ public class ActivityUtils {
      * @param activity Activity to set action bar on.
      * @param titleID  String ID of title.
      */
-    public static void setSupportActionBarTitle(Activity activity, @StringRes int titleID) {
+    public static void setSupportActionBarTitle(@NonNull Activity activity, @StringRes int titleID) {
         setSupportActionBarTitle(activity, activity.getString(titleID));
     }
 
@@ -42,7 +43,7 @@ public class ActivityUtils {
      * @param activity Activity to set action bar on. Must be a {@link AppCompatActivity}.
      * @param title    String title to set.
      */
-    public static void setSupportActionBarTitle(Activity activity, String title) {
+    public static void setSupportActionBarTitle(@NonNull Activity activity, String title) {
         ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(title);
@@ -55,13 +56,11 @@ public class ActivityUtils {
      *
      * @param delegate AppCompatDelegate for the AppCompatActivity you want to modify.
      */
-    public static void setSupportActionBarBack(AppCompatDelegate delegate) {
-        if (delegate != null) {
-            ActionBar bar = delegate.getSupportActionBar();
-            if (bar != null) {
-                delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
-                delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            }
+    public static void setSupportActionBarBack(@NonNull AppCompatDelegate delegate) {
+        ActionBar bar = delegate.getSupportActionBar();
+        if (bar != null) {
+            delegate.getSupportActionBar().setDisplayShowHomeEnabled(true);
+            delegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 

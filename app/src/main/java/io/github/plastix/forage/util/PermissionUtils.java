@@ -23,7 +23,7 @@ public class PermissionUtils {
      * @param requestCode
      * @param permissions
      */
-    public static void requestPermissions(Activity activity, int requestCode, String... permissions) {
+    public static void requestPermissions(@NonNull Activity activity, int requestCode, String... permissions) {
         if (!hasPermissions(activity, permissions)) {
             ActivityCompat.requestPermissions(activity, permissions, requestCode);
         }
@@ -36,7 +36,7 @@ public class PermissionUtils {
      * @param permissions List of permissions to check.
      * @return True if all are granted, else false.
      */
-    public static boolean hasPermissions(Context context, String... permissions) {
+    public static boolean hasPermissions(@NonNull Context context, @NonNull String... permissions) {
         for (String perm : permissions) {
             if (!hasPermission(context, perm)) {
                 return false;
@@ -50,7 +50,7 @@ public class PermissionUtils {
      *
      * @param permission Permission to check.
      */
-    public static boolean hasPermission(Context context, String permission) {
+    public static boolean hasPermission(@NonNull Context context, @NonNull String permission) {
         return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }
 

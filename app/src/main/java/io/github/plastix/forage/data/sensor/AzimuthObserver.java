@@ -4,6 +4,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.annotation.NonNull;
 import android.view.WindowManager;
 
 import javax.inject.Inject;
@@ -31,7 +32,8 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
     private int sensorDelay;
 
     @Inject
-    public AzimuthObserver(SensorManager sensorManager, WindowManager windowManager) {
+    public AzimuthObserver(@NonNull SensorManager sensorManager,
+                           @NonNull WindowManager windowManager) {
         this.sensorManager = sensorManager;
         this.windowManager = windowManager;
         this.orientation = new float[3];

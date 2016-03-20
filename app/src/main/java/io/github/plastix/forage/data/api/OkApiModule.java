@@ -1,6 +1,8 @@
 package io.github.plastix.forage.data.api;
 
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -27,6 +29,7 @@ public class OkApiModule {
 
     public static final String BASE_ENDPOINT = "http://www.opencaching.us";
 
+    @NonNull
     @Provides
     @Singleton
     @Named("BASE_ENDPOINT")
@@ -34,9 +37,13 @@ public class OkApiModule {
         return BASE_ENDPOINT;
     }
 
+    @NonNull
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(@Named("BASE_ENDPOINT") String baseUrl, GsonConverterFactory gsonConverter, RxJavaCallAdapterFactory rxAdapter) {
+    public Retrofit provideRetrofit(@NonNull @Named("BASE_ENDPOINT") String baseUrl,
+                                    @NonNull GsonConverterFactory gsonConverter,
+                                    @NonNull RxJavaCallAdapterFactory rxAdapter) {
+
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(gsonConverter)
@@ -44,18 +51,23 @@ public class OkApiModule {
                 .build();
     }
 
+    @NonNull
     @Provides
     @Singleton
-    public GsonConverterFactory provideGsonConverterFactory(Gson gson) {
+    public GsonConverterFactory provideGsonConverterFactory(@NonNull Gson gson) {
         return GsonConverterFactory.create(gson);
     }
 
     /**
      * Custom Gson to make Retrofit Gson adapter work with Realm objects
      */
+    @NonNull
     @Provides
     @Singleton
-    public Gson provideGson(ListTypeAdapterFactory jsonArrayTypeAdapterFactory, HtmlAdapter htmlAdapter, StringCapitalizer stringCapitalizer) {
+    public Gson provideGson(@NonNull ListTypeAdapterFactory jsonArrayTypeAdapterFactory,
+                            @NonNull HtmlAdapter htmlAdapter,
+                            @NonNull StringCapitalizer stringCapitalizer) {
+
         return new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
@@ -74,15 +86,17 @@ public class OkApiModule {
                 .create();
     }
 
+    @NonNull
     @Provides
     @Singleton
     public RxJavaCallAdapterFactory providesRxAdapter() {
         return RxJavaCallAdapterFactory.create();
     }
 
+    @NonNull
     @Provides
     @Singleton
-    public OkApiService provideOkApiService(Retrofit retrofit) {
+    public OkApiService provideOkApiService(@NonNull Retrofit retrofit) {
         return retrofit.create(OkApiService.class);
     }
 

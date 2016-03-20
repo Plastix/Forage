@@ -1,6 +1,8 @@
 package io.github.plastix.forage.util;
 
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.Html;
 
 import java.util.Locale;
@@ -20,11 +22,7 @@ public class StringUtils {
      * @param elements  Elements to join together.
      * @return Single joined string.
      */
-    public static String join(String delimiter, String[] elements) {
-        if (delimiter == null || elements == null) {
-            throw new RuntimeException("String join parameters cannot be null!");
-        }
-
+    public static String join(@NonNull String delimiter, @NonNull String[] elements) {
         StringBuilder builder = new StringBuilder();
         String separator = "";
         for (String element : elements) {
@@ -43,7 +41,7 @@ public class StringUtils {
      * <p/>
      * Based on http://stackoverflow.com/questions/8560045/android-getting-obj-using-textview-settextcharactersequence
      */
-    public static String stripHtml(String input) {
+    public static String stripHtml(@NonNull String input) {
         return Html.fromHtml(input).toString()
                 .replace((char) 160, (char) 32).replace((char) 65532, (char) 32).trim();
     }
@@ -54,7 +52,7 @@ public class StringUtils {
      * @param input String to capitalize.
      * @return Capitalized string.
      */
-    public static String capitalize(String input) {
+    public static String capitalize(@NonNull String input) {
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 
@@ -68,7 +66,7 @@ public class StringUtils {
      * @param miles     Miles to convert.
      * @return Human readable string.
      */
-    public static String humanReadableImperialDistance(Resources resources, double miles) {
+    public static String humanReadableImperialDistance(@NonNull Resources resources, double miles) {
         String distance;
         String units;
 

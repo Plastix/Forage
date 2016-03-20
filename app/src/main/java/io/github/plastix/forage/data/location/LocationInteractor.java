@@ -1,6 +1,7 @@
 package io.github.plastix.forage.data.location;
 
 import android.location.Location;
+import android.support.annotation.NonNull;
 
 import com.google.android.gms.location.LocationRequest;
 
@@ -20,7 +21,8 @@ public class LocationInteractor {
     private LocationCompletableFactory completableFactory;
 
     @Inject
-    public LocationInteractor(LocationObservableFactory observableFactory, LocationCompletableFactory completableFactory) {
+    public LocationInteractor(@NonNull LocationObservableFactory observableFactory,
+                              @NonNull LocationCompletableFactory completableFactory) {
         this.observableFactory = observableFactory;
         this.completableFactory = completableFactory;
     }
@@ -31,6 +33,7 @@ public class LocationInteractor {
      *
      * @return An rx.Observable that emits one Location object.
      */
+    @NonNull
     public Observable<Location> getUpdatedLocation() {
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -48,6 +51,7 @@ public class LocationInteractor {
      * @param intervalInMillis Time between location events in milliseconds.
      * @return Location observable.
      */
+    @NonNull
     public Observable<Location> getLocationObservable(long intervalInMillis) {
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -64,6 +68,7 @@ public class LocationInteractor {
      *
      * @return Completable calls onComplete() when location is available, and onError() when not.
      */
+    @NonNull
     public Completable isLocationAvailable() {
         return completableFactory.buldLocationCompletable();
     }

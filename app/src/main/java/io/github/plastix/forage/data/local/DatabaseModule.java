@@ -1,6 +1,7 @@
 package io.github.plastix.forage.data.local;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import javax.inject.Singleton;
 
@@ -16,14 +17,16 @@ import io.realm.RealmConfiguration;
 @Module
 public class DatabaseModule {
 
+    @NonNull
     @Provides
-    public Realm provideRealm(RealmConfiguration realmConfiguration) {
+    public Realm provideRealm(@NonNull  RealmConfiguration realmConfiguration) {
         return Realm.getInstance(realmConfiguration);
     }
 
+    @NonNull
     @Provides
     @Singleton
-    public RealmConfiguration provideDefaultRealmConfig(@ForApplication Context context) {
+    public RealmConfiguration provideDefaultRealmConfig(@NonNull @ForApplication Context context) {
         return new RealmConfiguration.Builder(context)
                 .deleteRealmIfMigrationNeeded()
                 .name(Realm.DEFAULT_REALM_NAME)

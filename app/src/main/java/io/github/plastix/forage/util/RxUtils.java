@@ -1,5 +1,7 @@
 package io.github.plastix.forage.util;
 
+import android.support.annotation.Nullable;
+
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,7 +21,7 @@ public class RxUtils {
      *
      * @param subscription
      */
-    public static void safeUnsubscribe(Subscription subscription) {
+    public static void safeUnsubscribe(@Nullable Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }

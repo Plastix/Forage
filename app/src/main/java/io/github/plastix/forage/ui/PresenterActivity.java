@@ -1,5 +1,7 @@
 package io.github.plastix.forage.ui;
 
+import android.support.annotation.NonNull;
+
 import javax.inject.Inject;
 
 
@@ -20,7 +22,7 @@ public abstract class PresenterActivity<T extends Presenter> extends BaseActivit
      * @param presenter Presenter object from the dependency graph.
      */
     @Inject
-    public void setPresenter(T presenter) {
+    public void setPresenter(@NonNull T presenter) {
         this.presenter = presenter;
     }
 

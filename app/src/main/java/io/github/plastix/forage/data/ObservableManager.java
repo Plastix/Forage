@@ -1,5 +1,7 @@
 package io.github.plastix.forage.data;
 
+import android.support.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +55,7 @@ public class ObservableManager {
      * @return Observable stored or null if it does not exist.
      */
     @SuppressWarnings("unchecked")
+    @Nullable
     public <T> Observable<T> getObservable(String id) {
         return (Observable<T>) observableMap.get(id);
     }
