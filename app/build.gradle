@@ -31,6 +31,11 @@ def getProps(String propName) {
     }
 }
 
+// Use a gradle trick to allow manual setting of minSdk without build flavors
+// If minSdkVersion >= 21 Android uses the ART compiler which is a lot faster
+// Set the compiler flag via: -PminSdk=21
+int minSdk = hasProperty('minSdk') ? minSdk.toInteger() : 16
+
 android {
 
     compileSdkVersion 23
@@ -38,7 +43,7 @@ android {
 
     defaultConfig {
         applicationId "io.github.plastix.forage"
-        minSdkVersion 16
+        minSdkVersion minSdk
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
