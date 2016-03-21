@@ -53,7 +53,7 @@ public class StringUtils {
      * @return Capitalized string.
      */
     public static String capitalize(@NonNull String input) {
-        return input.substring(0, 1).toUpperCase() + input.substring(1);
+        return input.substring(0, 1).toUpperCase(Locale.getDefault()) + input.substring(1);
     }
 
     /**
