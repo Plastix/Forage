@@ -5,10 +5,13 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import io.github.plastix.forage.data.local.model.RealmLocation;
 
 public class RealmLocationAdapter extends TypeAdapter<RealmLocation> {
+
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("\\|");
 
     @Override
     public void write(JsonWriter out, RealmLocation value) throws IOException {
@@ -18,7 +21,7 @@ public class RealmLocationAdapter extends TypeAdapter<RealmLocation> {
     @Override
     public RealmLocation read(JsonReader in) throws IOException {
         String raw = in.nextString();
-        final String[] parts = raw.split("\\|");
+        final String[] parts = SPLIT_PATTERN.split(raw, 2);
 
         RealmLocation location = new RealmLocation();
         location.latitude = Double.parseDouble(parts[0]);
