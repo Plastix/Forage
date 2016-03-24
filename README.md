@@ -21,10 +21,21 @@ Libraries
 
 Requirements
 -------
-API keys are not stored in the repo! If you want to build the project yourself you need the following:
+To compile and run the project you'll need:
 
-1. OkApi (US) key
-2. Google Maps Android API key
+- [Android SDK](http://developer.android.com/sdk/index.html).
+- [Android Marshmallow (API 23)](http://developer.android.com/tools/revisions/platforms.html#5.1).
+- Android SDK Tools
+- Android SDK Build tools 23.0.2
+- Android Support Repository
+- Android Support libraries
+- JDK 7
+- Valid API keys
+
+API keys are not stored in the repo! Thus, you will need the following API keys:
+
+1. [OkApi (US) key](http://www.opencaching.us/)
+2. [Google Maps Android API key](https://developers.google.com/maps/documentation/android-api/)
 
 Create a `local.properties` file in the root directory of the project and add the following to it:
 ```
