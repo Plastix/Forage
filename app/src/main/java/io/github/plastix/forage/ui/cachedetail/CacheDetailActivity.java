@@ -32,7 +32,7 @@ import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.PresenterActivity;
 import io.github.plastix.forage.ui.compass.CompassActivity;
-import io.github.plastix.forage.util.LocationUtils;
+import io.github.plastix.forage.util.ActivityUtils;
 
 /**
  * Activity that represents the Geocache detail view screen of the app.
@@ -91,7 +91,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
         this.cacheCode = getIntent().getStringExtra(EXTRA_CACHE_CODE);
 
-        intializeView(savedInstanceState);
+        initializeView(savedInstanceState);
 
         injectDependencies();
 
@@ -104,7 +104,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
                 .plus(new CacheDetailModule(this)).injectTo(this);
     }
 
-    private void intializeView(Bundle savedInstanceState) {
+    private void initializeView(Bundle savedInstanceState) {
         setActivityActionBar();
 
         fab.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_compass).color(Color.WHITE));
@@ -122,8 +122,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
     private void setActivityActionBar() {
         setSupportActionBar(toolbar);
 
-        getDelegate().getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActivityUtils.setSupportActionBarBack(getDelegate());
     }
 
     @Override
@@ -209,11 +208,11 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
             googleMap.addMarker(new MarkerOptions()
                     .position(markerPos));
 
-            CameraPosition camerPosition = new CameraPosition.Builder()
+            CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(markerPos)
                     .zoom(13).build();
 
-            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camerPosition));
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
             animateIntoView();
         }
