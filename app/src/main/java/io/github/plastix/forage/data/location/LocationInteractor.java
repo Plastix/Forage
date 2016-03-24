@@ -37,8 +37,7 @@ public class LocationInteractor {
     public Observable<Location> getUpdatedLocation() {
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setNumUpdates(1)
-                .setExpirationDuration(2500);
+                .setNumUpdates(1);
 
         return observableFactory.buildObservable(request).take(1);
     }

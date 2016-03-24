@@ -29,13 +29,8 @@ public class LocationCompletableOnSubscribe implements Completable.CompletableOn
         this.completableSubscriber = completableSubscriber;
         googleApiClient.registerConnectionCallbacks(this);
         googleApiClient.registerConnectionFailedListener(this);
-
-        if (!googleApiClient.isConnected() && !googleApiClient.isConnecting()) {
-            googleApiClient.connect();
-        }
-
+        googleApiClient.connect();
         completableSubscriber.onSubscribe(buildUnsubscriber());
-
     }
 
     @Override

@@ -31,7 +31,7 @@ public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, Go
     private LocationRequest locationRequest;
 
     @Inject
-    public LocationOnSubscribe(@NonNull  GoogleApiClient googleApiClient) {
+    public LocationOnSubscribe(@NonNull GoogleApiClient googleApiClient) {
         this.googleApiClient = googleApiClient;
     }
 
@@ -44,11 +44,7 @@ public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, Go
         this.observer = subscriber;
         googleApiClient.registerConnectionCallbacks(this);
         googleApiClient.registerConnectionFailedListener(this);
-
-        if (!googleApiClient.isConnected() && !googleApiClient.isConnecting()) {
-            googleApiClient.connect();
-        }
-
+        googleApiClient.connect();
         subscriber.add(buildUnsubscriber());
     }
 
