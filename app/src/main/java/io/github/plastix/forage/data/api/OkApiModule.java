@@ -17,9 +17,9 @@ import io.github.plastix.forage.data.api.gson.HtmlAdapter;
 import io.github.plastix.forage.data.api.gson.ListTypeAdapterFactory;
 import io.github.plastix.forage.data.api.gson.StringCapitalizer;
 import io.realm.RealmObject;
-import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
-import retrofit2.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Dagger module that provides dependencies for {@link OkApiService} and {@link OkApiInteractor}.
