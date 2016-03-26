@@ -23,11 +23,11 @@ Requirements
 To compile and run the project you'll need:
 
 - [Android SDK](http://developer.android.com/sdk/index.html).
-- [Android Marshmallow (API 23)](http://developer.android.com/tools/revisions/platforms.html#5.1).
+- [Android Marshmallow (API 23)](http://developer.android.com/tools/revisions/platforms.html).
 - Android SDK Tools
-- Android SDK Build tools 23.0.2
+- Android SDK Build Tools 23.0.2
 - Android Support Repository
-- Android Support libraries
+- Android Support Libraries
 - JDK 7
 - Valid API keys
 
