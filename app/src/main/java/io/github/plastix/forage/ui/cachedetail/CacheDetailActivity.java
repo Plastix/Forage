@@ -3,7 +3,6 @@ package io.github.plastix.forage.ui.cachedetail;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -20,8 +19,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 
 import javax.inject.Inject;
 
@@ -106,8 +103,6 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
     private void initializeView(Bundle savedInstanceState) {
         setActivityActionBar();
-
-        fab.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_compass).color(Color.WHITE));
 
         Bundle mapState = null;
         if (savedInstanceState != null) {

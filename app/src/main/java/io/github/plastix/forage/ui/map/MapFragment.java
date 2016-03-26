@@ -1,11 +1,8 @@
 package io.github.plastix.forage.ui.map;
 
 
-import android.Manifest;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresPermission;
 import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -21,7 +18,6 @@ import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.PresenterFragment;
-import io.github.plastix.forage.util.LocationUtils;
 
 /**
  * Fragment that is responsible for the geocache map.

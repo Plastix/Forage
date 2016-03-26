@@ -7,16 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.mikepenz.iconics.view.IconicsImageView;
 
 import butterknife.Bind;
 import icepick.State;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.PresenterFragment;
-import io.github.plastix.forage.util.LocationUtils;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
 
@@ -28,7 +26,7 @@ public class CompassFragment extends PresenterFragment<CompassPresenter> impleme
     private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
 
     @Bind(R.id.compass_arrow)
-    IconicsImageView arrow;
+    ImageView arrow;
 
     @Bind(R.id.compass_distance)
     TextView distance;

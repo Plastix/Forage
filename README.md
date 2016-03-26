@@ -13,7 +13,6 @@ Libraries
 * [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 * [Butterknife](http://jakewharton.github.io/butterknife/)
 * [Realm](https://realm.io/)
-* [Android Iconics](https://github.com/mikepenz/Android-Iconics)
 * [Icepick](https://github.com/frankiesardo/icepick)
 * [Google Support Libraries](http://developer.android.com/tools/support-library/index.html)
 * [Google Play Location Services](https://developers.google.com/android/reference/com/google/android/gms/location/package-summary)

@@ -2,7 +2,6 @@ package io.github.plastix.forage.util;
 
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.Html;
 
 import java.util.Locale;

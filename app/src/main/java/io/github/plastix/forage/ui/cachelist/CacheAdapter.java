@@ -42,14 +42,10 @@ public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.Cache
         Resources resources = holder.itemView.getContext().getResources();
 
         holder.cacheName.setText(cache.name);
-
         holder.cacheType.setText(resources.getString(R.string.cacheitem_type, cache.type));
-
-        holder.cacheTerrain.setText(resources.getString(R.string.cacheitem_terrain, cache.terrain));
-
-        holder.cacheDifficulty.setText(resources.getString(R.string.cacheitem_difficulty, cache.difficulty));
-
-        holder.cacheSize.setText(resources.getString(R.string.cache_item_size, cache.size));
+        holder.cacheTerrain.setText(String.valueOf(cache.terrain));
+        holder.cacheDifficulty.setText(String.valueOf(cache.difficulty));
+        holder.cacheSize.setText(cache.size);
 
         holder.itemView.setOnClickListener(onClickListener);
     }

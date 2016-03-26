@@ -4,15 +4,14 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 
 import butterknife.Bind;
 import io.github.plastix.forage.R;
@@ -20,6 +19,7 @@ import io.github.plastix.forage.ui.BaseFragmentActivity;
 import io.github.plastix.forage.ui.map.MapActivity;
 import io.github.plastix.forage.ui.navigate.NavigateActivity;
 import io.github.plastix.forage.util.ActivityUtils;
+import io.github.plastix.forage.util.MenuUtils;
 import io.github.plastix.forage.util.PermissionUtils;
 
 /**
@@ -120,11 +120,14 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_cache_list, menu);
 
-        menu.findItem(R.id.cachelist_action_map).setIcon(
-                new IconicsDrawable(this, CommunityMaterial.Icon.cmd_map)
-                        .actionBar().colorRes(R.color.white)
-        );
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        @ColorInt int color = ContextCompat.getColor(this, R.color.white);
+        MenuUtils.tintMenuItemIcon(color, menu.findItem(R.id.cachelist_action_map));
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

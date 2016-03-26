@@ -57,13 +57,14 @@
             android:layout_gravity="center"
             android:background="@drawable/shape_circle" />
 
-        <com.mikepenz.iconics.view.IconicsImageView
+        <ImageView
             android:id="@+id/compass_arrow"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            app:iiv_color="@color/white"
-            app:iiv_icon="cmd-arrow-up" />
+            android:tint="@color/white"
+            app:srcCompat="@drawable/ic_arrow_upward"
+            tools:ignore="MissingPrefix" />
 
     </FrameLayout>
 

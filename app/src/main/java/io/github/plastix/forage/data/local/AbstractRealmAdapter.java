@@ -1,11 +1,7 @@
 package io.github.plastix.forage.data.local;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 import dagger.Lazy;
 import io.realm.Realm;

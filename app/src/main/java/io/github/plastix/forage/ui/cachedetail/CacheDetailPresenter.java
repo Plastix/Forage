@@ -2,8 +2,8 @@ package io.github.plastix.forage.ui.cachedetail;
 
 import javax.inject.Inject;
 
-import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
+import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.Presenter;
 import rx.SingleSubscriber;
 

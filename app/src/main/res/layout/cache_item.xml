@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -40,56 +41,80 @@
         android:typeface="sans"
         tools:text="Traditional" />
 
-    <com.mikepenz.iconics.view.IconicsTextView
-        android:id="@+id/cache_terrain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/cache_terrain_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_below="@+id/cache_type"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:tint="@color/gray"
+        app:srcCompat="@drawable/ic_terrain"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:id="@+id/cache_terrain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/cache_terrain_icon"
+        android:layout_below="@+id/cache_type"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@id/cache_terrain_icon"
         android:textSize="15sp"
         android:typeface="sans"
         tools:text="Terrain: 2.0" />
 
-    <com.mikepenz.iconics.view.IconicsTextView
-        android:id="@+id/cache_difficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/cache_terrain"
+    <ImageView
+        android:id="@+id/cache_difficulty_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/cache_type"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/cache_terrain"
         android:layout_toRightOf="@+id/cache_terrain"
+        android:tint="@color/gray"
+        app:srcCompat="@drawable/ic_speedometer"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:id="@+id/cache_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/cache_difficulty_icon"
+        android:layout_below="@+id/cache_type"
+        android:layout_marginLeft="2dp"
+        android:layout_toEndOf="@+id/cache_difficulty_icon"
+        android:layout_toRightOf="@+id/cache_difficulty_icon"
         android:textSize="15sp"
         android:typeface="sans"
         tools:text="Difficulty: 2.5" />
 
-    <com.mikepenz.iconics.view.IconicsTextView
-        android:id="@+id/cache_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/cache_difficulty"
+    <ImageView
+        android:id="@+id/cache_size_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/cache_type"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/cache_difficulty"
         android:layout_toRightOf="@+id/cache_difficulty"
+        android:tint="@color/gray"
+        app:srcCompat="@drawable/ic_cube"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:id="@+id/cache_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/cache_size_icon"
+        android:layout_below="@+id/cache_type"
+        android:layout_marginLeft="2dp"
+        android:layout_toEndOf="@+id/cache_size_icon"
+        android:layout_toRightOf="@+id/cache_size_icon"
         android:fontFeatureSettings="smcp"
         android:textSize="15sp"
         android:typeface="sans"
         tools:text="Size: Micro" />
-
-    <TextView
-        android:id="@+id/cache_distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/cache_name"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:textSize="15sp"
-        android:typeface="sans"
-        tools:text="150ft" />
-
 
 </RelativeLayout>

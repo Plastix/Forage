@@ -8,8 +8,6 @@ import javax.inject.Provider;
 
 import io.github.plastix.forage.util.RxUtils;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 /**

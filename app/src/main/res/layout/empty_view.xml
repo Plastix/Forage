@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/empty_view"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/empty_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="gone"
+    tools:visibility="visible">
 
-    <com.mikepenz.iconics.view.IconicsImageView
+    <ImageView
         android:id="@+id/empty_view_icon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
-        app:iiv_color="@color/gray_light"
-        app:iiv_icon="cmd-cloud-download"/>
+        android:tint="@color/gray_light"
+        app:srcCompat="@drawable/ic_archive"
+        tools:ignore="MissingPrefix" />
 
     <TextView
         android:id="@+id/empty_view_text"
@@ -25,6 +27,6 @@
         android:fontFamily="sans-serif-light"
         android:text="@string/cachelist_no_caches"
         android:textSize="20sp"
-        android:typeface="sans"/>
+        android:typeface="sans" />
 
 </LinearLayout>

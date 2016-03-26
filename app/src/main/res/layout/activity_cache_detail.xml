@@ -224,6 +224,8 @@
         android:layout_margin="16dp"
         android:clickable="true"
         app:layout_anchor="@id/cachedetail_appbar"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|right|end"
+        app:srcCompat="@drawable/ic_compass"
+        android:tint="@color/white"/>
 
 </android.support.design.widget.CoordinatorLayout>

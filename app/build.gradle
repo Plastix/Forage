@@ -48,6 +48,9 @@ android {
         versionCode 1
         versionName "1.0"
 
+        // Enable VectorDrawableCompat for API <21
+        vectorDrawables.useSupportLibrary = true
+
         buildConfigField("String", "OKAPI_US_CONSUMER_KEY", getProps("okapi_us_consumer_key"))
 
         // Use res value so we can access the Google API key in the AndroidManifest.xml
@@ -150,8 +153,6 @@ dependencies {
 
     // Other Third Party Libraries
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.mikepenz:iconics-core:2.5.4@aar'
-    compile 'com.mikepenz:community-material-typeface:1.3.41.1@aar'
 
     // Unit testing
     testCompile(

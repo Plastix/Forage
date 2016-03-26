@@ -14,7 +14,6 @@ import io.github.plastix.forage.util.RxUtils;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.subscriptions.Subscriptions;
 
