@@ -86,7 +86,7 @@ public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Ca
         return locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Observable<List<Cache>>>() {
             @Override
             public Observable<List<Cache>> call(Location location) {
-                return apiInteractor.getNearbyCaches(location, NEARBY_CACHE_RADIUS_MILES);
+                return apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES);
             }
         });
     }

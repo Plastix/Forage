@@ -3,6 +3,9 @@ package io.github.plastix.forage.data.api;
 import android.location.Location;
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,31 +38,27 @@ public class OkApiInteractor {
     /**
      * Gets a JSON array of Geocaches near the specified Location from {@link OkApiService}.
      *
-     * @param location Center location.
+     * @param lat    Latitude of specified location.
+     * @param lon    Longitude of specified location.
+     * @param radius Boundary radius.
      * @return A rx.Single JsonArray.
      */
-    public Observable<List<Cache>> getNearbyCaches(@NonNull Location location, Double radius) {
-        try {
+    public Observable<List<Cache>> getNearbyCaches(double lat, double lon, double radius) {
 
-            JSONObject searchParams = new JSONObject();
-            searchParams.put("center", String.format("%s|%s", location.getLatitude(), location.getLongitude()));
-            searchParams.put("radius", UnitUtils.milesToKilometer(radius));
+        JsonObject searchParams = new JsonObject();
+        searchParams.addProperty("center", String.format("%s|%s", lat, lon));
+        searchParams.addProperty("radius", UnitUtils.milesToKilometer(radius));
 
-            JSONObject returnParams = new JSONObject();
-            returnParams.put("fields", StringUtils.join("|", geocacheFields));
+        JsonObject returnParams = new JsonObject();
+        returnParams.addProperty("fields", StringUtils.join("|", geocacheFields));
 
-            return apiService.get().searchAndRetrieve(
-                    OkApiService.ENDPOINT_NEAREST,
-                    searchParams.toString(),
-                    OkApiService.ENDPOINT_GEOCACHES,
-                    returnParams.toString(),
-                    false,
-                    BuildConfig.OKAPI_US_CONSUMER_KEY
-            ).compose(RxUtils.<List<Cache>>applySchedulers());
-
-        } catch (JSONException e) {
-            // Let the subscriber handle the error
-            return Observable.error(e);
-        }
+        return apiService.get().searchAndRetrieve(
+                OkApiService.ENDPOINT_NEAREST,
+                searchParams.toString(),
+                OkApiService.ENDPOINT_GEOCACHES,
+                returnParams.toString(),
+                false,
+                BuildConfig.OKAPI_US_CONSUMER_KEY
+        ).compose(RxUtils.<List<Cache>>applySchedulers());
     }
 }
