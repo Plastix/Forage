@@ -18,6 +18,12 @@ Libraries
 * [Google Play Location Services](https://developers.google.com/android/reference/com/google/android/gms/location/package-summary)
 * [Google Play Maps](https://developers.google.com/maps/documentation/android-api/)
 
+Testing Libraries
+-------
+* [JUnit](http://junit.org/junit4/)
+* [Mockito](http://mockito.org/)
+* [Roboelectric](http://robolectric.org/)
+
 Requirements
 -------
 To compile and run the project you'll need:
