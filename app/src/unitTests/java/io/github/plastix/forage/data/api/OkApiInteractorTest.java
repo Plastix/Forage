@@ -3,19 +3,16 @@ package io.github.plastix.forage.data.api;
 import android.support.annotation.NonNull;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.List;
 
 import dagger.Lazy;
+import io.github.plastix.forage.RxSchedulersOverrideRule;
 import io.github.plastix.forage.data.local.model.Cache;
 import rx.Observable;
-import rx.Scheduler;
-import rx.android.plugins.RxAndroidPlugins;
-import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.observables.BlockingObservable;
-import rx.schedulers.Schedulers;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assert_;
@@ -26,6 +23,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class OkApiInteractorTest {
+
+    @Rule
+    public final RxSchedulersOverrideRule schedulersOverrideRule = new RxSchedulersOverrideRule();
 
     @SuppressWarnings("NullableProblems") // Initialized in @Before.
     @NonNull
@@ -38,18 +38,6 @@ public class OkApiInteractorTest {
     // Input to the interactor.
     // We're mocking the API response so it doesn't matter what we pass into the interceptor
     private double lat, lon, radius;
-
-    @BeforeClass
-    public static void onlyOnce() {
-        // Use Schedulers.immediate() instead of AndroidSchedulers.mainThread()
-        // We can't mock an Android looper on the JVM!
-        RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
-            @Override
-            public Scheduler getMainThreadScheduler() {
-                return Schedulers.immediate();
-            }
-        });
-    }
 
     @Before
     public void beforeEachTest() {
