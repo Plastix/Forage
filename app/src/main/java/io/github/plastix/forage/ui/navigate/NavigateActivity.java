@@ -15,6 +15,7 @@ import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.PresenterActivity;
 import io.github.plastix.forage.ui.compass.CompassActivity;
 import io.github.plastix.forage.util.ActivityUtils;
+import io.github.plastix.forage.util.LocationUtils;
 
 public class NavigateActivity extends PresenterActivity<NavigatePresenter> implements NavigateView {
 
@@ -71,9 +72,10 @@ public class NavigateActivity extends PresenterActivity<NavigatePresenter> imple
     }
 
     @Override
-    public void openCompassScreen(Location location) {
+    public void openCompassScreen(double lat, double lon) {
         latitudeInputLayout.setErrorEnabled(false);
         longitudeInputLayout.setErrorEnabled(false);
+        Location location = LocationUtils.buildLocation(lat, lon);
         startActivity(CompassActivity.newIntent(this, location));
     }
 

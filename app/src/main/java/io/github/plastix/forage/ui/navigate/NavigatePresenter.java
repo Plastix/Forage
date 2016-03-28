@@ -28,7 +28,7 @@ public class NavigatePresenter extends Presenter<NavigateView> {
             double lat = Double.valueOf(latitude);
             double lon = Double.valueOf(longitude);
 
-            view.openCompassScreen(LocationUtils.buildLocation(lat, lon));
+            view.openCompassScreen(lat, lon);
         }
 
     }
