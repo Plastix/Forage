@@ -31,11 +31,6 @@ def getProps(String propName) {
     }
 }
 
-// Use a gradle trick to allow manual setting of minSdk without build flavors
-// If minSdkVersion >= 21 Android uses the ART compiler which is a lot faster
-// Set the compiler flag via: -PminSdk=21
-int minSdk = hasProperty('minSdk') ? minSdk.toInteger() : 16
-
 android {
 
     compileSdkVersion 23
@@ -43,7 +38,7 @@ android {
 
     defaultConfig {
         applicationId "io.github.plastix.forage"
-        minSdkVersion minSdk
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -137,8 +132,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
 
     // Dagger 2
-    apt 'com.google.dagger:dagger-compiler:2.0.2'
-    compile 'com.google.dagger:dagger:2.0.2'
+    apt 'com.google.dagger:dagger-compiler:2.2'
+    compile 'com.google.dagger:dagger:2.2'
     provided 'javax.annotation:jsr250-api:1.0'
 
     // LeakCanary
