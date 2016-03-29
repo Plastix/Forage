@@ -21,6 +21,7 @@ public class StringUtils {
      * @param elements  Elements to join together.
      * @return Single joined string.
      */
+    @NonNull
     public static String join(@NonNull String delimiter, @NonNull String[] elements) {
         StringBuilder builder = new StringBuilder();
         String separator = "";
@@ -40,6 +41,7 @@ public class StringUtils {
      * <p/>
      * Based on http://stackoverflow.com/questions/8560045/android-getting-obj-using-textview-settextcharactersequence
      */
+    @NonNull
     public static String stripHtml(@NonNull String input) {
         return Html.fromHtml(input).toString()
                 .replace((char) 160, (char) 32).replace((char) 65532, (char) 32).trim();
@@ -65,6 +67,7 @@ public class StringUtils {
      * @param miles     Miles to convert.
      * @return Human readable string.
      */
+    @NonNull
     public static String humanReadableImperialDistance(@NonNull Resources resources, double miles) {
         String distance;
         String units;
