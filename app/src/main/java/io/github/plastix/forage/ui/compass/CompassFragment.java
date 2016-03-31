@@ -6,7 +6,9 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ import io.github.plastix.forage.util.UnitUtils;
 public class CompassFragment extends PresenterFragment<CompassPresenter> implements CompassView {
 
     private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
+    private static float CENTER = 0.5f;
 
     @Bind(R.id.compass_arrow)
     ImageView arrow;
@@ -75,13 +78,18 @@ public class CompassFragment extends PresenterFragment<CompassPresenter> impleme
     @Override
     public void rotateCompass(final float degrees) {
         // Rotate by negative degrees because Android rotates counter-clockwise
-        arrow.animate()
-                .rotation(-degrees)
-                .setDuration(100)
-                .setInterpolator(new LinearInterpolator())
-                .start();
-
+        Animation an = new RotateAnimation(
+                currentAzimuth,
+                -degrees,
+                Animation.RELATIVE_TO_SELF,
+                CENTER,
+                Animation.RELATIVE_TO_SELF,
+                CENTER);
+        an.setDuration(250);
+        an.setInterpolator(new LinearInterpolator());
+        an.setFillAfter(true);
         currentAzimuth = -degrees;
+        arrow.startAnimation(an);
     }
 
     @Override
