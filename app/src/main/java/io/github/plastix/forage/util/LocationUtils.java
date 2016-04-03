@@ -40,7 +40,7 @@ public class LocationUtils {
      * field from true north, in degrees (i.e. positive means the
      * magnetic field is rotated east that much from true north).
      */
-    public static double getMagneticDeclination(@NonNull  Location location) {
+    public static double getMagneticDeclination(@NonNull Location location) {
         GeomagneticField geoField = new GeomagneticField(
                 (float) location.getLatitude(),
                 (float) location.getLongitude(),
@@ -57,7 +57,7 @@ public class LocationUtils {
      * @param latitude String Latitude
      * @return True if valid, else false.
      */
-    public static boolean isValidLatitude(@NonNull  String latitude) {
+    public static boolean isValidLatitude(@NonNull String latitude) {
         try {
             return isValidLatitude(Double.valueOf(latitude));
         } catch (NumberFormatException e) {
@@ -72,7 +72,7 @@ public class LocationUtils {
      * @return True if valid, else false.
      */
     public static boolean isValidLatitude(double latitude) {
-        return latitude < MAX_LATITUDE && MIN_LATITUDE < latitude;
+        return latitude <= MAX_LATITUDE && MIN_LATITUDE <= latitude;
     }
 
     /**
@@ -96,6 +96,6 @@ public class LocationUtils {
      * @return True if valid, else false.
      */
     public static boolean isValidLongitude(double longitude) {
-        return longitude < MAX_LONGITUDE && MIN_LONGITUDE < longitude;
+        return longitude <= MAX_LONGITUDE && MIN_LONGITUDE <= longitude;
     }
 }
