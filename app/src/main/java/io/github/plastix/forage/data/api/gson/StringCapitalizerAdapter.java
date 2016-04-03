@@ -13,13 +13,13 @@ import io.github.plastix.forage.util.StringUtils;
 /**
  * Gson adapter for automatically capitalizing a String input.
  */
-public class StringCapitalizer extends TypeAdapter<String> {
+public class StringCapitalizerAdapter extends TypeAdapter<String> {
 
     /**
      * Single @Inject annotated constructor so Dagger knows how to instantiate the adapter.
      */
     @Inject
-    public StringCapitalizer() {
+    public StringCapitalizerAdapter() {
     }
 
     @Override

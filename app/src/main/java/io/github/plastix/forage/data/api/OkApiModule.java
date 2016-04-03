@@ -15,7 +15,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.github.plastix.forage.data.api.gson.HtmlAdapter;
 import io.github.plastix.forage.data.api.gson.ListTypeAdapterFactory;
-import io.github.plastix.forage.data.api.gson.StringCapitalizer;
+import io.github.plastix.forage.data.api.gson.StringCapitalizerAdapter;
 import io.realm.RealmObject;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -66,7 +66,7 @@ public class OkApiModule {
     @Singleton
     public Gson provideGson(@NonNull ListTypeAdapterFactory jsonArrayTypeAdapterFactory,
                             @NonNull HtmlAdapter htmlAdapter,
-                            @NonNull StringCapitalizer stringCapitalizer) {
+                            @NonNull StringCapitalizerAdapter stringCapitalizerAdapter) {
 
         return new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
@@ -82,7 +82,7 @@ public class OkApiModule {
                 })
                 .registerTypeAdapterFactory(jsonArrayTypeAdapterFactory)
                 .registerTypeAdapter(String.class, htmlAdapter)
-                .registerTypeAdapter(String.class, stringCapitalizer)
+                .registerTypeAdapter(String.class, stringCapitalizerAdapter)
                 .create();
     }
 
