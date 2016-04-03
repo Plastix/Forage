@@ -44,7 +44,7 @@ API keys are not stored in the repo! Thus, you will need the following API keys:
 2. [Google Maps Android API key](https://developers.google.com/maps/documentation/android-api/)
 
 Create a `local.properties` file in the root directory of the project and add the following to it:
-```
+```INI
 okapi_us_consumer_key=PUT OKAPI CONSUMER KEY HERE
 okapi_us_consumer_secret=PUT OKAPI CONSUMER SECRET HERE
 google_maps_api_key=PUT GOOGLE MAPS KEY HERE
