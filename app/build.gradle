@@ -167,5 +167,13 @@ dependencies {
         exclude group: 'commons-logging'
         exclude group: 'org.apache.httpcomponents'
     }
+    testCompile ('org.powermock:powermock-api-mockito:1.6.2') {
+        exclude module: 'hamcrest-core'
+        exclude module: 'objenesis'
+    }
+    testCompile ('org.powermock:powermock-module-junit4:1.6.2') {
+        exclude module: 'hamcrest-core'
+        exclude module: 'objenesis'
+    }
 
 }

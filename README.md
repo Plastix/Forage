@@ -22,6 +22,7 @@ Testing Libraries
 -------
 * [JUnit](http://junit.org/junit4/)
 * [Mockito](http://mockito.org/)
+* [Powermock](https://github.com/jayway/powermock)
 * [Roboelectric](http://robolectric.org/)
 
 Requirements
