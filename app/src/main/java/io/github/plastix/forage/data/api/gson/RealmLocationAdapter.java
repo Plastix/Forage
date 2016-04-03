@@ -21,11 +21,24 @@ public class RealmLocationAdapter extends TypeAdapter<RealmLocation> {
     @Override
     public RealmLocation read(JsonReader in) throws IOException {
         String raw = in.nextString();
+
+        if (raw == null || raw.isEmpty()) {
+            return null;
+        }
         final String[] parts = SPLIT_PATTERN.split(raw, 2);
 
-        RealmLocation location = new RealmLocation();
-        location.latitude = Double.parseDouble(parts[0]);
-        location.longitude = Double.parseDouble(parts[1]);
-        return location;
+        if (parts.length < 2) {
+            return null;
+        }
+
+        try {
+            RealmLocation location = new RealmLocation();
+            location.latitude = Double.parseDouble(parts[0]);
+            location.longitude = Double.parseDouble(parts[1]);
+            return location;
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
     }
 }
