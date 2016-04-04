@@ -8,7 +8,7 @@ import android.view.MenuItem;
 public class MenuUtils {
 
     private MenuUtils() {
-        // No instantiation
+        throw new UnsupportedOperationException("No Instantiation!");
     }
 
     /**

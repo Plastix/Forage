@@ -13,7 +13,7 @@ import rx.schedulers.Schedulers;
 public class RxUtils {
 
     private RxUtils() {
-        // No instantiation
+        throw new UnsupportedOperationException("No Instantiation!");
     }
 
     /**

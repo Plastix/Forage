@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatDelegate;
 public class ActivityUtils {
 
     private ActivityUtils() {
-        // No instantiation
+        throw new UnsupportedOperationException("No Instantiation!");
     }
 
     /**

@@ -12,7 +12,7 @@ public class LocationUtils {
     private static double MAX_LONGITUDE = 180;
 
     private LocationUtils() {
-        // No instantiation
+        throw new UnsupportedOperationException("No Instantiation!");
     }
 
     /**

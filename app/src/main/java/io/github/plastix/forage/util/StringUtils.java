@@ -11,7 +11,7 @@ import io.github.plastix.forage.R;
 public class StringUtils {
 
     private StringUtils() {
-        // No instantiation
+        throw new UnsupportedOperationException("No Instantiation!");
     }
 
     /**

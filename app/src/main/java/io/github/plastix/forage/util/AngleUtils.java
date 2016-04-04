@@ -8,7 +8,7 @@ import android.view.WindowManager;
 public class AngleUtils {
 
     private AngleUtils() {
-        // No instantiation
+        throw new UnsupportedOperationException("No Instantiation!");
     }
 
     /**
