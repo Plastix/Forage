@@ -1,18 +1,25 @@
 package io.github.plastix.forage.util;
 
 import android.content.res.Resources;
+import android.text.Html;
+import android.text.Spannable;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
-import io.github.plastix.forage.ForageRoboelectricUnitTestRunner;
 import io.github.plastix.forage.R;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Html.class)
 public class StringUtilsTest {
 
     private static Resources resources;
@@ -80,7 +87,23 @@ public class StringUtilsTest {
     //
     // Unit tests for stripHtml()
     //
-    // TODO Needs to be refactored since it depends on Android resources.
+
+    @Test
+    public void stripHtml_delegatesToAndroidClass() {
+        PowerMockito.mockStatic(Html.class);
+        String input = "input string";
+        String out = "output string";
+        Spannable spannable = mock(Spannable.class);
+        when(spannable.toString()).thenReturn(out);
+        when(Html.fromHtml(input)).thenReturn(spannable);
+
+        String output = StringUtils.stripHtml(input);
+
+        PowerMockito.verifyStatic();
+        Html.fromHtml(input);
+
+        assertThat(out).isEqualTo(output);
+    }
 
     //
     // Unit tests for capitalize()
