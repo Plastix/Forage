@@ -36,7 +36,6 @@ public class ReactivePresenterTest {
     public void beforeEachTest() {
         view = mock(FakeView.class);
         presenter = spy(new FakePresenter());
-
         presenter.setView(view);
 
         observableManager = mock(ObservableManager.class);
@@ -67,7 +66,8 @@ public class ReactivePresenterTest {
     @Test
     public void onPause_callsUnsubscribe() {
         presenter.onPause();
-        verify(presenter).unsubscribe();
+        PowerMockito.verifyStatic();
+        RxUtils.safeUnsubscribe(presenter.subscription);
     }
 
     @Test
