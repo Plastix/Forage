@@ -1,5 +1,6 @@
 package io.github.plastix.forage.data;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class ObservableManager {
      * @param id         Unique key to store Observable by.
      * @param observable Observable to store.
      */
-    public void storeObservable(final String id, Observable<?> observable) {
+    public void storeObservable(@NonNull final String id, @NonNull Observable<?> observable) {
         observable = observable.cache();
 
         observableMap.put(id, observable);
@@ -43,7 +44,7 @@ public class ObservableManager {
      *
      * @param id Key of observable to remove.
      */
-    public void removeObservable(String id) {
+    public void removeObservable(@NonNull String id) {
         observableMap.remove(id);
     }
 
@@ -56,7 +57,7 @@ public class ObservableManager {
      */
     @SuppressWarnings("unchecked")
     @Nullable
-    public <T> Observable<T> getObservable(String id) {
+    public <T> Observable<T> getObservable(@NonNull String id) {
         return (Observable<T>) observableMap.get(id);
     }
 
@@ -66,7 +67,7 @@ public class ObservableManager {
      * @param id Id to query
      * @return True if there is an Observable cached, else false.
      */
-    public boolean isStored(String id) {
+    public boolean isStored(@NonNull String id) {
         return observableMap.containsKey(id);
     }
 
