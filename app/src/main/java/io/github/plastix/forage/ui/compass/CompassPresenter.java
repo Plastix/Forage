@@ -1,6 +1,7 @@
 package io.github.plastix.forage.ui.compass;
 
 import android.location.Location;
+import android.support.annotation.NonNull;
 import android.util.Pair;
 
 import java.util.concurrent.TimeUnit;
@@ -38,10 +39,7 @@ public class CompassPresenter extends Presenter<CompassView> {
         this.subscription = Subscriptions.empty();
     }
 
-    public void setTargetLocation(Location location) {
-        if (location == null) {
-            throw new IllegalArgumentException("Target location cannot be null!");
-        }
+    public void setTargetLocation(@NonNull Location location) {
         this.target = location;
     }
 
@@ -88,6 +86,11 @@ public class CompassPresenter extends Presenter<CompassView> {
                         view.rotateCompass(pair.first);
                         view.updateDistance(pair.second.distanceTo(target));
                         view.updateAccuracy(pair.second.getAccuracy());
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        throwable.printStackTrace();
                     }
                 });
     }
