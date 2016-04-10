@@ -2,13 +2,18 @@ package io.github.plastix.forage.data;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import rx.Observable;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Observable.class)
 public class ObservableManagerTest {
 
     private ObservableManager observableManager;
@@ -21,7 +26,7 @@ public class ObservableManagerTest {
     @Test
     public void storeObservable_callsCache() {
         String id = "id";
-        Observable observable = spy(Observable.empty());
+        Observable observable = mock(Observable.class);
 
         observableManager.storeObservable(id, observable);
         verify(observable).cache();
