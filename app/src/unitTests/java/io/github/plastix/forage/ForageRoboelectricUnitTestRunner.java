@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 public class ForageRoboelectricUnitTestRunner extends RobolectricGradleTestRunner {
 
     // This value should be changed as soon as Robolectric will support newer api.
-    private static final int SDK_EMULATE_LEVEL = 23;
+    private static final int SDK_EMULATE_LEVEL = 21;
 
     public ForageRoboelectricUnitTestRunner(@NonNull Class<?> klass) throws Exception {
         super(klass);
@@ -28,7 +28,6 @@ public class ForageRoboelectricUnitTestRunner extends RobolectricGradleTestRunne
                 defaultConfig.resourceDir(),
                 defaultConfig.assetDir(),
                 defaultConfig.shadows(),
-                defaultConfig.instrumentedPackages(),
                 defaultConfig.application(),
                 defaultConfig.libraries(),
                 defaultConfig.constants() == Void.class ? BuildConfig.class : defaultConfig.constants()

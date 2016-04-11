@@ -157,23 +157,11 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
 
     // Unit testing
-    testCompile(
-            'junit:junit:4.12',
-            'org.mockito:mockito-core:1.10.19',
-            'com.google.truth:truth:0.28'
-    )
-    // Roboelectric 3.1-SNAPSHOT is the latest that supports API 23
-    testCompile('org.robolectric:robolectric:3.1-SNAPSHOT') {
-        exclude group: 'commons-logging'
-        exclude group: 'org.apache.httpcomponents'
-    }
-    testCompile ('org.powermock:powermock-api-mockito:1.6.2') {
-        exclude module: 'hamcrest-core'
-        exclude module: 'objenesis'
-    }
-    testCompile ('org.powermock:powermock-module-junit4:1.6.2') {
-        exclude module: 'hamcrest-core'
-        exclude module: 'objenesis'
-    }
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'com.google.truth:truth:0.28'
+    testCompile 'org.robolectric:robolectric:3.0'
+    testCompile 'org.powermock:powermock-api-mockito:1.6.2'
+    testCompile 'org.powermock:powermock-module-junit4:1.6.2'
 
 }
