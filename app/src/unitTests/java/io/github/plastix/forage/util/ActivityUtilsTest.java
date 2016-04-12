@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import io.github.plastix.forage.ForageRoboelectricUnitTestRunner;
@@ -19,73 +20,87 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(ForageRoboelectricUnitTestRunner.class)
+@RunWith(Enclosed.class)
 public class ActivityUtilsTest {
 
-    private AppCompatActivity activity;
+    @RunWith(ForageRoboelectricUnitTestRunner.class)
+    public static class WithRoboelectric {
 
-    @Before
-    public void beforeEachTest() {
-        activity = mock(AppCompatActivity.class);
+        private AppCompatActivity activity;
+
+        @Before
+        public void beforeEachTest() {
+            activity = mock(AppCompatActivity.class);
+        }
+
+        @Test
+        public void getApplicationSettingsIntent_hasCorrectIntentData() {
+            when(activity.getPackageName()).thenReturn("FakeActivity");
+            String uri_string = "package:" + activity.getPackageName();
+            Intent intent = ActivityUtils.getApplicationSettingsIntent(activity);
+
+            assertThat(intent.getDataString()).isEqualTo(uri_string);
+            assertThat(intent.getAction()).isEqualTo(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        }
     }
 
-    @Test
-    public void getApplicationSettingsIntent_hasCorrectIntentData() {
-        when(activity.getPackageName()).thenReturn("FakeActivity");
-        String uri_string = "package:" + activity.getPackageName();
-        Intent intent = ActivityUtils.getApplicationSettingsIntent(activity);
+    public static class WithoutRoboelectric {
 
-        assertThat(intent.getDataString()).isEqualTo(uri_string);
-        assertThat(intent.getAction()).isEqualTo(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-    }
+        private AppCompatActivity activity;
 
-    @Test
-    public void setSupportActionBarTitle_setStringTitleHasActionBar() {
-        String title = "title";
-        ActionBar actionBar = mock(ActionBar.class);
-        when(activity.getSupportActionBar()).thenReturn(actionBar);
+        @Before
+        public void beforeEachTest() {
+            activity = mock(AppCompatActivity.class);
+        }
 
-        ActivityUtils.setSupportActionBarTitle(activity, title);
+        @Test
+        public void setSupportActionBarTitle_setStringTitleHasActionBar() {
+            String title = "title";
+            ActionBar actionBar = mock(ActionBar.class);
+            when(activity.getSupportActionBar()).thenReturn(actionBar);
 
-        verify(activity, times(1)).getSupportActionBar();
-        verify(actionBar, times(1)).setTitle(title);
-    }
+            ActivityUtils.setSupportActionBarTitle(activity, title);
 
-    @Test
-    public void setSupportActionBarTitle_noActionBar() {
-        String title = "title";
-        when(activity.getSupportActionBar()).thenReturn(null);
+            verify(activity, times(1)).getSupportActionBar();
+            verify(actionBar, times(1)).setTitle(title);
+        }
 
-        ActivityUtils.setSupportActionBarTitle(activity, title);
+        @Test
+        public void setSupportActionBarTitle_noActionBar() {
+            String title = "title";
+            when(activity.getSupportActionBar()).thenReturn(null);
 
-        verify(activity, times(1)).getSupportActionBar();
-    }
+            ActivityUtils.setSupportActionBarTitle(activity, title);
 
-    @Test
-    public void setSupportActionBarTitle_stringResID() {
-        String title = "title";
-        @StringRes int fakeId = 0;
-        when(activity.getString(fakeId)).thenReturn(title);
-        ActionBar actionBar = mock(ActionBar.class);
-        when(activity.getSupportActionBar()).thenReturn(actionBar);
+            verify(activity, times(1)).getSupportActionBar();
+        }
 
-        ActivityUtils.setSupportActionBarTitle(activity, fakeId);
+        @Test
+        public void setSupportActionBarTitle_stringResID() {
+            String title = "title";
+            @StringRes int fakeId = 0;
+            when(activity.getString(fakeId)).thenReturn(title);
+            ActionBar actionBar = mock(ActionBar.class);
+            when(activity.getSupportActionBar()).thenReturn(actionBar);
 
-        verify(activity, times(1)).getString(fakeId);
-        verify(activity, times(1)).getSupportActionBar();
-        verify(actionBar, times(1)).setTitle(title);
-    }
+            ActivityUtils.setSupportActionBarTitle(activity, fakeId);
 
-    @Test
-    public void setSupportActionBarBack_setBackButtonEnabled() {
-        AppCompatDelegate delegate = mock(AppCompatDelegate.class);
-        ActionBar actionBar = mock(ActionBar.class);
-        when(delegate.getSupportActionBar()).thenReturn(actionBar);
+            verify(activity, times(1)).getString(fakeId);
+            verify(activity, times(1)).getSupportActionBar();
+            verify(actionBar, times(1)).setTitle(title);
+        }
 
-        ActivityUtils.setSupportActionBarBack(delegate);
+        @Test
+        public void setSupportActionBarBack_setBackButtonEnabled() {
+            AppCompatDelegate delegate = mock(AppCompatDelegate.class);
+            ActionBar actionBar = mock(ActionBar.class);
+            when(delegate.getSupportActionBar()).thenReturn(actionBar);
 
-        verify(delegate, atLeastOnce()).getSupportActionBar();
-        verify(actionBar, times(1)).setDisplayShowHomeEnabled(true);
-        verify(actionBar, times(1)).setDisplayHomeAsUpEnabled(true);
+            ActivityUtils.setSupportActionBarBack(delegate);
+
+            verify(delegate, atLeastOnce()).getSupportActionBar();
+            verify(actionBar, times(1)).setDisplayShowHomeEnabled(true);
+            verify(actionBar, times(1)).setDisplayHomeAsUpEnabled(true);
+        }
     }
 }
