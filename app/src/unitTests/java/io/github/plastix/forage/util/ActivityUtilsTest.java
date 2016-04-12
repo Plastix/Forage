@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import io.github.plastix.forage.ForageRoboelectricUnitTestRunner;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.atLeastOnce;
@@ -17,6 +19,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@RunWith(ForageRoboelectricUnitTestRunner.class)
 public class ActivityUtilsTest {
 
     private AppCompatActivity activity;
@@ -26,7 +29,6 @@ public class ActivityUtilsTest {
         activity = mock(AppCompatActivity.class);
     }
 
-    @Ignore("Roboelectric Problems")
     @Test
     public void getApplicationSettingsIntent_hasCorrectIntentData() {
         when(activity.getPackageName()).thenReturn("FakeActivity");

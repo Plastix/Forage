@@ -28,7 +28,7 @@ public class ForageRoboelectricUnitTestRunner extends RobolectricGradleTestRunne
                 defaultConfig.resourceDir(),
                 defaultConfig.assetDir(),
                 defaultConfig.shadows(),
-                defaultConfig.application(),
+                ForageUnitTestApplication.class,
                 defaultConfig.libraries(),
                 defaultConfig.constants() == Void.class ? BuildConfig.class : defaultConfig.constants()
         );
