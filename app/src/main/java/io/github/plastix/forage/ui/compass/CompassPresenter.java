@@ -78,7 +78,7 @@ public class CompassPresenter extends Presenter<CompassView> {
                     }
                 })
                 .sample(COMPASS_UPDATE_INTERVAL, TimeUnit.MILLISECONDS)
-                .compose(RxUtils.<Pair<Float, Location>>subscribeOnComputationThreadTransformer())
+                .compose(RxUtils.<Pair<Float, Location>>subscribeOnIoThreadTransformer())
                 .compose(RxUtils.<Pair<Float, Location>>observeOnUIThreadTransformer())
                 .subscribe(new Action1<Pair<Float, Location>>() {
                     @Override
