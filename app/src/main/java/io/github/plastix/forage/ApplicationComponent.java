@@ -1,5 +1,7 @@
 package io.github.plastix.forage;
 
+import com.google.gson.Gson;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -36,6 +38,9 @@ import io.github.plastix.forage.ui.navigate.NavigateModule;
         }
 )
 public interface ApplicationComponent {
+
+    // Provide Gson from the real app to the tests without need in injection to the test.
+    Gson gson();
 
     void injectTo(ForageApplication forageApplication);
 
