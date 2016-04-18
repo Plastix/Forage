@@ -1,4 +1,4 @@
 package io.github.plastix.forage.data.api;
 
-public class OkApiServiceTest {
+public class OkApiServiceIntegrationTest {
 }
