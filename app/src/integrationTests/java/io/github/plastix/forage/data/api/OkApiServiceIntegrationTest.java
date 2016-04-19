@@ -13,8 +13,10 @@ import io.github.plastix.forage.ForageRoboelectricIntegrationTestRunner;
 import io.github.plastix.forage.data.local.model.Cache;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import retrofit2.adapter.rxjava.HttpException;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assert_;
 
 @RunWith(ForageRoboelectricIntegrationTestRunner.class)
 public class OkApiServiceIntegrationTest {
@@ -68,6 +70,7 @@ public class OkApiServiceIntegrationTest {
                 "}";
         mockWebServer.enqueue(new MockResponse().setBody(jsonResponse));
 
+        // Input fake data to the API call
         List<Cache> caches = okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().first();
 
         assertThat(caches).hasSize(2);
@@ -96,5 +99,22 @@ public class OkApiServiceIntegrationTest {
         assertThat(cache2.size).isEqualTo("None");
         assertThat(cache2.description).isEqualTo("Cache Description 2");
 
+    }
+
+    @Test
+    public void searchAndRetrieve_shouldThrowExceptionOnWebserverError() {
+        for (Integer errorCode : HttpCodes.clientAndServerSideErrorCodes()) {
+            mockWebServer.enqueue(new MockResponse().setStatus("HTTP/1.1 " + errorCode + " Nope!"));
+
+            try {
+                // Input fake data to the API call
+                okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().first();
+                assert_().fail("HttpException should be thrown for error code: " + errorCode);
+            } catch (RuntimeException expected) {
+                HttpException httpException = (HttpException) expected.getCause();
+                assertThat(httpException.code()).isEqualTo(errorCode);
+                assertThat(httpException.message()).isEqualTo("Nope!");
+            }
+        }
     }
 }
