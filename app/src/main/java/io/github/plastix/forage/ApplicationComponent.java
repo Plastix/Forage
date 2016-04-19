@@ -5,7 +5,9 @@ import com.google.gson.Gson;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import io.github.plastix.forage.data.api.HostSelectionInterceptor;
 import io.github.plastix.forage.data.api.OkApiModule;
+import io.github.plastix.forage.data.api.OkApiService;
 import io.github.plastix.forage.data.local.DatabaseModule;
 import io.github.plastix.forage.data.location.LocationModule;
 import io.github.plastix.forage.data.network.NetworkModule;
@@ -39,8 +41,14 @@ import io.github.plastix.forage.ui.navigate.NavigateModule;
 )
 public interface ApplicationComponent {
 
-    // Provide Gson from the real app to the tests without need in injection to the test.
+    // Provide Gson from the real app to the tests without need to inject to the test.
     Gson gson();
+
+    // Provide OkHttp Host Interceptor from the real app to the tests without need to inject to the test.
+    HostSelectionInterceptor inteceptor();
+
+    // Provide OkApiService from the real app to the tests without need to inject to the test.
+    OkApiService okApiService();
 
     void injectTo(ForageApplication forageApplication);
 

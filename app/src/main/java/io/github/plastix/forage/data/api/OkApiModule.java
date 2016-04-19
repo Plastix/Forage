@@ -17,6 +17,7 @@ import io.github.plastix.forage.data.api.gson.HtmlAdapter;
 import io.github.plastix.forage.data.api.gson.ListTypeAdapterFactory;
 import io.github.plastix.forage.data.api.gson.StringCapitalizerAdapter;
 import io.realm.RealmObject;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -40,12 +41,30 @@ public class OkApiModule {
     @NonNull
     @Provides
     @Singleton
+    public HostSelectionInterceptor provideUrlInterceptor() {
+        return new HostSelectionInterceptor();
+    }
+
+    @NonNull
+    @Singleton
+    @Provides
+    public OkHttpClient provideOkHttp(HostSelectionInterceptor host) {
+        return new OkHttpClient.Builder()
+                .addInterceptor(host)
+                .build();
+    }
+
+    @NonNull
+    @Provides
+    @Singleton
     public Retrofit provideRetrofit(@NonNull @Named("BASE_ENDPOINT") String baseUrl,
                                     @NonNull GsonConverterFactory gsonConverter,
-                                    @NonNull RxJavaCallAdapterFactory rxAdapter) {
+                                    @NonNull RxJavaCallAdapterFactory rxAdapter,
+                                    @NonNull OkHttpClient client) {
 
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .client(client)
                 .addConverterFactory(gsonConverter)
                 .addCallAdapterFactory(rxAdapter)
                 .build();

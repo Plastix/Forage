@@ -171,4 +171,7 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4-rule:1.6.2'
     testCompile 'org.powermock:powermock-classloading-xstream:1.6.2'
 
+    // Integration Testing
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
+
 }
