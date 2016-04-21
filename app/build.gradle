@@ -46,6 +46,9 @@ android {
         // Enable VectorDrawableCompat for API <21
         vectorDrawables.useSupportLibrary = true
 
+        // Custom instrumentation runner to change the application class
+        testInstrumentationRunner "io.github.plastix.forage.ForageFunctionalTestRunner"
+
         buildConfigField("String", "OKAPI_US_CONSUMER_KEY", getProps("okapi_us_consumer_key"))
 
         // Use res value so we can access the Google API key in the AndroidManifest.xml
@@ -173,5 +176,18 @@ dependencies {
 
     // Integration Testing
     testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
+
+    // Functional Testing
+    androidTestCompile 'com.android.support:support-annotations:23.3.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
+        // Fix dependency error
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'support-v4'
+    }
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+
 
 }
