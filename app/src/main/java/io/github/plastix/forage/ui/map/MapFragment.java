@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
@@ -24,7 +24,7 @@ import io.github.plastix.forage.ui.PresenterFragment;
  */
 public class MapFragment extends PresenterFragment<MapPresenter> implements MapFragView, OnMapReadyCallback {
 
-    @Bind(R.id.map_mapview)
+    @BindView(R.id.map_mapview)
     MapView map;
 
     private GoogleMap googleMap;

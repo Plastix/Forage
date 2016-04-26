@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Lazy;
 import io.github.plastix.forage.R;
@@ -63,19 +63,19 @@ public class CacheAdapter extends AbstractRealmAdapter<Cache, CacheAdapter.Cache
 
     public class CacheHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.cache_name)
+        @BindView(R.id.cache_name)
         TextView cacheName;
 
-        @Bind(R.id.cache_terrain)
+        @BindView(R.id.cache_terrain)
         TextView cacheTerrain;
 
-        @Bind(R.id.cache_difficulty)
+        @BindView(R.id.cache_difficulty)
         TextView cacheDifficulty;
 
-        @Bind(R.id.cache_size)
+        @BindView(R.id.cache_size)
         TextView cacheSize;
 
-        @Bind(R.id.cache_type)
+        @BindView(R.id.cache_type)
         TextView cacheType;
 
         public CacheHolder(View itemView) {

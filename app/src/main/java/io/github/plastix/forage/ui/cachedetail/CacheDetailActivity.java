@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import icepick.State;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
@@ -39,37 +39,37 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
     private final static String BUNDLE_KEY_MAP_STATE = "BUNDLE_KEY_MAP_STATE";
 
-    @Bind(R.id.cachedetail_appbar)
+    @BindView(R.id.cachedetail_appbar)
     AppBarLayout appBarLayout;
 
-    @Bind(R.id.cachedetail_toolbar)
+    @BindView(R.id.cachedetail_toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.cachedetail_collapsing_toolbar)
+    @BindView(R.id.cachedetail_collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
-    @Bind(R.id.cachedetail_fab)
+    @BindView(R.id.cachedetail_fab)
     FloatingActionButton fab;
 
-    @Bind(R.id.cachedetail_map)
+    @BindView(R.id.cachedetail_map)
     MapView map;
 
-    @Bind(R.id.cachedetail_description)
+    @BindView(R.id.cachedetail_description)
     TextView description;
 
-    @Bind(R.id.cachedetail_difficulty)
+    @BindView(R.id.cachedetail_difficulty)
     TextView difficulty;
 
-    @Bind(R.id.cachedetail_size)
+    @BindView(R.id.cachedetail_size)
     TextView size;
 
-    @Bind(R.id.cachedetail_terrain)
+    @BindView(R.id.cachedetail_terrain)
     TextView terrain;
 
-    @Bind(R.id.cachedetail_title)
+    @BindView(R.id.cachedetail_title)
     TextView title;
 
-    @Bind(R.id.cachedetail_type)
+    @BindView(R.id.cachedetail_type)
     TextView type;
 
     @Inject
@@ -80,6 +80,20 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
     @State
     String cacheName;
+
+    /**
+     * Static factory method that returns a new intent for opening a {@link CacheDetailActivity}.
+     *
+     * @param context   A context
+     * @param cacheCode Cache code
+     * @return A new intent.
+     */
+    public static Intent newIntent(Context context, String cacheCode) {
+        Intent intent = new Intent(context, CacheDetailActivity.class);
+        intent.putExtra(EXTRA_CACHE_CODE, cacheCode);
+
+        return intent;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,11 +110,6 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
     }
 
-    private void injectDependencies() {
-        ForageApplication.getComponent(this)
-                .plus(new CacheDetailModule(this)).injectTo(this);
-    }
-
     private void initializeView(Bundle savedInstanceState) {
         setActivityActionBar();
 
@@ -113,6 +122,10 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
         map.onCreate(mapState);
     }
 
+    private void injectDependencies() {
+        ForageApplication.getComponent(this)
+                .plus(new CacheDetailModule(this)).injectTo(this);
+    }
 
     private void setActivityActionBar() {
         setSupportActionBar(toolbar);
@@ -222,20 +235,6 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
                     .setDuration(500);
         }
 
-    }
-
-    /**
-     * Static factory method that returns a new intent for opening a {@link CacheDetailActivity}.
-     *
-     * @param context   A context
-     * @param cacheCode Cache code
-     * @return A new intent.
-     */
-    public static Intent newIntent(Context context, String cacheCode) {
-        Intent intent = new Intent(context, CacheDetailActivity.class);
-        intent.putExtra(EXTRA_CACHE_CODE, cacheCode);
-
-        return intent;
     }
 
 }

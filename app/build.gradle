@@ -162,7 +162,8 @@ dependencies {
     provided 'frankiesardo:icepick-processor:3.1.0'
 
     // Other Third Party Libraries
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton:butterknife:8.0.0'
+    apt 'com.jakewharton:butterknife-compiler:8.0.0'
 
     // Unit testing
     testCompile 'junit:junit:4.12'

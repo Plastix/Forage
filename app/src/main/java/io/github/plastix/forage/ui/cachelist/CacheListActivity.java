@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.BaseFragmentActivity;
 import io.github.plastix.forage.ui.map.MapActivity;
@@ -36,7 +36,7 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
     private static final int LOCATION_REQUEST_CODE = 0;
     private static final String LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION;
 
-    @Bind(R.id.cachelist_toolbar)
+    @BindView(R.id.cachelist_toolbar)
     Toolbar toolbar;
 
     private AlertDialog dialog;

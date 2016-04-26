@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.BaseFragmentActivity;
 
@@ -23,7 +23,7 @@ public class CompassActivity extends BaseFragmentActivity<CompassFragment> {
     @IdRes
     private static final int COMPASS_FRAME_ID = R.id.compass_content_frame;
 
-    @Bind(R.id.compass_toolbar)
+    @BindView(R.id.compass_toolbar)
     Toolbar toolbar;
 
     @Override

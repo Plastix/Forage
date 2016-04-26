@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
@@ -40,13 +40,13 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter> imp
     @Inject
     SimpleDividerItemDecoration itemDecorator;
 
-    @Bind(R.id.cachelist_recyclerview)
+    @BindView(R.id.cachelist_recyclerview)
     RecyclerView recyclerView;
 
-    @Bind(R.id.cachelist_swiperefresh)
+    @BindView(R.id.cachelist_swiperefresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @Bind(R.id.empty_view)
+    @BindView(R.id.empty_view)
     View emptyView;
 
     private RecyclerView.AdapterDataObserver dataChangeListener;

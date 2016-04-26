@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.BaseFragmentActivity;
 import io.github.plastix.forage.util.ActivityUtils;
@@ -22,7 +22,7 @@ public class MapActivity extends BaseFragmentActivity<MapFragment> {
     @IdRes
     private static final int MAP_FRAME_ID = R.id.map_content_frame;
 
-    @Bind(R.id.map_toolbar)
+    @BindView(R.id.map_toolbar)
     Toolbar toolbar;
 
     @Override

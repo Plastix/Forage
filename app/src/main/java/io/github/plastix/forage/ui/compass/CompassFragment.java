@@ -12,7 +12,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import icepick.State;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
@@ -28,13 +28,13 @@ public class CompassFragment extends PresenterFragment<CompassPresenter> impleme
     private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
     private static float CENTER = 0.5f;
 
-    @Bind(R.id.compass_arrow)
+    @BindView(R.id.compass_arrow)
     ImageView arrow;
 
-    @Bind(R.id.compass_distance)
+    @BindView(R.id.compass_distance)
     TextView distance;
 
-    @Bind(R.id.compass_accuracy)
+    @BindView(R.id.compass_accuracy)
     TextView accuracy;
 
     @State

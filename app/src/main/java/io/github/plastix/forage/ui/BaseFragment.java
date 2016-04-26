@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import icepick.Icepick;
 
 /**
@@ -15,6 +16,8 @@ import icepick.Icepick;
  * This provides hooks for Butterknife and Icepick automatically.
  */
 public abstract class BaseFragment extends Fragment {
+
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,10 +31,12 @@ public abstract class BaseFragment extends Fragment {
         return inflater.inflate(getFragmentLayout(), container, false);
     }
 
+    protected abstract int getFragmentLayout();
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
     }
 
     @Override
@@ -43,8 +48,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
-
-    protected abstract int getFragmentLayout();
 }

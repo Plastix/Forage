@@ -8,7 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
@@ -19,19 +19,19 @@ import io.github.plastix.forage.util.LocationUtils;
 
 public class NavigateActivity extends PresenterActivity<NavigatePresenter> implements NavigateView {
 
-    @Bind(R.id.navigate_toolbar)
+    @BindView(R.id.navigate_toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.navigate_latitude)
+    @BindView(R.id.navigate_latitude)
     EditText latitude;
 
-    @Bind(R.id.navigate_longitude)
+    @BindView(R.id.navigate_longitude)
     EditText longitude;
 
-    @Bind(R.id.navigate_latitude_text_input_layout)
+    @BindView(R.id.navigate_latitude_text_input_layout)
     TextInputLayout latitudeInputLayout;
 
-    @Bind(R.id.navigate_longitude_text_input_layout)
+    @BindView(R.id.navigate_longitude_text_input_layout)
     TextInputLayout longitudeInputLayout;
 
     @Override
