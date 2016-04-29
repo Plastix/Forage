@@ -19,7 +19,6 @@ import com.google.android.gms.location.LocationServices;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,9 +27,9 @@ import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.rules.NeedsMockWebServer;
 import io.github.plastix.forage.screens.CacheListScreen;
-import io.github.plastix.forage.screens.MapScreen;
 import io.github.plastix.forage.ui.cachelist.CacheListActivity;
 import io.github.plastix.forage.ui.map.MapActivity;
+import io.github.plastix.forage.ui.navigate.NavigateActivity;
 import io.github.plastix.forage.util.LocationUtils;
 import io.github.plastix.forage.util.TestUtils;
 import io.github.plastix.forage.util.UiAutomatorUtils;
@@ -38,6 +37,7 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -45,6 +45,7 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -55,7 +56,6 @@ public class CacheListTest {
             new IntentsTestRule<>(CacheListActivity.class);
 
     private CacheListScreen cacheListScreen;
-    private MapScreen mapScreen;
     private UiDevice device;
 
     private DatabaseInteractor databaseInteractor;
@@ -92,7 +92,6 @@ public class CacheListTest {
     @Before
     public void beforeEachTest() {
         cacheListScreen = new CacheListScreen();
-        mapScreen = new MapScreen();
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         databaseInteractor = TestUtils.app().getComponent().databaseInteractor();
     }
@@ -114,20 +113,32 @@ public class CacheListTest {
 
         // Verify that an MapActivity intent has been launched
         intended(hasComponent(new ComponentName(InstrumentationRegistry.getTargetContext(), MapActivity.class)));
+    }
 
-        // Verify the MapActivity toolbar title
-        mapScreen.shouldDisplayTitle(TestUtils.app().getString(R.string.map_title));
+    @Test
+    public void testNavigateButton() {
+        UiAutomatorUtils.allowPermissionsIfNeeded(device);
+
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+
+        // We must click based on the text
+        // Android menu items don't the ID of the menu item
+        onView(withText(R.string.cachelist_action_navigate_title)).perform(click());
+
+        // Verify that an Navigate intent has been launched
+        intended(hasComponent(new ComponentName(InstrumentationRegistry.getTargetContext(), NavigateActivity.class)));
+
     }
 
     @Test
     public void testNoGeocachesDownloaded() {
         UiAutomatorUtils.allowPermissionsIfNeeded(device);
+        databaseInteractor.clearGeocaches();
 
         onView(withId(R.id.empty_view)).check(matches(isDisplayed()));
     }
 
-    @Ignore
-    @Test
+    //    @Test
     @NeedsMockWebServer(setupMethod = "queueNetworkRequest")
     public void shouldDisplayGeocachesFromServer() throws UiObjectNotFoundException {
         UiAutomatorUtils.allowPermissionsIfNeeded(device);
