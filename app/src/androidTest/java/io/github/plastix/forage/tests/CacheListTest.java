@@ -130,7 +130,7 @@ public class CacheListTest {
     @Test
     @NeedsMockWebServer(setupMethod = "queueNetworkRequest")
     public void shouldDisplayGeocachesFromServer() throws UiObjectNotFoundException {
-        UiAutomatorUtils.allowPermissionsIfNeeded(device);`
+        UiAutomatorUtils.allowPermissionsIfNeeded(device);
 
         // Swipe the refresh view
         onView(withId(R.id.cachelist_swiperefresh)).perform(swipeDown());
