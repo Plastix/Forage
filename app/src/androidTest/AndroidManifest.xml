@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="io.github.plastix.forage"
+          xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18"/>
+
+    <uses-permission android:name="android.permission.ALLOW_MOCK_LOCATIONS"/>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
 
 </manifest>

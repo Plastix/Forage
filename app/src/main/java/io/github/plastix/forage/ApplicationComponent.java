@@ -1,5 +1,6 @@
 package io.github.plastix.forage;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;
@@ -8,6 +9,7 @@ import dagger.Component;
 import io.github.plastix.forage.data.api.HostSelectionInterceptor;
 import io.github.plastix.forage.data.api.OkApiModule;
 import io.github.plastix.forage.data.api.OkApiService;
+import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.DatabaseModule;
 import io.github.plastix.forage.data.location.LocationModule;
 import io.github.plastix.forage.data.network.NetworkModule;
@@ -49,6 +51,12 @@ public interface ApplicationComponent {
 
     // Provide OkApiService from the real app to the tests without need to inject to the test.
     OkApiService okApiService();
+
+    // Provide DatabaseInteractor from the real app to the tests without need to inject to the test.
+    DatabaseInteractor databaseInteractor();
+
+    // Provide GoogleApiClient from the real app to the tests without need to inject to the test.
+    GoogleApiClient googleClient();
 
     void injectTo(ForageApplication forageApplication);
 
