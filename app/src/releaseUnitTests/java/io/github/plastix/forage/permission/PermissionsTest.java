@@ -48,6 +48,6 @@ public final class PermissionsTest {
         );
 
         assertThat(new HashSet<>(manifest.getUsedPermissions())).
-                containsExactly(EXPECTED_PERMISSIONS);
+                containsExactly((Object[]) EXPECTED_PERMISSIONS);
     }
 }
