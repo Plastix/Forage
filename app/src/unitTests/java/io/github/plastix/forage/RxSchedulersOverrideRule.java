@@ -44,16 +44,6 @@ public class RxSchedulersOverrideRule implements TestRule {
         }
     };
 
-    // Hack to get around RxJavaPlugins.reset() not being public
-    // See https://github.com/ReactiveX/RxJava/issues/2297
-    // Hopefully the method will be public in new releases of RxAndroid and we can remove the hack.
-    private void callResetViaReflectionIn(RxJavaPlugins rxJavaPlugins)
-            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Method method = rxJavaPlugins.getClass().getDeclaredMethod("reset");
-        method.setAccessible(true);
-        method.invoke(rxJavaPlugins);
-    }
-
     @Override
     public Statement apply(final Statement base, Description description) {
         return new Statement() {
@@ -70,5 +60,15 @@ public class RxSchedulersOverrideRule implements TestRule {
                 callResetViaReflectionIn(RxJavaPlugins.getInstance());
             }
         };
+    }
+
+    // Hack to get around RxJavaPlugins.reset() not being public
+    // See https://github.com/ReactiveX/RxJava/issues/2297
+    // Hopefully the method will be public in new releases of RxAndroid and we can remove the hack.
+    private void callResetViaReflectionIn(RxJavaPlugins rxJavaPlugins)
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        Method method = rxJavaPlugins.getClass().getDeclaredMethod("reset");
+        method.setAccessible(true);
+        method.invoke(rxJavaPlugins);
     }
 }

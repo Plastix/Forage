@@ -46,22 +46,6 @@ public class RxUtils {
     }
 
     /**
-     * Returns a new Observable transformer that observes on the Android Main thread.
-     *
-     * @param <T> Generic type of observable.
-     * @return New transformer.
-     */
-    public static <T> Observable.Transformer<T, T> observeOnUIThreadTransformer() {
-        return new Observable.Transformer<T, T>() {
-            @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable.observeOn(AndroidSchedulers.mainThread());
-            }
-        };
-    }
-
-
-    /**
      * Returns a new Observable transformer that subscribes on a IO thread.
      *
      * @param <T> Generic type of observable.
@@ -77,6 +61,21 @@ public class RxUtils {
     }
 
     /**
+     * Returns a new Observable transformer that observes on the Android Main thread.
+     *
+     * @param <T> Generic type of observable.
+     * @return New transformer.
+     */
+    public static <T> Observable.Transformer<T, T> observeOnUIThreadTransformer() {
+        return new Observable.Transformer<T, T>() {
+            @Override
+            public Observable<T> call(Observable<T> tObservable) {
+                return tObservable.observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+    }
+
+    /**
      * Returns a new Observable transformer that subscribes on a CPU computation thread.
      *
      * @param <T> Generic type of observable.
@@ -87,6 +86,21 @@ public class RxUtils {
             @Override
             public Observable<T> call(Observable<T> tObservable) {
                 return tObservable.subscribeOn(Schedulers.computation());
+            }
+        };
+    }
+
+    /**
+     * Returns a new Observable transformer that subscribes on a new thread
+     *
+     * @param <T> Generic type of observable.
+     * @return New transformer.
+     */
+    public static <T> Observable.Transformer<T, T> subscribeOnNewThreadTransformer() {
+        return new Observable.Transformer<T, T>() {
+            @Override
+            public Observable<T> call(Observable<T> tObservable) {
+                return tObservable.subscribeOn(Schedulers.newThread());
             }
         };
     }

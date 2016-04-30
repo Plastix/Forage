@@ -64,6 +64,7 @@ public class CompassPresenter extends Presenter<CompassView> {
                     }
                 }
         )
+                .compose(RxUtils.<Pair<Float, Location>>subscribeOnComputationThreadTransformer())
                 .map(new Func1<Pair<Float, Location>, Pair<Float, Location>>() {
                     @Override
                     public Pair<Float, Location> call(Pair<Float, Location> pair) {
@@ -77,9 +78,8 @@ public class CompassPresenter extends Presenter<CompassView> {
 
                     }
                 })
-                .sample(COMPASS_UPDATE_INTERVAL, TimeUnit.MILLISECONDS)
-                .compose(RxUtils.<Pair<Float, Location>>subscribeOnIoThreadTransformer())
                 .compose(RxUtils.<Pair<Float, Location>>observeOnUIThreadTransformer())
+                .throttleFirst(COMPASS_UPDATE_INTERVAL, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Pair<Float, Location>>() {
                     @Override
                     public void call(Pair<Float, Location> pair) {
