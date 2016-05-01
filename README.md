@@ -21,9 +21,12 @@ Libraries
 Testing Libraries
 -------
 * [JUnit](http://junit.org/junit4/)
+* [Truth](https://github.com/google/truth)
 * [Mockito](http://mockito.org/)
 * [Powermock](https://github.com/jayway/powermock)
 * [Roboelectric](http://robolectric.org/)
+* [Espresso](https://google.github.io/android-testing-support-library/docs/espresso/index.html)
+* [UI Automator](http://developer.android.com/tools/testing-support-library/index.html#UIAutomator)
 
 Requirements
 -------
@@ -32,7 +35,7 @@ To compile and run the project you'll need:
 - [Android SDK](http://developer.android.com/sdk/index.html).
 - [Android Marshmallow (API 23)](http://developer.android.com/tools/revisions/platforms.html).
 - Android SDK Tools
-- Android SDK Build Tools 23.0.2
+- Android SDK Build Tools 23.0.3
 - Android Support Repository
 - Android Support Libraries
 - JDK 7
