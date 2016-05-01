@@ -116,3 +116,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Allow anything in the gradle wrapper folder
+!gradle/wrapper/*
