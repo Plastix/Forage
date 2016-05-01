@@ -8,7 +8,7 @@ dependencies:
     # Build tools should be installed after "tools", uh.
     - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.3"
     # Generate gradle.properties with API keys
-    - source environmentSetup.sh && copyEnvVarsToGradlePropertie
+    - source environmentSetup.sh && copyEnvVarsToGradleProperties
 
 test:
   override:
