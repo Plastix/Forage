@@ -20,17 +20,6 @@ buildscript {
     }
 }
 
-def getProps(String propName) {
-    def propsFile = rootProject.file('local.properties')
-    if (propsFile.exists()) {
-        def props = new Properties()
-        props.load(new FileInputStream(propsFile))
-        return String.format("\"%s\"", props[propName]);
-    } else {
-        return "";
-    }
-}
-
 android {
 
     compileSdkVersion 23
@@ -49,10 +38,12 @@ android {
         // Custom instrumentation runner to change the application class
         testInstrumentationRunner "io.github.plastix.forage.ForageFunctionalTestRunner"
 
-        buildConfigField("String", "OKAPI_US_CONSUMER_KEY", getProps("okapi_us_consumer_key"))
+        //noinspection GroovyAssignabilityCheck
+        buildConfigField("String", "OKAPI_US_CONSUMER_KEY", "\"" + OKAPI_US_CONSUMER_KEY + "\"")
 
+        //noinspection GroovyAssignabilityCheck
         // Use res value so we can access the Google API key in the AndroidManifest.xml
-        resValue("string", "GOOGLE_MAPS_API_KEY", getProps("google_maps_api_key"))
+        resValue("string", "GOOGLE_MAPS_API_KEY", "\"" + GOOGLE_MAPS_API_KEY + "\"")
 
     }
 

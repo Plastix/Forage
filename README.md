@@ -43,11 +43,11 @@ API keys are not stored in the repo! Thus, you will need the following API keys:
 1. [OkApi (US) key](http://www.opencaching.us/)
 2. [Google Maps Android API key](https://developers.google.com/maps/documentation/android-api/)
 
-Create a `local.properties` file in the root directory of the project and add the following to it:
+Add the following to your global `gradle.properties` file. On OSX this file is stored at `~/.gradle/gradle.properties`.
 ```INI
-okapi_us_consumer_key=PUT OKAPI CONSUMER KEY HERE
-okapi_us_consumer_secret=PUT OKAPI CONSUMER SECRET HERE
-google_maps_api_key=PUT GOOGLE MAPS KEY HERE
+OKAPI_US_CONSUMER_KEY=PUT OKAPI CONSUMER KEY HERE
+OKAPI_US_CONSUMER_SECRET=PUT OKAPI CONSUMER SECRET HERE
+GOOGLE_MAPS_API_KEY=PUT GOOGLE MAPS KEY HERE
 ```
 
 
