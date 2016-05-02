@@ -47,7 +47,7 @@ public interface ApplicationComponent {
     Gson gson();
 
     // Provide OkHttp Host Interceptor from the real app to the tests without need to inject to the test.
-    HostSelectionInterceptor inteceptor();
+    HostSelectionInterceptor hostInteceptor();
 
     // Provide OkApiService from the real app to the tests without need to inject to the test.
     OkApiService okApiService();

@@ -25,7 +25,7 @@ public class MockWebServerRule implements TestRule {
 
     public MockWebServerRule(@NonNull Object testClassInstance) {
         this.testClassInstance = testClassInstance;
-        interceptor = TestUtils.app().getComponent().inteceptor();
+        interceptor = TestUtils.app().getComponent().hostInteceptor();
     }
 
     @Override

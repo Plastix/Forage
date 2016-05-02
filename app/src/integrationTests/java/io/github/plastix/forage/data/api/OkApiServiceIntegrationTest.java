@@ -32,7 +32,7 @@ public class OkApiServiceIntegrationTest {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
         okApiService = applicationComponent.okApiService();
-        interceptor = applicationComponent.inteceptor();
+        interceptor = applicationComponent.hostInteceptor();
 
         interceptor.setHost(mockWebServer.url("").toString());
     }
