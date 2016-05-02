@@ -86,6 +86,11 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
+        disable 'GoogleAppIndexingWarning' // App does not have deep linking.
+        disable 'UseCompoundDrawables' // Support library dropped support for Compound Drawable vectors
+        disable 'UnusedAttribute'
+
+        warningsAsErrors false
         abortOnError false
     }
 

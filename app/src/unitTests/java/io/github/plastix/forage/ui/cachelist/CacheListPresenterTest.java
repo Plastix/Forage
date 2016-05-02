@@ -3,7 +3,6 @@ package io.github.plastix.forage.ui.cachelist;
 import android.location.Location;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;

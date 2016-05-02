@@ -37,19 +37,18 @@ public class MapFragment extends PresenterFragment<MapPresenter> implements MapF
 
     }
 
+    private void injectDependencies() {
+        ForageApplication.getComponent(getContext())
+                .plus(new MapModule(this))
+                .injectTo(this);
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         map.onCreate(savedInstanceState);
         map.getMapAsync(this);
-    }
-
-
-    private void injectDependencies() {
-        ForageApplication.getComponent(getContext())
-                .plus(new MapModule(this))
-                .injectTo(this);
     }
 
     @Override

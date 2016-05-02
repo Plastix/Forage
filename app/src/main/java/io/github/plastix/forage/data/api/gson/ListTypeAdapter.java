@@ -14,7 +14,7 @@ import javax.inject.Inject;
 /**
  * Gson Type Adapter for dealing with OkApi's awful JSON response format. For some reason
  * OkApi returns JSON Object with each each geocache as a key instead of a JSON list.
- * <p/>
+ * <p>
  * This adapter converts the OkApi JSON object format to a nice list.
  *
  * @param <T> Object type of list.

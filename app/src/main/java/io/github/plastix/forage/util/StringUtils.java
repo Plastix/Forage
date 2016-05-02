@@ -38,7 +38,7 @@ public class StringUtils {
      *
      * @param input String in HTML form
      * @return Plain text string
-     * <p/>
+     * <p>
      * Based on http://stackoverflow.com/questions/8560045/android-getting-obj-using-textview-settextcharactersequence
      */
     @NonNull
@@ -64,7 +64,7 @@ public class StringUtils {
 
     /**
      * Turns the distance in miles to a human-readable String. For example:
-     * <p/>
+     * <p>
      * 5.2 -> 5.2 mi
      * 0.3 -> 5280 ft
      *

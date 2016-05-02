@@ -27,7 +27,7 @@ public class ObservableManager {
     /**
      * Store the specified observable using the specified key. The observable is cached using
      * Rx's default .cache() operator.
-     * <p/>
+     * <p>
      * See {@link Observable#cache()} for caveats.
      *
      * @param id         Unique key to store Observable by.

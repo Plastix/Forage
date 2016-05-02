@@ -16,15 +16,12 @@
     <string name="cachelist_action_map_title">Map</string>
     <string name="cachelist_action_navigate_title">Navigate To</string>
 
-    <string name="cachedetail_title">Geocache Info</string>
     <string name="cachedetail_difficulty_header">Difficulty</string>
     <string name="cachedetail_terrain_header">Terrain</string>
     <string name="cachedetail_description_header">Description</string>
     <string name="cachedetail_cacheinfo_header">Cache Info</string>
     <string name="cachedetail_size_header">Size</string>
     <string name="cachedetail_rating">%s/5</string>
-
-    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor augue nec odio mattis maximus. Nunc convallis lorem ut dui dapibus, a egestas sem consequat. Praesent fermentum lacus at justo scelerisque, sed blandit elit posuere. Suspendisse nisi ante, accumsan ac malesuada eget, euismod sit amet ipsum. Pellentesque sed sem laoreet, pellentesque metus sed, elementum neque. Fusce magna odio, dapibus a sagittis vel, efficitur eget dui. Maecenas volutpat luctus metus sed laoreet. Nam laoreet egestas pharetra. Sed pulvinar tincidunt tincidunt. Aenean quis nisi ac sapien tempus porttitor non sit amet lectus. Donec mollis, neque eget eleifend convallis, velit diam interdum augue, ac lobortis nisi enim sed elit. Pellentesque nec blandit mi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin quis velit a nisi ultricies convallis. Sed ut tellus vel orci mollis congue.</string>
 
     <string name="compass_title">Compass</string>
     <string name="compass_distance_label">Distance</string>
@@ -42,5 +39,12 @@
     <string name="navigate_latitude">Latitude</string>
     <string name="navigate_invalid_latitude">Invalid latitude format!</string>
     <string name="navigate_invalid_longitude">Invalid longitude format!</string>
+    <string name="cachelist_action_clear">Clear</string>
+    <string name="cachelist_action_fetch_geocaches">Fetch Geocaches</string>
+    <string name="cacheitem_terrain_icon_description">Terrain Icon</string>
+    <string name="cacheitem_difficulty_icon_description">Difficulty Icon</string>
+    <string name="cacheitem_size_icon_description">Size Icon</string>
+    <string name="emptyview_no_geocaches_icon_description">No Geocaches Icon</string>
+    <string name="compassfragment_compass_arrow_image_description">Compass Arrow Image</string>
 
 </resources>

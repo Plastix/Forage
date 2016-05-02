@@ -1,10 +1,10 @@
 <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:columnCount="2"
-    tools:context="io.github.plastix.forage.ui.compass.CompassFragment">
+                                      xmlns:app="http://schemas.android.com/apk/res-auto"
+                                      xmlns:tools="http://schemas.android.com/tools"
+                                      android:layout_width="match_parent"
+                                      android:layout_height="match_parent"
+                                      app:columnCount="2"
+                                      tools:context="io.github.plastix.forage.ui.compass.CompassFragment">
 
 
     <TextView
@@ -18,7 +18,7 @@
         android:textStyle="bold"
         app:layout_column="0"
         app:layout_columnWeight="1"
-        app:layout_row="0" />
+        app:layout_row="0"/>
 
     <TextView
         android:id="@+id/compass_distance"
@@ -33,7 +33,7 @@
         app:layout_column="0"
         app:layout_columnWeight="1"
         app:layout_row="1"
-        tools:text="500 ft" />
+        tools:text="500 ft"/>
 
     <TextView
         android:id="@+id/compass_accuracy"
@@ -46,7 +46,7 @@
         app:layout_column="0"
         app:layout_columnWeight="1"
         app:layout_row="2"
-        tools:text="+/- 32 ft" />
+        tools:text="+/- 32 ft"/>
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -66,16 +66,17 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
-            android:background="@drawable/shape_circle" />
+            android:background="@drawable/shape_circle"/>
 
         <ImageView
             android:id="@+id/compass_arrow"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
+            android:contentDescription="@string/compassfragment_compass_arrow_image_description"
             android:tint="@color/white"
             app:srcCompat="@drawable/ic_arrow_upward"
-            tools:ignore="MissingPrefix" />
+            tools:ignore="MissingPrefix"/>
 
     </FrameLayout>
 

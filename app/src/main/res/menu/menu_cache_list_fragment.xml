@@ -5,12 +5,12 @@
     <item
         android:id="@+id/action_fetch"
         android:orderInCategory="100"
-        android:title="Fetch Geocaches"
+        android:title="@string/cachelist_action_fetch_geocaches"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_clear"
         android:orderInCategory="100"
-        android:title="Clear"
+        android:title="@string/cachelist_action_clear"
         app:showAsAction="never"/>
 </menu>

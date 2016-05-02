@@ -24,7 +24,7 @@ public class SensorModule {
     @NonNull
     @Provides
     @Singleton
-    public WindowManager provideWindowManager(@NonNull @ForApplication Context context){
+    public WindowManager provideWindowManager(@NonNull @ForApplication Context context) {
         return (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
     }
 }

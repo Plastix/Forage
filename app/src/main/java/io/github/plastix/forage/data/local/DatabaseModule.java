@@ -19,7 +19,7 @@ public class DatabaseModule {
 
     @NonNull
     @Provides
-    public Realm provideRealm(@NonNull  RealmConfiguration realmConfiguration) {
+    public Realm provideRealm(@NonNull RealmConfiguration realmConfiguration) {
         return Realm.getInstance(realmConfiguration);
     }
 

@@ -1,10 +1,6 @@
 package io.github.plastix.forage.tests;
 
 import android.content.ComponentName;
-import android.location.Location;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
@@ -12,13 +8,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationServices;
-
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +21,6 @@ import io.github.plastix.forage.screens.CacheListScreen;
 import io.github.plastix.forage.ui.cachelist.CacheListActivity;
 import io.github.plastix.forage.ui.map.MapActivity;
 import io.github.plastix.forage.ui.navigate.NavigateActivity;
-import io.github.plastix.forage.util.LocationUtils;
 import io.github.plastix.forage.util.TestUtils;
 import io.github.plastix.forage.util.UiAutomatorUtils;
 import okhttp3.mockwebserver.MockResponse;
@@ -59,34 +49,6 @@ public class CacheListTest {
     private UiDevice device;
 
     private DatabaseInteractor databaseInteractor;
-
-    @BeforeClass
-    public static void onlyOnce() {
-
-        final GoogleApiClient apiClient = TestUtils.app().getComponent().googleClient();
-
-        apiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-            @Override
-            public void onConnected(@Nullable Bundle bundle) {
-                final Location location = LocationUtils.buildLocation(0, 0);
-                LocationServices.FusedLocationApi.setMockMode(apiClient, true)
-                        .setResultCallback(new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(@NonNull Status status) {
-                                if (status.isSuccess()) {
-                                    LocationServices.FusedLocationApi.setMockLocation(apiClient, location);
-                                }
-
-                            }
-                        });
-            }
-
-            @Override
-            public void onConnectionSuspended(int i) {
-
-            }
-        });
-    }
 
 
     @Before
@@ -138,7 +100,8 @@ public class CacheListTest {
         onView(withId(R.id.empty_view)).check(matches(isDisplayed()));
     }
 
-    //    @Test
+    @Test
+    @Ignore
     @NeedsMockWebServer(setupMethod = "queueNetworkRequest")
     public void shouldDisplayGeocachesFromServer() throws UiObjectNotFoundException {
         UiAutomatorUtils.allowPermissionsIfNeeded(device);

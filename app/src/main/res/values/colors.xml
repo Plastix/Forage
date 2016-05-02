@@ -15,13 +15,10 @@
     <!-- Material Colors -->
     <color name="cyan">#00BCD4</color>
     <color name="cyan_dark">#0097A7</color>
-    <color name="cyan_light">#B2EBF2</color>
     <color name="pink">#FF4081</color>
 
     <!-- Text Scrim Colors -->
     <color name="translucent_scrim_top">#26000000</color>
     <color name="translucent_scrim_top_center">#0C000000</color>
-    <color name="translucent_scrim_bottom">#2A000000</color>
-    <color name="translucent_scrim_bottom_center">#0D000000</color>
 
 </resources>

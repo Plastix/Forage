@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.plastix.forage">
+          package="io.github.plastix.forage">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
-    <uses-feature android:name="android.hardware.sensor.compass" />
+    <uses-feature android:name="android.hardware.sensor.compass"/>
 
     <application
         android:name=".ForageApplication"
@@ -20,9 +20,9 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -30,28 +30,28 @@
             android:name=".ui.cachedetail.CacheDetailActivity"
             android:label=""
             android:parentActivityName=".ui.cachelist.CacheListActivity"
-            android:theme="@style/AppTheme.NoActionBar.Transparent" />
+            android:theme="@style/AppTheme.NoActionBar.Transparent"/>
 
         <activity
             android:name=".ui.compass.CompassActivity"
             android:label="@string/compass_title"
             android:parentActivityName=".ui.cachedetail.CacheDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".ui.map.MapActivity"
             android:label="@string/map_title"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".ui.navigate.NavigateActivity"
             android:label="@string/navigate_title"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!-- Register Google Maps API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/GOOGLE_MAPS_API_KEY" />
+            android:value="@string/GOOGLE_MAPS_API_KEY"/>
 
     </application>
 

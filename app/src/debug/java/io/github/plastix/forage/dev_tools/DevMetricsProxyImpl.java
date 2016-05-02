@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.frogermcs.androiddevmetrics.AndroidDevMetrics;
 
-import io.github.plastix.forage.dev_tools.DevMetricsProxy;
-
 public class DevMetricsProxyImpl implements DevMetricsProxy {
 
     @NonNull

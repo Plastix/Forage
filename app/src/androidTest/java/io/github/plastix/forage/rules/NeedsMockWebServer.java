@@ -18,7 +18,7 @@ public @interface NeedsMockWebServer {
     /**
      * Optional specifier for a setupMethod that needs to be invoked during initialization
      * of {@link okhttp3.mockwebserver.MockWebServer}.
-     * <p/>
+     * <p>
      * Useful for setting up responses that you simply can not define in the test code because app already hit the server.
      *
      * @return Empty string if no method invocation required or public method name that needs to be called.

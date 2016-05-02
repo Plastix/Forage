@@ -1,13 +1,8 @@
 package io.github.plastix.forage.data.api;
 
-import android.location.Location;
 import android.support.annotation.NonNull;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 

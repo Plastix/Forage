@@ -19,7 +19,7 @@ import rx.schedulers.Schedulers;
  * always subscribeOn and observeOn Schedulers.immediate().
  * Warning, this rule will reset RxAndroidPlugins and RxJavaPlugins before and after each test so
  * if the application code uses RxJava plugins this may affect the behaviour of the testing method.
- * <p/>
+ * <p>
  * This code is from Ribot's Android Boilerplate (Apache 2 license)
  * https://github.com/ribot/android-boilerplate
  */
