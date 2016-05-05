@@ -4,9 +4,6 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import rx.Scheduler;
 import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
@@ -19,8 +16,8 @@ import rx.schedulers.Schedulers;
  * always subscribeOn and observeOn Schedulers.immediate().
  * Warning, this rule will reset RxAndroidPlugins and RxJavaPlugins before and after each test so
  * if the application code uses RxJava plugins this may affect the behaviour of the testing method.
- * <p>
- * This code is from Ribot's Android Boilerplate (Apache 2 license)
+ * <p/>
+ * This code is adapted from Ribot's Android Boilerplate (Apache 2 license)
  * https://github.com/ribot/android-boilerplate
  */
 public class RxSchedulersOverrideRule implements TestRule {
@@ -51,24 +48,15 @@ public class RxSchedulersOverrideRule implements TestRule {
             public void evaluate() throws Throwable {
                 RxAndroidPlugins.getInstance().reset();
                 RxAndroidPlugins.getInstance().registerSchedulersHook(mRxAndroidSchedulersHook);
-                callResetViaReflectionIn(RxJavaPlugins.getInstance());
+
+                RxJavaPlugins.getInstance().reset();
                 RxJavaPlugins.getInstance().registerSchedulersHook(mRxJavaSchedulersHook);
 
                 base.evaluate();
 
                 RxAndroidPlugins.getInstance().reset();
-                callResetViaReflectionIn(RxJavaPlugins.getInstance());
+                RxJavaPlugins.getInstance().reset();
             }
         };
-    }
-
-    // Hack to get around RxJavaPlugins.reset() not being public
-    // See https://github.com/ReactiveX/RxJava/issues/2297
-    // Hopefully the method will be public in new releases of RxAndroid and we can remove the hack.
-    private void callResetViaReflectionIn(RxJavaPlugins rxJavaPlugins)
-            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Method method = rxJavaPlugins.getClass().getDeclaredMethod("reset");
-        method.setAccessible(true);
-        method.invoke(rxJavaPlugins);
     }
 }
