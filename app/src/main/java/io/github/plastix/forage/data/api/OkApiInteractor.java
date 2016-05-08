@@ -9,7 +9,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.Lazy;
-import io.github.plastix.forage.BuildConfig;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.util.RxUtils;
 import io.github.plastix.forage.util.StringUtils;
@@ -53,7 +52,7 @@ public class OkApiInteractor {
                 OkApiService.ENDPOINT_GEOCACHES,
                 returnParams.toString(),
                 false,
-                BuildConfig.OKAPI_US_CONSUMER_KEY
+                AuthManager.authenticateLevel1()
         ).compose(RxUtils.<List<Cache>>applySchedulers());
     }
 }

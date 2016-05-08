@@ -18,6 +18,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assert_;
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyMapOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -57,7 +58,12 @@ public class OkApiInteractorTest {
     public void getNearbyItems_shouldReturnItemsFromApi() {
         List<Cache> caches = asList(mock(Cache.class), mock(Cache.class));
         when(
-                okApiService.searchAndRetrieve(anyString(), anyString(), anyString(), anyString(), anyBoolean(), anyString())
+                okApiService.searchAndRetrieve(anyString(),
+                        anyString(),
+                        anyString(),
+                        anyString(),
+                        anyBoolean(),
+                        anyMapOf(String.class, String.class))
         ).thenReturn(Observable.just(caches));
 
         BlockingObservable<List<Cache>> result = okApiInteractor.getNearbyCaches(lat, lon, radius).toBlocking();
@@ -68,7 +74,12 @@ public class OkApiInteractorTest {
     public void getNearbyItems_shouldReturnErrorFromApi() {
         Exception error = new RuntimeException();
         when(
-                okApiService.searchAndRetrieve(anyString(), anyString(), anyString(), anyString(), anyBoolean(), anyString())
+                okApiService.searchAndRetrieve(anyString(),
+                        anyString(),
+                        anyString(),
+                        anyString(),
+                        anyBoolean(),
+                        anyMapOf(String.class, String.class))
         ).thenReturn(Observable.<List<Cache>>error(error));
 
         try {
