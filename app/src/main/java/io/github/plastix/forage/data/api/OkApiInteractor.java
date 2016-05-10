@@ -9,6 +9,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.Lazy;
+import io.github.plastix.forage.BuildConfig;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.util.RxUtils;
 import io.github.plastix.forage.util.StringUtils;
@@ -47,12 +48,12 @@ public class OkApiInteractor {
         returnParams.addProperty("fields", StringUtils.join("|", geocacheFields));
 
         return apiService.get().searchAndRetrieve(
-                OkApiService.ENDPOINT_NEAREST,
+                ApiConstants.ENDPOINT_NEAREST,
                 searchParams.toString(),
-                OkApiService.ENDPOINT_GEOCACHES,
+                ApiConstants.ENDPOINT_GEOCACHES,
                 returnParams.toString(),
                 false,
-                AuthManager.authenticateLevel1()
+                BuildConfig.OKAPI_US_CONSUMER_KEY
         ).compose(RxUtils.<List<Cache>>applySchedulers());
     }
 }

@@ -13,6 +13,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.github.plastix.forage.BuildConfig;
+import io.github.plastix.forage.data.api.auth.OAuthSigningInterceptor;
 import io.github.plastix.forage.data.api.gson.HtmlAdapter;
 import io.github.plastix.forage.data.api.gson.ListTypeAdapterFactory;
 import io.github.plastix.forage.data.api.gson.StringCapitalizerAdapter;
@@ -21,6 +23,8 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import se.akerfeldt.okhttp.signpost.OkHttpOAuthConsumer;
+import se.akerfeldt.okhttp.signpost.OkHttpOAuthProvider;
 
 /**
  * Dagger module that provides dependencies for {@link OkApiService} and {@link OkApiInteractor}.
@@ -28,14 +32,32 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class OkApiModule {
 
-    public static final String BASE_ENDPOINT = "http://www.opencaching.us";
-
     @NonNull
     @Provides
     @Singleton
     @Named("BASE_ENDPOINT")
     public String provideBaseURL() {
-        return BASE_ENDPOINT;
+        return ApiConstants.BASE_ENDPOINT;
+    }
+
+    @NonNull
+    @Provides
+    @Singleton
+    public OkHttpOAuthProvider provideOkHttpOAuthProvider(OkHttpClient okHttpClient) {
+        return new OkHttpOAuthProvider(
+                ApiConstants.REQUEST_TOKEN_ENDPOINT,
+                ApiConstants.ACCESS_TOKEN_ENDPOINT,
+                ApiConstants.AUTHORIZATION_WEBSITE_URL,
+                okHttpClient
+        );
+    }
+
+
+    @NonNull
+    @Provides
+    @Singleton
+    public OkHttpOAuthConsumer provideOkHttpOAuthConsumer() {
+        return new OkHttpOAuthConsumer(BuildConfig.OKAPI_US_CONSUMER_KEY, BuildConfig.OKAPI_US_CONSUMER_SECRET);
     }
 
     @NonNull
@@ -48,9 +70,10 @@ public class OkApiModule {
     @NonNull
     @Singleton
     @Provides
-    public OkHttpClient provideOkHttp(HostSelectionInterceptor host) {
+    public OkHttpClient provideOkHttp(HostSelectionInterceptor host, OAuthSigningInterceptor signingInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(host)
+                .addInterceptor(signingInterceptor)
                 .build();
     }
 

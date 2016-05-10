@@ -14,6 +14,7 @@ Libraries
 * [Butterknife](http://jakewharton.github.io/butterknife/)
 * [Realm](https://realm.io/)
 * [Icepick](https://github.com/frankiesardo/icepick)
+* [Signpost](https://github.com/mttkay/signpost) and [OkHttp-Signpost](https://github.com/pakerfeldt/okhttp-signpost)
 * [Google Support Libraries](http://developer.android.com/tools/support-library/index.html)
 * [Google Play Location Services](https://developers.google.com/android/reference/com/google/android/gms/location/package-summary)
 * [Google Play Maps](https://developers.google.com/maps/documentation/android-api/)
@@ -32,10 +33,10 @@ Requirements
 -------
 To compile and run the project you'll need:
 
-- [Android SDK](http://developer.android.com/sdk/index.html).
-- [Android Marshmallow (API 23)](http://developer.android.com/tools/revisions/platforms.html).
+- [Android SDK](http://developer.android.com/sdk/index.html)
+- [Android Marshmallow (API 23)](http://developer.android.com/tools/revisions/platforms.html)
 - Android SDK Tools
-- Android SDK Build Tools 23.0.3
+- Android SDK Build Tools `23.0.3`
 - Android Support Repository
 - Android Support Libraries
 - JDK 7

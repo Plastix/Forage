@@ -40,9 +40,11 @@ android {
 
         //noinspection GroovyAssignabilityCheck
         buildConfigField("String", "OKAPI_US_CONSUMER_KEY", "\"" + OKAPI_US_CONSUMER_KEY + "\"")
-
         //noinspection GroovyAssignabilityCheck
+        buildConfigField("String", "OKAPI_US_CONSUMER_SECRET", "\"" + OKAPI_US_CONSUMER_SECRET + "\"")
+
         // Use res value so we can access the Google API key in the AndroidManifest.xml
+        //noinspection GroovyAssignabilityCheck
         resValue("string", "GOOGLE_MAPS_API_KEY", "\"" + GOOGLE_MAPS_API_KEY + "\"")
 
     }
@@ -159,6 +161,8 @@ dependencies {
     // Other Third Party Libraries
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'se.akerfeldt:okhttp-signpost:1.1.0'
+    compile 'oauth.signpost:signpost-core:1.2.1.2'
 
     // Unit Testing
     testCompile 'junit:junit:4.12'

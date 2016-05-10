@@ -20,6 +20,9 @@ import retrofit2.adapter.rxjava.HttpException;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assert_;
 
+/**
+ * TODO test invalid JSON response?
+ */
 @RunWith(ForageRoboelectricIntegrationTestRunner.class)
 public class OkApiServiceIntegrationTest {
 

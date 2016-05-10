@@ -5,13 +5,18 @@
 
     <item
         android:id="@+id/cachelist_action_map"
+        android:icon="@drawable/ic_map"
         android:title="@string/cachelist_action_map_title"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_map"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/cachelist_action_navigate"
         android:title="@string/cachelist_action_navigate_title"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/cachelist_action_login"
+        android:title="Login"
         app:showAsAction="never"/>
 
     <item

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="io.github.plastix.forage">
+<manifest package="io.github.plastix.forage"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -14,7 +14,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.cachelist.CacheListActivity"
             android:label="@string/app_name"
@@ -25,24 +24,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.cachedetail.CacheDetailActivity"
             android:label=""
             android:parentActivityName=".ui.cachelist.CacheListActivity"
             android:theme="@style/AppTheme.NoActionBar.Transparent"/>
-
         <activity
             android:name=".ui.compass.CompassActivity"
             android:label="@string/compass_title"
             android:parentActivityName=".ui.cachedetail.CacheDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
         <activity
             android:name=".ui.map.MapActivity"
             android:label="@string/map_title"
             android:theme="@style/AppTheme.NoActionBar"/>
-
         <activity
             android:name=".ui.navigate.NavigateActivity"
             android:label="@string/navigate_title"
@@ -53,6 +48,20 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/GOOGLE_MAPS_API_KEY"/>
 
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="forage"
+                    android:scheme="app"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

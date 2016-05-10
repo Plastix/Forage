@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.BaseFragmentActivity;
+import io.github.plastix.forage.ui.login.LoginActivity;
 import io.github.plastix.forage.ui.map.MapActivity;
 import io.github.plastix.forage.ui.navigate.NavigateActivity;
 import io.github.plastix.forage.util.ActivityUtils;
@@ -81,12 +82,6 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
 
     }
 
-    private void dismissRationaleDialog() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-        }
-    }
-
     private void buildDialog() {
         if (dialog == null) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.AppTheme_AlertDialog);
@@ -115,6 +110,12 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
         dismissRationaleDialog();
     }
 
+    private void dismissRationaleDialog() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -138,6 +139,9 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
                 return true;
             case R.id.cachelist_action_navigate:
                 startActivity(NavigateActivity.newIntent(this));
+                return true;
+            case R.id.cachelist_action_login:
+                startActivity(LoginActivity.newIntent(this));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
