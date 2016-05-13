@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import icepick.Icepick;
 
 /**
@@ -15,8 +14,6 @@ import icepick.Icepick;
  * This provides hooks for Butterknife and Icepick automatically.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-
-    private Unbinder unbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
-        this.unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -45,11 +42,5 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
     }
 }
