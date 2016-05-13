@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.plastix.forage.ForApplication;
+import io.github.plastix.forage.ApplicationScope;
 
 @Module
 public class SensorModule {
@@ -17,14 +17,14 @@ public class SensorModule {
     @NonNull
     @Provides
     @Singleton
-    public SensorManager provideSensorManager(@NonNull @ForApplication Context context) {
+    public SensorManager provideSensorManager(@NonNull @ApplicationScope Context context) {
         return (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
     }
 
     @NonNull
     @Provides
     @Singleton
-    public WindowManager provideWindowManager(@NonNull @ForApplication Context context) {
+    public WindowManager provideWindowManager(@NonNull @ApplicationScope Context context) {
         return (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
     }
 }

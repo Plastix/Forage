@@ -9,7 +9,7 @@ import android.view.View;
 
 import javax.inject.Inject;
 
-import io.github.plastix.forage.ForApplication;
+import io.github.plastix.forage.ApplicationScope;
 import io.github.plastix.forage.R;
 
 /**
@@ -21,7 +21,7 @@ public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable divider;
 
     @Inject
-    public SimpleDividerItemDecoration(@ForApplication Context context) {
+    public SimpleDividerItemDecoration(@ApplicationScope Context context) {
         divider = ContextCompat.getDrawable(context, R.drawable.line_divider);
     }
 

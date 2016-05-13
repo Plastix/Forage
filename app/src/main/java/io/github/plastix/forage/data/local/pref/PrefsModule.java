@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.plastix.forage.ForApplication;
+import io.github.plastix.forage.ApplicationScope;
 
 @Module
 public class PrefsModule {
@@ -17,7 +17,7 @@ public class PrefsModule {
 
     @Provides
     @Singleton
-    public SharedPreferences provideSharedPreferences(@ForApplication Context context) {
+    public SharedPreferences provideSharedPreferences(@ApplicationScope Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
