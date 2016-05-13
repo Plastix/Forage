@@ -79,4 +79,14 @@ public class OAuthInteractor {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public boolean hasSavedOAuthTokens() {
+        return userToken.isSet() & userTokenSecret.isSet();
+    }
+
+    public void clearSavedOAuthTokens(){
+        userToken.delete();
+        userTokenSecret.delete();
+    }
+
+
 }
