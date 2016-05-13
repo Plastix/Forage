@@ -113,7 +113,9 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
     }
 
     private void initializeView(Bundle savedInstanceState) {
-        setActivityActionBar();
+        setSupportActionBar(toolbar);
+
+        ActivityUtils.setSupportActionBarBack(getDelegate());
 
         Bundle mapState = null;
         if (savedInstanceState != null) {
@@ -122,12 +124,6 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
         }
 
         map.onCreate(mapState);
-    }
-
-    private void setActivityActionBar() {
-        setSupportActionBar(toolbar);
-
-        ActivityUtils.setSupportActionBarBack(getDelegate());
     }
 
     @Override
