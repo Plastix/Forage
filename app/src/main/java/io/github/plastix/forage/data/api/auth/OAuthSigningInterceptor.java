@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import io.github.plastix.forage.data.api.ApiConstants;
 import io.github.plastix.forage.data.local.pref.OAuthUserToken;
 import io.github.plastix.forage.data.local.pref.OAuthUserTokenSecret;
 import io.github.plastix.forage.data.local.pref.StringPreference;
@@ -20,8 +21,6 @@ import se.akerfeldt.okhttp.signpost.OkHttpOAuthConsumer;
  * header
  */
 public class OAuthSigningInterceptor implements Interceptor {
-
-    public static final String OAUTH_ENABLE_HEADER = "OAuth";
 
     private final OkHttpOAuthConsumer consumer;
 
@@ -42,7 +41,7 @@ public class OAuthSigningInterceptor implements Interceptor {
         Request original = chain.request();
 
 
-        if (original.header(OAUTH_ENABLE_HEADER) != null) {
+        if (original.header(ApiConstants.OAUTH_ENABLE_HEADER) != null) {
             try {
                 original = (Request) consumer.sign(original).unwrap();
             } catch (OAuthException e) {
