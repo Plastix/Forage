@@ -23,7 +23,7 @@ import io.github.plastix.forage.util.UnitUtils;
 /**
  * Fragment that is responsible for the geocache compass.
  */
-public class CompassFragment extends PresenterFragment<CompassPresenter> implements CompassView {
+public class CompassFragment extends PresenterFragment<CompassPresenter, CompassView> implements CompassView {
 
     private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
     private static float CENTER = 0.5f;
@@ -45,12 +45,10 @@ public class CompassFragment extends PresenterFragment<CompassPresenter> impleme
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        injectDependencies();
         super.onCreate(savedInstanceState);
 
         this.target = getArguments().getParcelable(EXTRA_CACHE_LOCATION);
-
-        injectDependencies();
-        initializePresenter();
 
     }
 
@@ -59,7 +57,8 @@ public class CompassFragment extends PresenterFragment<CompassPresenter> impleme
                 .plus(new CompassModule(this)).injectTo(this);
     }
 
-    private void initializePresenter() {
+    @Override
+    protected void onPresenterPrepared(CompassPresenter presenter) {
         presenter.setTargetLocation(target);
     }
 

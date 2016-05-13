@@ -11,7 +11,6 @@ import dagger.Lazy;
 import io.realm.Realm;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * Todo instrumentation tests for Realm
@@ -43,31 +42,5 @@ public class DatabaseInteractorTest {
     public void onDestroy_shouldCallRealmClose() {
         databaseInteractor.onDestroy();
         verify(realm).close();
-    }
-
-    @Test
-    public void onPause_noOp() {
-        databaseInteractor.onPause();
-        verifyNoMoreInteractions(realm);
-
-    }
-
-    @Test
-    public void onStart_noOp() {
-        databaseInteractor.onStart();
-        verifyNoMoreInteractions(realm);
-    }
-
-    @Test
-    public void onStop_noOp() {
-        databaseInteractor.onStop();
-        verifyNoMoreInteractions(realm);
-    }
-
-    @Test
-    public void onResume_noOp() {
-        databaseInteractor.onResume();
-        verifyNoMoreInteractions(realm);
-
     }
 }

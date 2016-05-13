@@ -50,4 +50,8 @@ public class LoginPresenter extends Presenter<LoginView> {
                 });
     }
 
+    @Override
+    public void onDestroyed() {
+        oAuthInteractor = null;
+    }
 }

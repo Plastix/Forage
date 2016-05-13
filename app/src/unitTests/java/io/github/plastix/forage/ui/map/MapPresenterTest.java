@@ -28,12 +28,12 @@ public class MapPresenterTest {
         view = mock(MapFragView.class);
         databaseInteractor = mock(DatabaseInteractor.class);
         mapPresenter = new MapPresenter(databaseInteractor);
-        mapPresenter.setView(view);
+        mapPresenter.onViewAttached(view);
     }
 
     @Test
     public void onDestroy_shouldCallDatabaseInteractorDestroy() {
-        mapPresenter.onDestroy();
+        mapPresenter.onDestroyed();
         verify(databaseInteractor, only()).onDestroy();
     }
 

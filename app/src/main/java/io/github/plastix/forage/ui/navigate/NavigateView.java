@@ -1,8 +1,6 @@
 package io.github.plastix.forage.ui.navigate;
 
-import io.github.plastix.forage.ui.View;
-
-public interface NavigateView extends View {
+public interface NavigateView {
 
     void errorParsingLatitude();
 

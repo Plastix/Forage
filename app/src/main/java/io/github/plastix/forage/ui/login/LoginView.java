@@ -1,8 +1,6 @@
 package io.github.plastix.forage.ui.login;
 
-import io.github.plastix.forage.ui.View;
-
-public interface LoginView extends View {
+public interface LoginView {
 
     void openBrowser(String authUrl);
 

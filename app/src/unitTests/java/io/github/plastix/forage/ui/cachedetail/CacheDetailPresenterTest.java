@@ -23,12 +23,12 @@ public class CacheDetailPresenterTest {
         view = mock(CacheDetailView.class);
         databaseInteractor = mock(DatabaseInteractor.class);
         cacheDetailPresenter = new CacheDetailPresenter(databaseInteractor);
-        cacheDetailPresenter.setView(view);
+        cacheDetailPresenter.onViewAttached(view);
     }
 
     @Test
     public void onDestroy_shouldCallDatabaseInteractorDestroy() {
-        cacheDetailPresenter.onDestroy();
+        cacheDetailPresenter.onDestroyed();
         verify(databaseInteractor, only()).onDestroy();
     }
 

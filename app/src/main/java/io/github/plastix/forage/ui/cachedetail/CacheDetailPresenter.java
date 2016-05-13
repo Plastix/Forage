@@ -31,8 +31,7 @@ public class CacheDetailPresenter extends Presenter<CacheDetailView> {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyed() {
         databaseInteractor.onDestroy();
     }
 }

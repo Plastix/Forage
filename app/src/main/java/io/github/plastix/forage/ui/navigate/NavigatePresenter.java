@@ -32,4 +32,9 @@ public class NavigatePresenter extends Presenter<NavigateView> {
         }
 
     }
+
+    @Override
+    public void onDestroyed() {
+        // Nothing
+    }
 }

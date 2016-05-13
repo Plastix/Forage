@@ -34,7 +34,7 @@ import io.github.plastix.forage.util.ActivityUtils;
 /**
  * Activity that represents the Geocache detail view screen of the app.
  */
-public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter> implements CacheDetailView {
+public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter, CacheDetailView> implements CacheDetailView {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
     private final static String BUNDLE_KEY_MAP_STATE = "BUNDLE_KEY_MAP_STATE";
@@ -97,6 +97,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache_detail);
 
@@ -104,10 +105,11 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
 
         initializeView(savedInstanceState);
 
-        injectDependencies();
+    }
 
-        presenter.getGeocache(cacheCode);
-
+    private void injectDependencies() {
+        ForageApplication.getComponent(this)
+                .plus(new CacheDetailModule(this)).injectTo(this);
     }
 
     private void initializeView(Bundle savedInstanceState) {
@@ -122,15 +124,15 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter>
         map.onCreate(mapState);
     }
 
-    private void injectDependencies() {
-        ForageApplication.getComponent(this)
-                .plus(new CacheDetailModule(this)).injectTo(this);
-    }
-
     private void setActivityActionBar() {
         setSupportActionBar(toolbar);
 
         ActivityUtils.setSupportActionBarBack(getDelegate());
+    }
+
+    @Override
+    protected void onPresenterPrepared(CacheDetailPresenter presenter) {
+        presenter.getGeocache(cacheCode);
     }
 
     @Override

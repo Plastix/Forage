@@ -17,7 +17,7 @@ import io.github.plastix.forage.ui.compass.CompassActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.LocationUtils;
 
-public class NavigateActivity extends PresenterActivity<NavigatePresenter> implements NavigateView {
+public class NavigateActivity extends PresenterActivity<NavigatePresenter, NavigateView> implements NavigateView {
 
     @BindView(R.id.navigate_toolbar)
     Toolbar toolbar;
@@ -34,15 +34,23 @@ public class NavigateActivity extends PresenterActivity<NavigatePresenter> imple
     @BindView(R.id.navigate_longitude_text_input_layout)
     TextInputLayout longitudeInputLayout;
 
+    /**
+     * Returns a new intent that opens the NavigateActivity.
+     *
+     * @param context Current context.
+     * @return New intent object.
+     */
+    public static Intent newIntent(Context context) {
+        return new Intent(context, NavigateActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate);
         setSupportActionBar(toolbar);
         ActivityUtils.setSupportActionBarBack(getDelegate());
-
-        injectDependencies();
-
     }
 
     private void injectDependencies() {
@@ -50,7 +58,6 @@ public class NavigateActivity extends PresenterActivity<NavigatePresenter> imple
                 .plus(new NavigateModule(this))
                 .injectTo(this);
     }
-
 
     @OnClick(R.id.navigate_button)
     public void onNavigate() {
@@ -77,15 +84,5 @@ public class NavigateActivity extends PresenterActivity<NavigatePresenter> imple
         longitudeInputLayout.setErrorEnabled(false);
         Location location = LocationUtils.buildLocation(lat, lon);
         startActivity(CompassActivity.newIntent(this, location));
-    }
-
-    /**
-     * Returns a new intent that opens the NavigateActivity.
-     *
-     * @param context Current context.
-     * @return New intent object.
-     */
-    public static Intent newIntent(Context context) {
-        return new Intent(context, NavigateActivity.class);
     }
 }

@@ -45,7 +45,7 @@ public class CompassPresenterTest {
     public void beforeEachTest() {
         MockitoAnnotations.initMocks(this);
         compassPresenter = new CompassPresenter(azimuthInteractor, locationInteractor);
-        compassPresenter.setView(view);
+        compassPresenter.onViewAttached(view);
     }
 
     @Test
@@ -63,7 +63,6 @@ public class CompassPresenterTest {
         // Wait for the compass presenter to update the view
         // We need this because we're applying backpressure operators to the observable
         TimeUnit.MILLISECONDS.sleep(500);
-        compassPresenter.onStop();
 
         verify(view, times(1)).updateDistance(anyFloat());
         verify(view, times(1)).updateAccuracy(anyFloat());

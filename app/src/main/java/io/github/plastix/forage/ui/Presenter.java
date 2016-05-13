@@ -1,49 +1,22 @@
 package io.github.plastix.forage.ui;
 
-import javax.inject.Inject;
-
 /**
  * Base Presenter class.
  *
- * @param <T> Generic type of view that the presenter holds.
+ * @param <V> Generic type of view that the presenter interacts with.
  */
-public abstract class Presenter<T extends View> implements LifecycleCallbacks {
+public abstract class Presenter<V> {
 
-    protected T view;
+    protected V view;
 
-    /**
-     * Automatically set the View with Dagger 2 method injection.
-     *
-     * @param view View object from the graph.
-     */
-    @Inject
-    public void setView(T view) {
+    public void onViewAttached(V view) {
         this.view = view;
-
     }
 
-    @Override
-    public void onStart() {
-
+    public void onViewDetached() {
+        this.view = null;
     }
 
-    @Override
-    public void onStop() {
+    public abstract void onDestroyed();
 
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-
-    }
 }

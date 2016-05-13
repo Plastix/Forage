@@ -33,8 +33,7 @@ public class MapPresenter extends Presenter<MapFragView> {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyed() {
         databaseInteractor.onDestroy();
     }
 }

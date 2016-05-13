@@ -6,9 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.ForageRoboelectricIntegrationTestRunner;
@@ -76,8 +74,7 @@ public class OkApiServiceIntegrationTest {
         mockWebServer.enqueue(new MockResponse().setBody(jsonResponse));
 
         // Input fake data to the API call
-        Map<String, String> auth = new HashMap<>();
-        List<Cache> caches = okApiService.searchAndRetrieve("", "", "", "", false, auth).toBlocking().first();
+        List<Cache> caches = okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().first();
 
         assertThat(caches).hasSize(2);
 
@@ -114,8 +111,7 @@ public class OkApiServiceIntegrationTest {
 
             try {
                 // Input fake data to the API call
-                Map<String, String> auth = new HashMap<>();
-                okApiService.searchAndRetrieve("", "", "", "", false, auth).toBlocking().first();
+                okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().first();
                 assert_().fail("HttpException should be thrown for error code: " + errorCode);
             } catch (RuntimeException expected) {
                 HttpException httpException = (HttpException) expected.getCause();

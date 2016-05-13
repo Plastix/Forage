@@ -21,7 +21,7 @@ public class NavigatePresenterTest {
     public void beforeEachTest() {
         MockitoAnnotations.initMocks(this);
         navigatePresenter = new NavigatePresenter();
-        navigatePresenter.setView(navigateView);
+        navigatePresenter.onViewAttached(navigateView);
     }
 
     @Test

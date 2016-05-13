@@ -32,7 +32,8 @@ import io.github.plastix.forage.util.ActivityUtils;
 /**
  * Fragment that is responsible for the Geocache list.
  */
-public class CacheListFragment extends PresenterFragment<CacheListPresenter> implements CacheListView, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class CacheListFragment extends PresenterFragment<CacheListPresenter, CacheListView> implements CacheListView,
+        SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     @Inject
     CacheAdapter adapter;
@@ -53,12 +54,11 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter> imp
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        injectDependencies();
         super.onCreate(savedInstanceState);
 
         // Tell the activity we have menu items to contribute to the toolbar
         setHasOptionsMenu(true);
-
-        injectDependencies();
     }
 
     private void injectDependencies() {
@@ -105,14 +105,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter> imp
 
     @Override
     public void setRefreshing() {
-        // Required hacky fix for some reason
-        // http://stackoverflow.com/questions/26484907/setrefreshingtrue-does-not-show-indicator
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(true);
-            }
-        });
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     /**

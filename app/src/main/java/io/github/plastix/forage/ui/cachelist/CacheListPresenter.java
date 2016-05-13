@@ -12,22 +12,25 @@ import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
-import io.github.plastix.forage.ui.ReactivePresenter;
+import io.github.plastix.forage.ui.Presenter;
+import io.github.plastix.forage.util.RxUtils;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.subscriptions.Subscriptions;
 
-public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Cache>> {
+public class CacheListPresenter extends Presenter<CacheListView> {
 
-    private static final String REQUEST_ID = "CacheListPresenter.network";
     private static final double NEARBY_CACHE_RADIUS_MILES = 100;
 
     private OkApiInteractor apiInteractor;
     private DatabaseInteractor databaseInteractor;
     private LocationInteractor locationInteractor;
     private NetworkInteractor networkInteractor;
+    private Subscription subscription = Subscriptions.unsubscribed();
 
 
     @Inject
@@ -35,7 +38,6 @@ public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Ca
                               DatabaseInteractor databaseInteractor,
                               LocationInteractor locationInteractor,
                               NetworkInteractor networkInteractor) {
-        super();
         this.apiInteractor = apiInteractor;
         this.databaseInteractor = databaseInteractor;
         this.locationInteractor = locationInteractor;
@@ -66,7 +68,7 @@ public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Ca
                                                @Override
                                                public void call() {
                                                    // Run the ReactivePresenter observable
-                                                   subscribe();
+                                                   getGeocaches();
                                                }
                                            }
                                 );
@@ -75,25 +77,17 @@ public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Ca
 
     }
 
-    @Override
-    protected void onAttachObservable() {
-        super.onAttachObservable();
-        view.setRefreshing();
+    public void unsubscribe() {
+        RxUtils.safeUnsubscribe(subscription);
     }
 
-
-    protected Observable<List<Cache>> buildObservable() {
-        return locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Observable<List<Cache>>>() {
+    private void getGeocaches() {
+        subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Observable<List<Cache>>>() {
             @Override
             public Observable<List<Cache>> call(Location location) {
                 return apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES);
             }
-        });
-    }
-
-
-    protected Subscriber<List<Cache>> buildSubscription() {
-        return new Subscriber<List<Cache>>() {
+        }).subscribe(new Subscriber<List<Cache>>() {
             @Override
             public void onCompleted() {
 
@@ -108,22 +102,27 @@ public class CacheListPresenter extends ReactivePresenter<CacheListView, List<Ca
             @Override
             public void onNext(List<Cache> caches) {
                 databaseInteractor.clearAndSaveGeocaches(caches);
+                subscription.unsubscribe();
             }
-        };
+        });
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onViewAttached(CacheListView view) {
+        super.onViewAttached(view);
+
+        if (!subscription.isUnsubscribed()) {
+            view.setRefreshing();
+        }
+    }
+
+    @Override
+    public void onDestroyed() {
         databaseInteractor.onDestroy();
     }
 
     public void clearCaches() {
         databaseInteractor.clearGeocaches();
-    }
-
-    protected String getObservableId() {
-        return REQUEST_ID;
     }
 
 

@@ -18,7 +18,6 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assert_;
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyMapOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -63,7 +62,7 @@ public class OkApiInteractorTest {
                         anyString(),
                         anyString(),
                         anyBoolean(),
-                        anyMapOf(String.class, String.class))
+                        anyString())
         ).thenReturn(Observable.just(caches));
 
         BlockingObservable<List<Cache>> result = okApiInteractor.getNearbyCaches(lat, lon, radius).toBlocking();
@@ -79,7 +78,7 @@ public class OkApiInteractorTest {
                         anyString(),
                         anyString(),
                         anyBoolean(),
-                        anyMapOf(String.class, String.class))
+                        anyString())
         ).thenReturn(Observable.<List<Cache>>error(error));
 
         try {

@@ -17,15 +17,27 @@ public class PresenterTest {
     }
 
     @Test
-    public void setView_shouldAttachView() {
-        presenter.setView(view);
+    public void onViewAttached_shouldSetView() {
+        presenter.onViewAttached(view);
 
         assertThat(presenter.view).isSameAs(view);
     }
 
-    private class FakeView implements View {
+    @Test
+    public void onViewDetatched_shouldClearView() {
+        presenter.onViewAttached(view);
+        presenter.onViewDetached();
+
+        assertThat(presenter.view).isNull();
+    }
+
+    private class FakeView {
     }
 
     private class FakePresenter extends Presenter<FakeView> {
+        @Override
+        public void onDestroyed() {
+            // No op
+        }
     }
 }

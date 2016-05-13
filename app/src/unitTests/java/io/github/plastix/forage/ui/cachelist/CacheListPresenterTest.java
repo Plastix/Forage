@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-import io.github.plastix.forage.data.ObservableManager;
 import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
@@ -18,7 +17,6 @@ import rx.Observable;
 
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.anyDouble;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -33,7 +31,6 @@ public class CacheListPresenterTest {
     private DatabaseInteractor databaseInteractor;
     private LocationInteractor locationInteractor;
     private NetworkInteractor networkInteractor;
-    private ObservableManager observableManager;
 
     @Before
     public void beforeEachTest() {
@@ -41,18 +38,14 @@ public class CacheListPresenterTest {
         databaseInteractor = mock(DatabaseInteractor.class);
         locationInteractor = mock(LocationInteractor.class);
         networkInteractor = mock(NetworkInteractor.class);
-        observableManager = mock(ObservableManager.class);
-
-        when(observableManager.isStored(anyString())).thenReturn(false);
 
         cacheListPresenter = new CacheListPresenter(okApiInteractor,
                 databaseInteractor,
                 locationInteractor,
                 networkInteractor);
-        cacheListPresenter.setCache(observableManager);
         view = mock(CacheListView.class);
 
-        cacheListPresenter.setView(view);
+        cacheListPresenter.onViewAttached(view);
 
         when(locationInteractor.getUpdatedLocation()).thenReturn(Observable.just(mock(Location.class)));
     }
@@ -67,7 +60,6 @@ public class CacheListPresenterTest {
         when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
 
 
-        cacheListPresenter.onResume();
         cacheListPresenter.fetchGeocaches();
 
         verify(databaseInteractor).clearAndSaveGeocaches(caches);
@@ -78,7 +70,6 @@ public class CacheListPresenterTest {
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(
                 Completable.error(new Throwable()));
 
-        cacheListPresenter.onResume();
         cacheListPresenter.fetchGeocaches();
 
         verify(view).onErrorInternet();
@@ -91,7 +82,6 @@ public class CacheListPresenterTest {
         when(locationInteractor.isLocationAvailable()).thenReturn(
                 Completable.error(new Throwable()));
 
-        cacheListPresenter.onResume();
         cacheListPresenter.fetchGeocaches();
 
         verify(view).onErrorLocation();
@@ -106,7 +96,6 @@ public class CacheListPresenterTest {
         when(okApiInteractor.getNearbyCaches(anyDouble(), anyDouble(), anyDouble())).thenReturn(
                 Observable.<List<Cache>>error(new Throwable()));
 
-        cacheListPresenter.onResume();
         cacheListPresenter.fetchGeocaches();
 
         verify(view).onErrorLocation();
@@ -115,7 +104,7 @@ public class CacheListPresenterTest {
 
     @Test
     public void onDestroy_callsDatabaseInteractor() {
-        cacheListPresenter.onDestroy();
+        cacheListPresenter.onDestroyed();
 
         verify(databaseInteractor).onDestroy();
         verifyNoMoreInteractions(databaseInteractor);

@@ -1,12 +1,10 @@
 package io.github.plastix.forage.ui.cachelist;
 
-import io.github.plastix.forage.ui.View;
-
 /**
  * Interface implemented by {@link CacheListFragment} to define callbacks used by
  * {@link CacheListPresenter}.
  */
-public interface CacheListView extends View {
+public interface CacheListView {
 
     void onErrorInternet();
 

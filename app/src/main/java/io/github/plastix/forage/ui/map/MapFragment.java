@@ -22,7 +22,7 @@ import io.github.plastix.forage.ui.PresenterFragment;
 /**
  * Fragment that is responsible for the geocache map.
  */
-public class MapFragment extends PresenterFragment<MapPresenter> implements MapFragView, OnMapReadyCallback {
+public class MapFragment extends PresenterFragment<MapPresenter, MapFragView> implements MapFragView, OnMapReadyCallback {
 
     @BindView(R.id.map_mapview)
     MapView map;
@@ -31,10 +31,8 @@ public class MapFragment extends PresenterFragment<MapPresenter> implements MapF
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         injectDependencies();
-
+        super.onCreate(savedInstanceState);
     }
 
     private void injectDependencies() {
@@ -46,8 +44,12 @@ public class MapFragment extends PresenterFragment<MapPresenter> implements MapF
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         map.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onPresenterPrepared(MapPresenter presenter) {
+        super.onPresenterPrepared(presenter);
         map.getMapAsync(this);
     }
 

@@ -14,7 +14,7 @@ import io.github.plastix.forage.data.api.ApiConstants;
 import io.github.plastix.forage.ui.PresenterActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 
-public class LoginActivity extends PresenterActivity<LoginPresenter> implements LoginView {
+public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> implements LoginView {
 
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -22,12 +22,10 @@ public class LoginActivity extends PresenterActivity<LoginPresenter> implements 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ActivityUtils.setSupportActionBarBack(getDelegate());
-
-
-        injectDependencies();
     }
 
     private void injectDependencies() {

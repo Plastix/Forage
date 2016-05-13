@@ -43,13 +43,16 @@ public class CompassPresenter extends Presenter<CompassView> {
         this.target = location;
     }
 
+
     @Override
-    public void onStop() {
+    public void onViewDetached() {
+        super.onViewDetached();
         RxUtils.safeUnsubscribe(subscription);
     }
 
     @Override
-    public void onResume() {
+    public void onViewAttached(CompassView view) {
+        super.onViewAttached(view);
         updateCompass();
     }
 
@@ -93,5 +96,13 @@ public class CompassPresenter extends Presenter<CompassView> {
                         throwable.printStackTrace();
                     }
                 });
+    }
+
+    @Override
+    public void onDestroyed() {
+        subscription = null;
+        azimuthInteractor = null;
+        locationInteractor = null;
+        target = null;
     }
 }
