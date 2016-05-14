@@ -127,7 +127,8 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
     }
 
     @Override
-    protected void onPresenterPrepared(CacheDetailPresenter presenter) {
+    protected void onStart() {
+        super.onStart();
         presenter.getGeocache(cacheCode);
     }
 

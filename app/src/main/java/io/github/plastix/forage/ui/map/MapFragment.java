@@ -48,12 +48,6 @@ public class MapFragment extends PresenterFragment<MapPresenter, MapFragView> im
     }
 
     @Override
-    protected void onPresenterPrepared(MapPresenter presenter) {
-        super.onPresenterPrepared(presenter);
-        map.getMapAsync(this);
-    }
-
-    @Override
     public void populateMap(List<Cache> caches) {
         if (googleMap != null) {
             for (Cache cache : caches) {
@@ -92,6 +86,7 @@ public class MapFragment extends PresenterFragment<MapPresenter, MapFragView> im
     public void onResume() {
         super.onResume();
         map.onResume();
+        map.getMapAsync(this);
     }
 
     @Override

@@ -58,8 +58,10 @@ public class CompassFragment extends PresenterFragment<CompassPresenter, Compass
     }
 
     @Override
-    protected void onPresenterPrepared(CompassPresenter presenter) {
+    public void onResume() {
+        super.onResume();
         presenter.setTargetLocation(target);
+
     }
 
     @Override
