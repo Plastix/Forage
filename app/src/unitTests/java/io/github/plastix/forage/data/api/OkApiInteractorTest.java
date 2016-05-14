@@ -11,8 +11,8 @@ import java.util.List;
 import dagger.Lazy;
 import io.github.plastix.forage.RxSchedulersOverrideRule;
 import io.github.plastix.forage.data.local.model.Cache;
-import rx.Observable;
-import rx.observables.BlockingObservable;
+import rx.Single;
+import rx.singles.BlockingSingle;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assert_;
@@ -63,10 +63,10 @@ public class OkApiInteractorTest {
                         anyString(),
                         anyBoolean(),
                         anyString())
-        ).thenReturn(Observable.just(caches));
+        ).thenReturn(Single.just(caches));
 
-        BlockingObservable<List<Cache>> result = okApiInteractor.getNearbyCaches(lat, lon, radius).toBlocking();
-        assertThat(result.first()).containsExactlyElementsIn(caches);
+        BlockingSingle<List<Cache>> result = okApiInteractor.getNearbyCaches(lat, lon, radius).toBlocking();
+        assertThat(result.value()).containsExactlyElementsIn(caches);
     }
 
     @Test
@@ -79,10 +79,10 @@ public class OkApiInteractorTest {
                         anyString(),
                         anyBoolean(),
                         anyString())
-        ).thenReturn(Observable.<List<Cache>>error(error));
+        ).thenReturn(Single.<List<Cache>>error(error));
 
         try {
-            okApiInteractor.getNearbyCaches(lat, lon, radius).toBlocking().first();
+            okApiInteractor.getNearbyCaches(lat, lon, radius).toBlocking().value();
             assert_().fail("Should have throw an error!", error);
         } catch (Exception e) {
             assertThat(e).isSameAs(error);

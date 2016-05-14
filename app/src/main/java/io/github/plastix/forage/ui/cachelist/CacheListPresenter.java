@@ -15,9 +15,8 @@ import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.Presenter;
 import io.github.plastix.forage.util.RxUtils;
 import io.realm.OrderedRealmCollection;
-import rx.Observable;
+import rx.Single;
 import rx.SingleSubscriber;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -83,27 +82,23 @@ public class CacheListPresenter extends Presenter<CacheListView> {
                                            }, new Action0() {
                                                @Override
                                                public void call() {
-                                                   subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Observable<List<Cache>>>() {
+                                                   subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Single<List<Cache>>>() {
                                                        @Override
-                                                       public Observable<List<Cache>> call(Location location) {
+                                                       public Single<List<Cache>> call(Location location) {
                                                            return apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES);
                                                        }
-                                                   }).subscribe(new Subscriber<List<Cache>>() {
+                                                   }).subscribe(new Action1<List<Cache>>() {
                                                        @Override
-                                                       public void onCompleted() {
-
-                                                       }
-
-                                                       @Override
-                                                       public void onError(Throwable e) {
-                                                           Log.e("CacheListPresenter", e.getMessage(), e);
-                                                           view.onErrorFetch();
-                                                       }
-
-                                                       @Override
-                                                       public void onNext(List<Cache> caches) {
+                                                       public void call(List<Cache> caches) {
+                                                           // The adapter will update automatically after this database write
                                                            databaseInteractor.clearAndSaveGeocaches(caches);
-                                                           subscription.unsubscribe();
+                                                           unsubscribe();
+                                                       }
+                                                   }, new Action1<Throwable>() {
+                                                       @Override
+                                                       public void call(Throwable throwable) {
+                                                           view.onErrorFetch();
+                                                           Log.e("CacheListPresenter", throwable.getMessage(), throwable);
                                                        }
                                                    });
                                                }
@@ -122,6 +117,8 @@ public class CacheListPresenter extends Presenter<CacheListView> {
     public void onViewAttached(CacheListView view) {
         super.onViewAttached(view);
 
+        // If we have an active subscription it means we are still fetching geocaches
+        // from the internet so set the view to refreshing
         if (!subscription.isUnsubscribed()) {
             view.setRefreshing();
         }

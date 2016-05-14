@@ -3,6 +3,7 @@ package io.github.plastix.forage.util;
 import android.support.annotation.Nullable;
 
 import rx.Observable;
+import rx.Single;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -17,32 +18,14 @@ public class RxUtils {
     }
 
     /**
-     * Unsubscribes from the specified subscription
+     * Unsubscribes from the specified subscription.
      *
-     * @param subscription
+     * @param subscription Subscription instance.
      */
     public static void safeUnsubscribe(@Nullable Subscription subscription) {
         if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
-    }
-
-    /**
-     * Returns a new Observable Transformer that subscribes on a IO thread and observes on the Android
-     * Main thread.
-     *
-     * @param <T> Generic type of observable.
-     * @return New transformer.
-     */
-    public static <T> Observable.Transformer<T, T> applySchedulers() {
-        return new Observable.Transformer<T, T>() {
-            @Override
-            public Observable<T> call(Observable<T> observable) {
-                return observable
-                        .compose(RxUtils.<T>subscribeOnIoThreadTransformer())
-                        .compose(RxUtils.<T>observeOnUIThreadTransformer());
-            }
-        };
     }
 
     /**
@@ -56,6 +39,21 @@ public class RxUtils {
             @Override
             public Observable<T> call(Observable<T> tObservable) {
                 return tObservable.subscribeOn(Schedulers.io());
+            }
+        };
+    }
+
+    /**
+     * Returns a new Single transformer that subscribes on a IO thread.
+     *
+     * @param <T> Generic type of single.
+     * @return New transformer.
+     */
+    public static <T> Single.Transformer<T, T> subscribeOnIoThreadTransformerSingle() {
+        return new Single.Transformer<T, T>() {
+            @Override
+            public Single<T> call(Single<T> tSingle) {
+                return tSingle.subscribeOn(Schedulers.io());
             }
         };
     }
@@ -76,6 +74,22 @@ public class RxUtils {
     }
 
     /**
+     * Returns a new Single transformer that observes on the Android Main thread.
+     *
+     * @param <T> Generic type of single.
+     * @return New transformer.
+     */
+    public static <T> Single.Transformer<T, T> observeOnUIThreadTransformerSingle() {
+        return new Single.Transformer<T, T>() {
+            @Override
+            public Single<T> call(Single<T> tSingle) {
+                return tSingle.observeOn(AndroidSchedulers.mainThread());
+            }
+        };
+    }
+
+
+    /**
      * Returns a new Observable transformer that subscribes on a CPU computation thread.
      *
      * @param <T> Generic type of observable.
@@ -91,19 +105,18 @@ public class RxUtils {
     }
 
     /**
-     * Returns a new Observable transformer that subscribes on a new thread
+     * Returns a new Single transformer that subscribes on a CPU computation thread.
      *
      * @param <T> Generic type of observable.
      * @return New transformer.
      */
-    public static <T> Observable.Transformer<T, T> subscribeOnNewThreadTransformer() {
-        return new Observable.Transformer<T, T>() {
+    public static <T> Single.Transformer<T, T> subscribeOnComputationThreadTransformerSingle() {
+        return new Single.Transformer<T, T>() {
             @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable.subscribeOn(Schedulers.newThread());
+            public Single<T> call(Single<T> tSingle) {
+                return tSingle.subscribeOn(Schedulers.computation());
             }
         };
     }
-
 
 }

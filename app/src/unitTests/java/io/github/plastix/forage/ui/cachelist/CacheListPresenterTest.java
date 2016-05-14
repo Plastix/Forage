@@ -13,7 +13,7 @@ import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import rx.Completable;
-import rx.Observable;
+import rx.Single;
 
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.anyDouble;
@@ -47,14 +47,14 @@ public class CacheListPresenterTest {
 
         cacheListPresenter.onViewAttached(view);
 
-        when(locationInteractor.getUpdatedLocation()).thenReturn(Observable.just(mock(Location.class)));
+        when(locationInteractor.getUpdatedLocation()).thenReturn(Single.just(mock(Location.class)));
     }
 
     @Test
     public void fetchGeocaches_savesDownloadedGeocachesToDatabase() {
         List<Cache> caches = asList(mock(Cache.class), mock(Cache.class), mock(Cache.class));
         when(okApiInteractor.getNearbyCaches(anyDouble(), anyDouble(), anyDouble()))
-                .thenReturn(Observable.just(caches));
+                .thenReturn(Single.just(caches));
 
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(Completable.complete());
         when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
@@ -94,7 +94,7 @@ public class CacheListPresenterTest {
         when(locationInteractor.isLocationAvailable()).thenReturn(
                 Completable.complete());
         when(okApiInteractor.getNearbyCaches(anyDouble(), anyDouble(), anyDouble())).thenReturn(
-                Observable.<List<Cache>>error(new Throwable()));
+                Single.<List<Cache>>error(new Throwable()));
 
         cacheListPresenter.getGeocachesFromInternet();
 

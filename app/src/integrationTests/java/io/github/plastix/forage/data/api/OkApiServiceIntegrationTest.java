@@ -74,7 +74,7 @@ public class OkApiServiceIntegrationTest {
         mockWebServer.enqueue(new MockResponse().setBody(jsonResponse));
 
         // Input fake data to the API call
-        List<Cache> caches = okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().first();
+        List<Cache> caches = okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().value();
 
         assertThat(caches).hasSize(2);
 
@@ -111,7 +111,7 @@ public class OkApiServiceIntegrationTest {
 
             try {
                 // Input fake data to the API call
-                okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().first();
+                okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().value();
                 assert_().fail("HttpException should be thrown for error code: " + errorCode);
             } catch (RuntimeException expected) {
                 HttpException httpException = (HttpException) expected.getCause();

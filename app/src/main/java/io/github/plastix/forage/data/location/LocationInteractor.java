@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import rx.Completable;
 import rx.Observable;
+import rx.Single;
 
 /**
  * Reactive wrapper around Google Play Location Services.
@@ -34,12 +35,12 @@ public class LocationInteractor {
      * @return An rx.Observable that emits one Location object.
      */
     @NonNull
-    public Observable<Location> getUpdatedLocation() {
+    public Single<Location> getUpdatedLocation() {
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setNumUpdates(1);
 
-        return observableFactory.buildObservable(request).take(1);
+        return observableFactory.buildObservable(request).take(1).toSingle();
     }
 
     /**

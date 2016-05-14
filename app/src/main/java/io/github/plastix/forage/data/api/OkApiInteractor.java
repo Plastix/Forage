@@ -14,7 +14,7 @@ import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.util.RxUtils;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
-import rx.Observable;
+import rx.Single;
 
 /**
  * A Reactive wrapper around {@link OkApiService}.
@@ -38,7 +38,7 @@ public class OkApiInteractor {
      * @param radius Boundary radius.
      * @return A rx.Single JsonArray.
      */
-    public Observable<List<Cache>> getNearbyCaches(double lat, double lon, double radius) {
+    public Single<List<Cache>> getNearbyCaches(double lat, double lon, double radius) {
 
         JsonObject searchParams = new JsonObject();
         searchParams.addProperty("center", String.format("%s|%s", lat, lon));
@@ -54,6 +54,8 @@ public class OkApiInteractor {
                 returnParams.toString(),
                 false,
                 BuildConfig.OKAPI_US_CONSUMER_KEY
-        ).compose(RxUtils.<List<Cache>>applySchedulers());
+        )
+                .compose(RxUtils.<List<Cache>>subscribeOnIoThreadTransformerSingle())
+                .compose(RxUtils.<List<Cache>>observeOnUIThreadTransformerSingle());
     }
 }
