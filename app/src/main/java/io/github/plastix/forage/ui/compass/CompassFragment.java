@@ -61,7 +61,7 @@ public class CompassFragment extends PresenterFragment<CompassPresenter, Compass
     public void onResume() {
         super.onResume();
         presenter.setTargetLocation(target);
-
+        presenter.updateCompass();
     }
 
     @Override

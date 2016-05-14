@@ -50,12 +50,6 @@ public class CompassPresenter extends Presenter<CompassView> {
         RxUtils.safeUnsubscribe(subscription);
     }
 
-    @Override
-    public void onViewAttached(CompassView view) {
-        super.onViewAttached(view);
-        updateCompass();
-    }
-
     public void updateCompass() {
         this.subscription = Observable.combineLatest(
                 azimuthInteractor.getAzimuthObservable(),
