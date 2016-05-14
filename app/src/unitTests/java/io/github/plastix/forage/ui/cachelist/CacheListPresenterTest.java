@@ -60,7 +60,7 @@ public class CacheListPresenterTest {
         when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
 
 
-        cacheListPresenter.fetchGeocaches();
+        cacheListPresenter.getGeocachesFromInternet();
 
         verify(databaseInteractor).clearAndSaveGeocaches(caches);
     }
@@ -70,7 +70,7 @@ public class CacheListPresenterTest {
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(
                 Completable.error(new Throwable()));
 
-        cacheListPresenter.fetchGeocaches();
+        cacheListPresenter.getGeocachesFromInternet();
 
         verify(view).onErrorInternet();
     }
@@ -82,7 +82,7 @@ public class CacheListPresenterTest {
         when(locationInteractor.isLocationAvailable()).thenReturn(
                 Completable.error(new Throwable()));
 
-        cacheListPresenter.fetchGeocaches();
+        cacheListPresenter.getGeocachesFromInternet();
 
         verify(view).onErrorLocation();
     }
@@ -96,7 +96,7 @@ public class CacheListPresenterTest {
         when(okApiInteractor.getNearbyCaches(anyDouble(), anyDouble(), anyDouble())).thenReturn(
                 Observable.<List<Cache>>error(new Throwable()));
 
-        cacheListPresenter.fetchGeocaches();
+        cacheListPresenter.getGeocachesFromInternet();
 
         verify(view).onErrorLocation();
         verify(view).onErrorLocation();

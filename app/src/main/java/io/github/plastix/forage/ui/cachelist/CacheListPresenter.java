@@ -14,7 +14,9 @@ import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.Presenter;
 import io.github.plastix.forage.util.RxUtils;
+import io.realm.OrderedRealmCollection;
 import rx.Observable;
+import rx.SingleSubscriber;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action0;
@@ -44,8 +46,22 @@ public class CacheListPresenter extends Presenter<CacheListView> {
         this.networkInteractor = networkInteractor;
     }
 
+    public void getGeocachesFromDatabase() {
+        databaseInteractor.getGeocaches().subscribe(new SingleSubscriber<OrderedRealmCollection<Cache>>() {
+            @Override
+            public void onSuccess(OrderedRealmCollection<Cache> value) {
+                view.setGeocacheList(value);
+            }
 
-    public void fetchGeocaches() {
+            @Override
+            public void onError(Throwable error) {
+                Log.e("CacheListPresenter", error.getMessage(), error);
+            }
+        });
+    }
+
+
+    public void getGeocachesFromInternet() {
         // Cancel any currently running request
         unsubscribe();
 
@@ -67,8 +83,29 @@ public class CacheListPresenter extends Presenter<CacheListView> {
                                            }, new Action0() {
                                                @Override
                                                public void call() {
-                                                   // Run the ReactivePresenter observable
-                                                   getGeocaches();
+                                                   subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Observable<List<Cache>>>() {
+                                                       @Override
+                                                       public Observable<List<Cache>> call(Location location) {
+                                                           return apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES);
+                                                       }
+                                                   }).subscribe(new Subscriber<List<Cache>>() {
+                                                       @Override
+                                                       public void onCompleted() {
+
+                                                       }
+
+                                                       @Override
+                                                       public void onError(Throwable e) {
+                                                           Log.e("CacheListPresenter", e.getMessage(), e);
+                                                           view.onErrorFetch();
+                                                       }
+
+                                                       @Override
+                                                       public void onNext(List<Cache> caches) {
+                                                           databaseInteractor.clearAndSaveGeocaches(caches);
+                                                           subscription.unsubscribe();
+                                                       }
+                                                   });
                                                }
                                            }
                                 );
@@ -79,32 +116,6 @@ public class CacheListPresenter extends Presenter<CacheListView> {
 
     public void unsubscribe() {
         RxUtils.safeUnsubscribe(subscription);
-    }
-
-    private void getGeocaches() {
-        subscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Observable<List<Cache>>>() {
-            @Override
-            public Observable<List<Cache>> call(Location location) {
-                return apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES);
-            }
-        }).subscribe(new Subscriber<List<Cache>>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e("error", e.getMessage(), e);
-                view.onErrorFetch();
-            }
-
-            @Override
-            public void onNext(List<Cache> caches) {
-                databaseInteractor.clearAndSaveGeocaches(caches);
-                subscription.unsubscribe();
-            }
-        });
     }
 
     @Override
@@ -124,6 +135,5 @@ public class CacheListPresenter extends Presenter<CacheListView> {
     public void clearCaches() {
         databaseInteractor.clearGeocaches();
     }
-
 
 }

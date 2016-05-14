@@ -55,7 +55,6 @@
                     android:paddingRight="16dp"
                     android:paddingTop="16dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:transitionName="cache_title"
                     tools:text="Cache Name"/>
 
                 <TextView
@@ -68,7 +67,6 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:textStyle="bold"
-                    android:transitionName="cache_type"
                     tools:text="Traditional Cache"/>
 
             </RelativeLayout>

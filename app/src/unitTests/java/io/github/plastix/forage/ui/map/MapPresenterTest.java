@@ -3,13 +3,11 @@ package io.github.plastix.forage.ui.map;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
+import io.realm.OrderedRealmCollection;
 import rx.Single;
 
-import static java.util.Arrays.asList;
 import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -39,7 +37,8 @@ public class MapPresenterTest {
 
     @Test
     public void getGeocaches_shouldCallViewPopulateMap() {
-        List<Cache> caches = asList(mock(Cache.class), mock(Cache.class));
+        //noinspection unchecked
+        OrderedRealmCollection<Cache> caches = mock(OrderedRealmCollection.class);
         when(databaseInteractor.getGeocaches()).thenReturn(Single.just(caches));
 
         mapPresenter.getGeocaches();
@@ -51,7 +50,7 @@ public class MapPresenterTest {
     @Test
     public void getGeocaches_errorDoesNothing() {
         when(databaseInteractor.getGeocaches()).
-                thenReturn(Single.<List<Cache>>error(new Throwable("Error")));
+                thenReturn(Single.<OrderedRealmCollection<Cache>>error(new Throwable("Error")));
 
         mapPresenter.getGeocaches();
 

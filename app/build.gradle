@@ -16,7 +16,7 @@ buildscript {
         classpath "com.fernandocejas.frodo:frodo-plugin:0.8.2" // Test logging of Observables
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.4.2'
         classpath 'com.frogermcs.androiddevmetrics:androiddevmetrics-plugin:0.3.1'
-        classpath "io.realm:realm-gradle-plugin:0.88.3"
+        classpath "io.realm:realm-gradle-plugin:0.90.1"
     }
 }
 
@@ -163,6 +163,7 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'se.akerfeldt:okhttp-signpost:1.1.0'
     compile 'oauth.signpost:signpost-core:1.2.1.2'
+    compile 'io.realm:android-adapters:1.2.1'
 
     // Unit Testing
     testCompile 'junit:junit:4.12'

@@ -24,7 +24,6 @@
         android:maxLines="2"
         android:textColor="@color/gray_dark"
         android:textSize="20sp"
-        android:transitionName="cache_title"
         android:typeface="sans"
         tools:text="Cache Name"/>
 
@@ -37,7 +36,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:textSize="15sp"
-        android:transitionName="cache_type"
         android:typeface="sans"
         tools:text="Traditional"/>
 
@@ -48,10 +46,10 @@
         android:layout_below="@+id/cache_type"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="@string/cacheitem_terrain_icon_description"
         android:tint="@color/gray"
         app:srcCompat="@drawable/ic_terrain"
-        tools:ignore="MissingPrefix"
-        android:contentDescription="@string/cacheitem_terrain_icon_description"/>
+        tools:ignore="MissingPrefix"/>
 
     <TextView
         android:id="@+id/cache_terrain"
@@ -76,10 +74,10 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/cache_terrain"
         android:layout_toRightOf="@+id/cache_terrain"
+        android:contentDescription="@string/cacheitem_difficulty_icon_description"
         android:tint="@color/gray"
         app:srcCompat="@drawable/ic_speedometer"
-        tools:ignore="MissingPrefix"
-        android:contentDescription="@string/cacheitem_difficulty_icon_description"/>
+        tools:ignore="MissingPrefix"/>
 
     <TextView
         android:id="@+id/cache_difficulty"
@@ -104,10 +102,10 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/cache_difficulty"
         android:layout_toRightOf="@+id/cache_difficulty"
+        android:contentDescription="@string/cacheitem_size_icon_description"
         android:tint="@color/gray"
         app:srcCompat="@drawable/ic_cube"
-        tools:ignore="MissingPrefix"
-        android:contentDescription="@string/cacheitem_size_icon_description"/>
+        tools:ignore="MissingPrefix"/>
 
     <TextView
         android:id="@+id/cache_size"

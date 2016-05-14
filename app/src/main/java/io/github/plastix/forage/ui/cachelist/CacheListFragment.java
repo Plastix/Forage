@@ -1,13 +1,9 @@
 package io.github.plastix.forage.ui.cachelist;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,17 +22,14 @@ import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.PresenterFragment;
 import io.github.plastix.forage.ui.SimpleDividerItemDecoration;
-import io.github.plastix.forage.ui.cachedetail.CacheDetailActivity;
 import io.github.plastix.forage.util.ActivityUtils;
+import io.realm.OrderedRealmCollection;
 
 /**
  * Fragment that is responsible for the Geocache list.
  */
 public class CacheListFragment extends PresenterFragment<CacheListPresenter, CacheListView> implements CacheListView,
-        SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
-
-    @Inject
-    CacheAdapter adapter;
+        SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     SimpleDividerItemDecoration itemDecorator;
@@ -50,7 +43,8 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     @BindView(R.id.empty_view)
     View emptyView;
 
-    private RecyclerView.AdapterDataObserver dataChangeListener;
+    private CacheAdapter adapter;
+    private DataChangeListener dataChangeListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,16 +68,15 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         ActivityUtils.setSupportActionBarTitle(getActivity(), R.string.cachelist_title);
 
+        adapter = new CacheAdapter(getContext(), null, true);
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(itemDecorator);
-        recyclerView.setAdapter(adapter);
 
         this.dataChangeListener = new DataChangeListener(this);
         adapter.registerAdapterDataObserver(dataChangeListener);
-        adapter.setOnClickListener(this);
 
         swipeRefreshLayout.setOnRefreshListener(this);
         updateEmptyView();
@@ -91,7 +84,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
 
     private void updateEmptyView() {
         stopRefresh();
-        if (recyclerView.getAdapter() == null || adapter.isEmpty()) {
+        if (recyclerView.getAdapter() == null || adapter.getItemCount() == 0) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
             emptyView.setVisibility(View.GONE);
@@ -104,30 +97,24 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     }
 
     @Override
-    public void setRefreshing() {
-        swipeRefreshLayout.setRefreshing(true);
+    public void onResume() {
+        super.onResume();
+        presenter.getGeocachesFromDatabase();
     }
 
-    /**
-     * Called when an item is clicked in the RecyclerView
-     *
-     * @param v View clicked.
-     */
     @Override
-    public void onClick(View v) {
-        presenter.unsubscribe();
-        stopRefresh();
+    public void setGeocacheList(OrderedRealmCollection<Cache> caches) {
+        adapter.updateData(caches);
+    }
 
-        int position = recyclerView.getChildLayoutPosition(v);
-        Cache cache = adapter.getItem(position);
-        Intent intent = CacheDetailActivity.newIntent(getContext(), cache.cacheCode);
-
-        // TODO Clean up
-        Pair<View, String> one = Pair.create(v.findViewById(R.id.cache_name), "cache_title");
-        Pair<View, String> two = Pair.create(v.findViewById(R.id.cache_type), "cache_type");
-
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), one, two);
-        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+    @Override
+    public void setRefreshing() {
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
     }
 
     @Override
@@ -148,7 +135,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
 
     private void downloadGeocaches() {
         swipeRefreshLayout.setRefreshing(true);
-        presenter.fetchGeocaches();
+        presenter.getGeocachesFromInternet();
     }
 
     @Override
@@ -191,28 +178,15 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
         }
     }
 
-    /**
-     * Remove Butterknife bindings when the view is destroyed.
-     */
     @Override
     public void onDestroyView() {
         recyclerView.setAdapter(null);
         adapter.unregisterAdapterDataObserver(dataChangeListener);
-        adapter.setOnClickListener(null);
-        this.dataChangeListener = null;
+        dataChangeListener = null;
 
         super.onDestroyView();
     }
 
-    /**
-     * Clean up the resources when the fragment is destroyed.
-     * e.g. Close the Realm instance held by the RecyclerView adapter.
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        adapter.closeRealm();
-    }
 
     private static class DataChangeListener extends RecyclerView.AdapterDataObserver {
 

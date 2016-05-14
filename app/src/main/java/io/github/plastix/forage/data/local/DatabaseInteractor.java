@@ -9,8 +9,8 @@ import javax.inject.Inject;
 
 import dagger.Lazy;
 import io.github.plastix.forage.data.local.model.Cache;
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
-import io.realm.RealmResults;
 import rx.Single;
 import rx.functions.Func1;
 
@@ -33,7 +33,7 @@ public class DatabaseInteractor {
         realm.get().executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.where(Cache.class).findAll().clear();
+                realm.delete(Cache.class);
             }
         });
     }
@@ -49,7 +49,7 @@ public class DatabaseInteractor {
         realm.get().executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.where(Cache.class).findAll().clear();
+                realm.delete(Cache.class);
                 realm.copyToRealmOrUpdate(data);
             }
         });
@@ -81,17 +81,17 @@ public class DatabaseInteractor {
      *
      * @return rx.Single with List of geocaches.
      */
-    public Single<List<Cache>> getGeocaches() {
+    public Single<OrderedRealmCollection<Cache>> getGeocaches() {
         return realm.get().where(Cache.class).findAllAsync()
-                .<List<Cache>>asObservable()
-                .filter(new Func1<RealmResults<Cache>, Boolean>() {
+                .<OrderedRealmCollection<Cache>>asObservable()
+                .filter(new Func1<OrderedRealmCollection<Cache>, Boolean>() {
                     @Override
-                    public Boolean call(RealmResults<Cache> caches) {
+                    public Boolean call(OrderedRealmCollection<Cache> caches) {
                         return caches.isLoaded();
                     }
-                }).map(new Func1<RealmResults<Cache>, List<Cache>>() {
+                }).map(new Func1<OrderedRealmCollection<Cache>, OrderedRealmCollection<Cache>>() {
                     @Override
-                    public List<Cache> call(RealmResults<Cache> caches) {
+                    public OrderedRealmCollection<Cache> call(OrderedRealmCollection<Cache> caches) {
                         return caches;
                     }
                 })
