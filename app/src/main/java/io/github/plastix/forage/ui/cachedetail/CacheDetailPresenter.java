@@ -17,7 +17,7 @@ public class CacheDetailPresenter extends Presenter<CacheDetailView> {
     }
 
     public void getGeocache(String cacheCode) {
-        databaseInteractor.getGeocache(cacheCode)
+        databaseInteractor.getGeocacheCopy(cacheCode)
                 .subscribe(new SingleSubscriber<Cache>() {
                     @Override
                     public void onSuccess(Cache value) {

@@ -55,6 +55,24 @@ public class DatabaseInteractor {
         });
     }
 
+    /**
+     * Returns a rx.Single of the Geocache with the specified OpenCaching cache code. This copies the
+     * object from the Realm database so it is no longer live!
+     * <p/>
+     * See {@link #getGeocache(String)} if you want a live object.
+     *
+     * @param cacheCode Cache code of geocache to query.
+     * @return rx.Single with Geocache.
+     */
+    public Single<Cache> getGeocacheCopy(@NonNull final String cacheCode) {
+        return getGeocache(cacheCode)
+                .map(new Func1<Cache, Cache>() {
+                    @Override
+                    public Cache call(Cache cache) {
+                        return realm.get().copyFromRealm(cache);
+                    }
+                });
+    }
 
     /**
      * Returns a rx.Single of the Geocache with the specified OpenCaching cache code. If the geocache
