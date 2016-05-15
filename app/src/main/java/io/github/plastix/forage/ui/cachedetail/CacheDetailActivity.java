@@ -37,7 +37,6 @@ import io.github.plastix.forage.util.ActivityUtils;
 public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter, CacheDetailView> implements CacheDetailView {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
-    private final static String BUNDLE_KEY_MAP_STATE = "BUNDLE_KEY_MAP_STATE";
 
     @BindView(R.id.cachedetail_appbar)
     AppBarLayout appBarLayout;
@@ -101,29 +100,16 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache_detail);
 
+        setSupportActionBar(toolbar);
+        ActivityUtils.setSupportActionBarBack(getDelegate());
+
         this.cacheCode = getIntent().getStringExtra(EXTRA_CACHE_CODE);
-
-        initializeView(savedInstanceState);
-
+        this.map.onCreate(savedInstanceState);
     }
 
     private void injectDependencies() {
         ForageApplication.getComponent(this)
                 .plus(new CacheDetailModule(this)).injectTo(this);
-    }
-
-    private void initializeView(Bundle savedInstanceState) {
-        setSupportActionBar(toolbar);
-
-        ActivityUtils.setSupportActionBarBack(getDelegate());
-
-        Bundle mapState = null;
-        if (savedInstanceState != null) {
-            // Load the map state bundle from the main savedInstanceState
-            mapState = savedInstanceState.getBundle(BUNDLE_KEY_MAP_STATE);
-        }
-
-        map.onCreate(mapState);
     }
 
     @Override
@@ -164,8 +150,8 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
 
     @Override
     protected void onDestroy() {
-        map.onDestroy();
         super.onDestroy();
+        map.onDestroy();
     }
 
     @Override
@@ -188,11 +174,8 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Bundle mapState = new Bundle();
-        map.onSaveInstanceState(mapState);
-        // Put the map bundle in the main outState
-        outState.putBundle(BUNDLE_KEY_MAP_STATE, mapState);
         super.onSaveInstanceState(outState);
+        map.onSaveInstanceState(outState);
     }
 
     /**

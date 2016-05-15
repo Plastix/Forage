@@ -17,17 +17,18 @@ public class CacheDetailPresenter extends Presenter<CacheDetailView> {
     }
 
     public void getGeocache(String cacheCode) {
-        databaseInteractor.getGeocache(cacheCode).subscribe(new SingleSubscriber<Cache>() {
-            @Override
-            public void onSuccess(Cache value) {
-                view.returnedGeocache(value);
-            }
+        databaseInteractor.getGeocache(cacheCode)
+                .subscribe(new SingleSubscriber<Cache>() {
+                    @Override
+                    public void onSuccess(Cache value) {
+                        view.returnedGeocache(value);
+                    }
 
-            @Override
-            public void onError(Throwable error) {
-                view.onError();
-            }
-        });
+                    @Override
+                    public void onError(Throwable error) {
+                        view.onError();
+                    }
+                });
     }
 
     @Override
