@@ -19,4 +19,13 @@ public abstract class Presenter<V> {
 
     public abstract void onDestroyed();
 
+    /**
+     * Checks if the view is currently attached to the presenter. You should call this method before
+     * accessing {@link #view} to avoid NPEs!
+     */
+    protected boolean isViewAttached() {
+        return view != null;
+    }
+
+
 }

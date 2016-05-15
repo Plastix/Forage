@@ -12,6 +12,10 @@ public class NavigatePresenter extends Presenter<NavigateView> {
     }
 
     public void navigate(String latitude, String longitude) {
+        if (!isViewAttached()) {
+            return;
+        }
+
         boolean error = false;
 
         if (!LocationUtils.isValidLatitude(latitude)) {

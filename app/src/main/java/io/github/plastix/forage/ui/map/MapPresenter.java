@@ -7,11 +7,14 @@ import javax.inject.Inject;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.Presenter;
+import io.github.plastix.forage.util.RxUtils;
 import rx.SingleSubscriber;
+import rx.Subscription;
 
 public class MapPresenter extends Presenter<MapFragView> {
 
     private DatabaseInteractor databaseInteractor;
+    private Subscription subscription;
 
     @Inject
     public MapPresenter(DatabaseInteractor databaseInteractor) {
@@ -19,10 +22,12 @@ public class MapPresenter extends Presenter<MapFragView> {
     }
 
     public void getGeocaches() {
-        databaseInteractor.getGeocaches().subscribe(new SingleSubscriber<List<Cache>>() {
+        subscription = databaseInteractor.getGeocaches().subscribe(new SingleSubscriber<List<Cache>>() {
             @Override
             public void onSuccess(List<Cache> value) {
-                view.populateMap(value);
+                if (isViewAttached()) {
+                    view.populateMap(value);
+                }
             }
 
             @Override
@@ -33,7 +38,14 @@ public class MapPresenter extends Presenter<MapFragView> {
     }
 
     @Override
+    public void onViewDetached() {
+        super.onViewDetached();
+        RxUtils.safeUnsubscribe(subscription);
+    }
+
+    @Override
     public void onDestroyed() {
         databaseInteractor.onDestroy();
+        subscription = null;
     }
 }

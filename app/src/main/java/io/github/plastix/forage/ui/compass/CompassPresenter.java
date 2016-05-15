@@ -51,7 +51,7 @@ public class CompassPresenter extends Presenter<CompassView> {
     }
 
     public void updateCompass() {
-        this.subscription = Observable.combineLatest(
+        subscription = Observable.combineLatest(
                 azimuthInteractor.getAzimuthObservable(),
                 locationInteractor.getLocationObservable(LOCATION_UPDATE_INTERVAL),
                 new Func2<Float, Location, Pair<Float, Location>>() {
@@ -77,6 +77,13 @@ public class CompassPresenter extends Presenter<CompassView> {
                 })
                 .compose(RxUtils.<Pair<Float, Location>>observeOnUIThreadTransformer())
                 .throttleFirst(COMPASS_UPDATE_INTERVAL, TimeUnit.MILLISECONDS)
+                .filter(new Func1<Pair<Float, Location>, Boolean>() {
+                    @Override
+                    public Boolean call(Pair<Float, Location> floatLocationPair) {
+                        // Check if the view is attached before updating the view
+                        return isViewAttached();
+                    }
+                })
                 .subscribe(new Action1<Pair<Float, Location>>() {
                     @Override
                     public void call(Pair<Float, Location> pair) {
