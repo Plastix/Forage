@@ -30,6 +30,10 @@ public class StringCapitalizerAdapter extends TypeAdapter<String> {
     @Override
     public String read(JsonReader in) throws IOException {
         String raw = in.nextString();
-        return StringUtils.capitalize(raw);
+        if (raw != null) {
+            return StringUtils.capitalize(raw);
+        } else {
+            return null;
+        }
     }
 }

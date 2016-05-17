@@ -30,7 +30,11 @@ public class HtmlAdapter extends TypeAdapter<String> {
     @Override
     public String read(JsonReader in) throws IOException {
         String raw = in.nextString();
-        return StringUtils.stripHtml(raw);
+        if (raw != null) {
+            return StringUtils.stripHtml(raw);
+        } else {
+            return null;
+        }
     }
 
 
