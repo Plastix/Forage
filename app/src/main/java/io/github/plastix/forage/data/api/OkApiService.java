@@ -2,8 +2,8 @@ package io.github.plastix.forage.data.api;
 
 import java.util.List;
 
+import io.github.plastix.forage.data.api.response.SubmitLogResponse;
 import io.github.plastix.forage.data.local.model.Cache;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
@@ -24,10 +24,11 @@ public interface OkApiService {
                                           @Query("consumer_key") String consumerKey
     );
 
-    @Headers("OAuth")
-    @GET("/okapi/services/logs/submit/?comment_format=plaintext")
-    Single<Call> submitLog(@Query("cache_code") String cacheCode,
-                           @Query("logtype") String logType
+    @Headers("OAuth: ENABLED")
+    @GET("/okapi/services/logs/submit")
+    Single<SubmitLogResponse> submitLog(@Query("cache_code") String cacheCode,
+                                        @Query("logtype") String logType,
+                                        @Query("comment") String comment
     );
 
 

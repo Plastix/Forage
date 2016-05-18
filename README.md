@@ -15,6 +15,7 @@ Libraries
 * [Realm](https://realm.io/)
 * [Icepick](https://github.com/frankiesardo/icepick)
 * [Signpost](https://github.com/mttkay/signpost) and [OkHttp-Signpost](https://github.com/pakerfeldt/okhttp-signpost)
+* [Material Dialogs](https://github.com/afollestad/material-dialogs)
 * [Google Support Libraries](http://developer.android.com/tools/support-library/index.html)
 * [Google Play Location Services](https://developers.google.com/android/reference/com/google/android/gms/location/package-summary)
 * [Google Play Maps](https://developers.google.com/maps/documentation/android-api/)

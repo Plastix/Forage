@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import dagger.Lazy;
 import io.github.plastix.forage.BuildConfig;
+import io.github.plastix.forage.data.api.response.SubmitLogResponse;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.util.RxUtils;
 import io.github.plastix.forage.util.StringUtils;
@@ -57,5 +58,12 @@ public class OkApiInteractor {
         )
                 .compose(RxUtils.<List<Cache>>subscribeOnIoThreadTransformerSingle())
                 .compose(RxUtils.<List<Cache>>observeOnUIThreadTransformerSingle());
+    }
+
+    public Single<SubmitLogResponse> submitLog(String cacheCode, String type, String comment) {
+        return apiService.get()
+                .submitLog(cacheCode, type, comment)
+                .compose(RxUtils.<SubmitLogResponse>subscribeOnIoThreadTransformerSingle())
+                .compose(RxUtils.<SubmitLogResponse>observeOnUIThreadTransformerSingle());
     }
 }

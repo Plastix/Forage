@@ -22,6 +22,8 @@ import io.github.plastix.forage.ui.cachelist.CacheListComponent;
 import io.github.plastix.forage.ui.cachelist.CacheListModule;
 import io.github.plastix.forage.ui.compass.CompassComponent;
 import io.github.plastix.forage.ui.compass.CompassModule;
+import io.github.plastix.forage.ui.log.LogComponent;
+import io.github.plastix.forage.ui.log.LogModule;
 import io.github.plastix.forage.ui.login.LoginComponent;
 import io.github.plastix.forage.ui.login.LoginModule;
 import io.github.plastix.forage.ui.map.MapComponent;
@@ -47,6 +49,10 @@ import io.github.plastix.forage.ui.navigate.NavigateModule;
 )
 public interface ApplicationComponent {
 
+    ///
+    // Getters
+    //
+
     // Provide Gson from the real app to the tests without need to inject to the test.
     Gson gson();
 
@@ -62,7 +68,15 @@ public interface ApplicationComponent {
     // Provide GoogleApiClient from the real app to the tests without need to inject to the test.
     GoogleApiClient googleClient();
 
+    ///
+    // Injector for Custom Application Class
+    //
+
     void injectTo(ForageApplication forageApplication);
+
+    ////
+    // Submodule Methods
+    ////
 
     CacheListComponent plus(CacheListModule module);
 
@@ -75,4 +89,6 @@ public interface ApplicationComponent {
     NavigateComponent plus(NavigateModule module);
 
     LoginComponent plus(LoginModule module);
+
+    LogComponent plus(LogModule module);
 }

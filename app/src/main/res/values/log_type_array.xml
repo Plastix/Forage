@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="log_types">
+        <item>Found it</item>
+        <item>Didn\'t find it</item>
+        <item>Comment</item>
+    </string-array>
+</resources>
