@@ -5,7 +5,7 @@ import android.net.Uri;
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.api.auth.OAuthInteractor;
-import io.github.plastix.forage.ui.Presenter;
+import io.github.plastix.forage.ui.base.Presenter;
 import rx.SingleSubscriber;
 import rx.functions.Action0;
 import rx.functions.Action1;

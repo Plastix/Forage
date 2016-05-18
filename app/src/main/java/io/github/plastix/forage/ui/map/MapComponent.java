@@ -1,7 +1,7 @@
 package io.github.plastix.forage.ui.map;
 
 import dagger.Subcomponent;
-import io.github.plastix.forage.ui.ActivityScope;
+import io.github.plastix.forage.ui.base.ActivityScope;
 
 /**
  * Dagger component to inject all required dependencies into {@link MapFragment}.

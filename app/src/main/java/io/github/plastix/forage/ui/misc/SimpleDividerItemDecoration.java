@@ -1,4 +1,4 @@
-package io.github.plastix.forage.ui;
+package io.github.plastix.forage.ui.misc;
 
 import android.content.Context;
 import android.graphics.Canvas;

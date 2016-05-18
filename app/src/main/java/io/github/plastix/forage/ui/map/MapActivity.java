@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import butterknife.BindView;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.ui.BaseFragmentActivity;
+import io.github.plastix.forage.ui.base.BaseFragmentActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 
 /**

@@ -12,7 +12,7 @@ import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
-import io.github.plastix.forage.ui.Presenter;
+import io.github.plastix.forage.ui.base.Presenter;
 import io.github.plastix.forage.util.RxUtils;
 import io.realm.OrderedRealmCollection;
 import rx.Single;

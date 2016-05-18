@@ -16,7 +16,7 @@ import butterknife.OnClick;
 import icepick.State;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.ui.PresenterActivity;
+import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 
 public class LogActivity extends PresenterActivity<LogPresenter, LogView> implements LogView {

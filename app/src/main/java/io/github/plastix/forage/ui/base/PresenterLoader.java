@@ -1,4 +1,4 @@
-package io.github.plastix.forage.ui;
+package io.github.plastix.forage.ui.base;
 
 import android.content.Context;
 import android.support.v4.content.Loader;

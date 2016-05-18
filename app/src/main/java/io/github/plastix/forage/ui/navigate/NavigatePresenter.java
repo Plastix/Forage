@@ -2,7 +2,7 @@ package io.github.plastix.forage.ui.navigate;
 
 import javax.inject.Inject;
 
-import io.github.plastix.forage.ui.Presenter;
+import io.github.plastix.forage.ui.base.Presenter;
 import io.github.plastix.forage.util.LocationUtils;
 
 public class NavigatePresenter extends Presenter<NavigateView> {

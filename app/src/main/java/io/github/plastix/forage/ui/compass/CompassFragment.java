@@ -16,7 +16,7 @@ import butterknife.BindView;
 import icepick.State;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.ui.PresenterFragment;
+import io.github.plastix.forage.ui.base.PresenterFragment;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
 

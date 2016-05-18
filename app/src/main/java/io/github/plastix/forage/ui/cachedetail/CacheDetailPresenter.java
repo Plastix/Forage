@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
-import io.github.plastix.forage.ui.Presenter;
+import io.github.plastix.forage.ui.base.Presenter;
 import io.github.plastix.forage.util.RxUtils;
 import rx.SingleSubscriber;
 import rx.Subscription;

@@ -1,4 +1,4 @@
-package io.github.plastix.forage.ui;
+package io.github.plastix.forage.ui.base;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,24 +20,32 @@ public class PresenterTest {
     public void onViewAttached_shouldSetView() {
         presenter.onViewAttached(view);
 
-        assertThat(presenter.view).isSameAs(view);
+        assertThat(presenter.getView()).isSameAs(view);
     }
 
     @Test
-    public void onViewDetatched_shouldClearView() {
+    public void onViewDetached_shouldClearView() {
         presenter.onViewAttached(view);
         presenter.onViewDetached();
 
-        assertThat(presenter.view).isNull();
+        assertThat(presenter.getView()).isNull();
     }
 
     private class FakeView {
     }
 
     private class FakePresenter extends Presenter<FakeView> {
+
         @Override
         public void onDestroyed() {
             // No op
+        }
+
+        /**
+         * Getter for tests
+         */
+        public FakeView getView() {
+            return view;
         }
     }
 }

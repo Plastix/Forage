@@ -11,7 +11,7 @@ import butterknife.OnClick;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.api.ApiConstants;
-import io.github.plastix.forage.ui.PresenterActivity;
+import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 
 public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> implements LoginView {

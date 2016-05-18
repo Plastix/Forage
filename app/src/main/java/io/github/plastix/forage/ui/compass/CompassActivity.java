@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 
 import butterknife.BindView;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.ui.BaseFragmentActivity;
+import io.github.plastix.forage.ui.base.BaseFragmentActivity;
 
 /**
  * Activity that represents the compass screen of the app. This is a container activity

@@ -1,4 +1,4 @@
-package io.github.plastix.forage.ui;
+package io.github.plastix.forage.ui.base;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

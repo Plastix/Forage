@@ -1,4 +1,4 @@
-package io.github.plastix.forage.ui;
+package io.github.plastix.forage.ui.base;
 
 /**
  * Base Presenter class.

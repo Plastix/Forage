@@ -17,7 +17,7 @@ import butterknife.BindView;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
-import io.github.plastix.forage.ui.PresenterFragment;
+import io.github.plastix.forage.ui.base.PresenterFragment;
 
 /**
  * Fragment that is responsible for the geocache map.

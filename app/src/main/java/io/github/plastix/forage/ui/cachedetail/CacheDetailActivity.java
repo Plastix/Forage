@@ -27,7 +27,7 @@ import icepick.State;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
-import io.github.plastix.forage.ui.PresenterActivity;
+import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.ui.compass.CompassActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 

@@ -6,7 +6,7 @@ import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.api.response.SubmitLogResponse;
 import io.github.plastix.forage.data.network.NetworkInteractor;
-import io.github.plastix.forage.ui.Presenter;
+import io.github.plastix.forage.ui.base.Presenter;
 import io.github.plastix.forage.util.RxUtils;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.SingleSubscriber;

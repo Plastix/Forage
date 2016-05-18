@@ -1,9 +1,11 @@
-package io.github.plastix.forage.ui;
+package io.github.plastix.forage.ui.base;
 
 import android.support.v7.app.AppCompatActivity;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import io.github.plastix.forage.ui.base.BaseActivity;
 
 import static com.google.common.truth.Truth.assertThat;
 

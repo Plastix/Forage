@@ -1,4 +1,4 @@
-package io.github.plastix.forage.ui;
+package io.github.plastix.forage.ui.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
