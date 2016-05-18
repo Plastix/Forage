@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.base.BaseFragmentActivity;
+import io.github.plastix.forage.util.ActivityUtils;
 
 /**
  * Activity that represents the compass screen of the app. This is a container activity
@@ -26,17 +27,6 @@ public class CompassActivity extends BaseFragmentActivity<CompassFragment> {
     @BindView(R.id.compass_toolbar)
     Toolbar toolbar;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compass);
-
-        setSupportActionBar(toolbar);
-
-        getDelegate().getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
     /**
      * Static factory method that returns a new intent for opening a {@link CompassActivity}.
      *
@@ -50,6 +40,16 @@ public class CompassActivity extends BaseFragmentActivity<CompassFragment> {
 
         return intent;
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_compass);
+
+        setSupportActionBar(toolbar);
+
+        ActivityUtils.setSupportActionBarBack(getDelegate());
     }
 
     @Override

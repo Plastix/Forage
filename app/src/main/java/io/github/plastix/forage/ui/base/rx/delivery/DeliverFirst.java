@@ -1,8 +1,6 @@
 package io.github.plastix.forage.ui.base.rx.delivery;
 
 import rx.Observable;
-import rx.functions.Func1;
-import rx.functions.Func2;
 
 /**
  * From https://github.com/alapshin/arctor
@@ -21,18 +19,8 @@ public class DeliverFirst<T> implements Observable.Transformer<T, T> {
                 .combineLatest(
                         view,
                         observable,
-                        new Func2<Boolean, T, T>() {
-                            @Override
-                            public T call(Boolean flag, T value) {
-                                return flag ? value : null;
-                            }
-                        })
-                .filter(new Func1<T, Boolean>() {
-                    @Override
-                    public Boolean call(T value) {
-                        return value != null;
-                    }
-                })
+                        (flag, value) -> flag ? value : null)
+                .filter(value -> value != null)
                 .take(1);
     }
 }

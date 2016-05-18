@@ -30,12 +30,7 @@ public class DatabaseInteractor {
      * Removes all {@link Cache} objects from the Realm database.
      */
     public void clearGeocaches() {
-        realm.get().executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.delete(Cache.class);
-            }
-        });
+        realm.get().executeTransactionAsync(realm1 -> realm1.delete(Cache.class));
     }
 
 
@@ -46,12 +41,9 @@ public class DatabaseInteractor {
      * @param data JSON Array of Geocaches.
      */
     public void clearAndSaveGeocaches(@Nullable final List<Cache> data) {
-        realm.get().executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.delete(Cache.class);
-                realm.copyToRealmOrUpdate(data);
-            }
+        realm.get().executeTransactionAsync(realm1 -> {
+            realm1.delete(Cache.class);
+            realm1.copyToRealmOrUpdate(data);
         });
     }
 
@@ -66,12 +58,7 @@ public class DatabaseInteractor {
      */
     public Single<Cache> getGeocacheCopy(@NonNull final String cacheCode) {
         return getGeocache(cacheCode)
-                .map(new Func1<Cache, Cache>() {
-                    @Override
-                    public Cache call(Cache cache) {
-                        return realm.get().copyFromRealm(cache);
-                    }
-                });
+                .map(cache -> realm.get().copyFromRealm(cache));
     }
 
     /**
@@ -84,12 +71,7 @@ public class DatabaseInteractor {
     public Single<Cache> getGeocache(@NonNull final String cacheCode) {
         return realm.get().where(Cache.class).contains("cacheCode", cacheCode).findFirstAsync()
                 // Must filter by loaded objects because findFirstAsync returns a "Future"
-                .<Cache>asObservable().filter(new Func1<Cache, Boolean>() {
-                    @Override
-                    public Boolean call(Cache cache) {
-                        return cache.isLoaded();
-                    }
-                })
+                .<Cache>asObservable().filter(cache -> cache.isLoaded())
                 .take(1).toSingle();
 
     }

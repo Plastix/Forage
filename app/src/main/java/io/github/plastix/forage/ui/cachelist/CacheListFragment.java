@@ -109,12 +109,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
 
     @Override
     public void setRefreshing() {
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(true);
-            }
-        });
+        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
     }
 
     @Override
@@ -125,11 +120,8 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     private void makeErrorSnackbar(@StringRes int resID) {
         stopRefresh();
         Snackbar.make(recyclerView, resID, Snackbar.LENGTH_LONG)
-                .setAction(R.string.cachelist_retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        downloadGeocaches();
-                    }
+                .setAction(R.string.cachelist_retry, v -> {
+                    downloadGeocaches();
                 }).show();
     }
 

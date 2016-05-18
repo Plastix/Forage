@@ -7,8 +7,6 @@ import javax.inject.Inject;
 import io.github.plastix.forage.data.api.auth.OAuthInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import rx.SingleSubscriber;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 public class LoginPresenter extends RxPresenter<LoginView> {
 
@@ -49,19 +47,13 @@ public class LoginPresenter extends RxPresenter<LoginView> {
                         .toObservable()
                         .compose(deliverFirst())
                         .toCompletable()
-                        .subscribe(new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-                                if (isViewAttached()) {
-                                    view.onErrorAccessToken();
-                                }
+                        .subscribe(throwable -> {
+                            if (isViewAttached()) {
+                                view.onErrorAccessToken();
                             }
-                        }, new Action0() {
-                            @Override
-                            public void call() {
-                                if (isViewAttached()) {
-                                    view.onAuthSuccess();
-                                }
+                        }, () -> {
+                            if (isViewAttached()) {
+                                view.onAuthSuccess();
                             }
                         })
         );

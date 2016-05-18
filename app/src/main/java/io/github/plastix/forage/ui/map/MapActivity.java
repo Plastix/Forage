@@ -41,8 +41,7 @@ public class MapActivity extends BaseFragmentActivity<MapFragment> {
      * @return A new intent.
      */
     public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context, MapActivity.class);
-        return intent;
+        return new Intent(context, MapActivity.class);
     }
 
     @Override

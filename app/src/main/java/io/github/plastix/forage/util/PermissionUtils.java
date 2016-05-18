@@ -20,8 +20,8 @@ public class PermissionUtils {
      * Checks if specified permissions are granted and requests them if not.
      *
      * @param activity    Activity to request permissions from.
-     * @param requestCode
-     * @param permissions
+     * @param requestCode Int request code
+     * @param permissions Permissions to request
      */
     public static void requestPermissions(@NonNull Activity activity, int requestCode, String... permissions) {
         if (!hasPermissions(activity, permissions)) {

@@ -16,11 +16,8 @@ public class ForageFunctionalTestApplication extends ForageApplication {
                     @NonNull
                     @Override
                     public DevMetricsProxy provideDevMetricsProxy(@NonNull Application application) {
-                        return new DevMetricsProxy() {
-                            @Override
-                            public void apply() {
-                                //No Op
-                            }
+                        return () -> {
+                            //No Op
                         };
                     }
                 });

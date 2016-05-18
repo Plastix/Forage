@@ -17,6 +17,7 @@ Libraries
 * [Signpost](https://github.com/mttkay/signpost) and [OkHttp-Signpost](https://github.com/pakerfeldt/okhttp-signpost)
 * [Material Dialogs](https://github.com/afollestad/material-dialogs)
 * [Google Support Libraries](http://developer.android.com/tools/support-library/index.html)
+* [Retrolambda](https://github.com/evant/gradle-retrolambda)
 * [Google Play Location Services](https://developers.google.com/android/reference/com/google/android/gms/location/package-summary)
 * [Google Play Maps](https://developers.google.com/maps/documentation/android-api/)
 

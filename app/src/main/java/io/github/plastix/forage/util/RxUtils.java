@@ -35,12 +35,7 @@ public class RxUtils {
      * @return New transformer.
      */
     public static <T> Observable.Transformer<T, T> subscribeOnIoThreadTransformer() {
-        return new Observable.Transformer<T, T>() {
-            @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable.subscribeOn(Schedulers.io());
-            }
-        };
+        return tObservable -> tObservable.subscribeOn(Schedulers.io());
     }
 
     /**
@@ -50,12 +45,7 @@ public class RxUtils {
      * @return New transformer.
      */
     public static <T> Single.Transformer<T, T> subscribeOnIoThreadTransformerSingle() {
-        return new Single.Transformer<T, T>() {
-            @Override
-            public Single<T> call(Single<T> tSingle) {
-                return tSingle.subscribeOn(Schedulers.io());
-            }
-        };
+        return tSingle -> tSingle.subscribeOn(Schedulers.io());
     }
 
     /**
@@ -65,12 +55,7 @@ public class RxUtils {
      * @return New transformer.
      */
     public static <T> Observable.Transformer<T, T> observeOnUIThreadTransformer() {
-        return new Observable.Transformer<T, T>() {
-            @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable.observeOn(AndroidSchedulers.mainThread());
-            }
-        };
+        return tObservable -> tObservable.observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -80,12 +65,7 @@ public class RxUtils {
      * @return New transformer.
      */
     public static <T> Single.Transformer<T, T> observeOnUIThreadTransformerSingle() {
-        return new Single.Transformer<T, T>() {
-            @Override
-            public Single<T> call(Single<T> tSingle) {
-                return tSingle.observeOn(AndroidSchedulers.mainThread());
-            }
-        };
+        return tSingle -> tSingle.observeOn(AndroidSchedulers.mainThread());
     }
 
 
@@ -96,12 +76,7 @@ public class RxUtils {
      * @return New transformer.
      */
     public static <T> Observable.Transformer<T, T> subscribeOnComputationThreadTransformer() {
-        return new Observable.Transformer<T, T>() {
-            @Override
-            public Observable<T> call(Observable<T> tObservable) {
-                return tObservable.subscribeOn(Schedulers.computation());
-            }
-        };
+        return tObservable -> tObservable.subscribeOn(Schedulers.computation());
     }
 
     /**
@@ -111,12 +86,7 @@ public class RxUtils {
      * @return New transformer.
      */
     public static <T> Single.Transformer<T, T> subscribeOnComputationThreadTransformerSingle() {
-        return new Single.Transformer<T, T>() {
-            @Override
-            public Single<T> call(Single<T> tSingle) {
-                return tSingle.subscribeOn(Schedulers.computation());
-            }
-        };
+        return tSingle -> tSingle.subscribeOn(Schedulers.computation());
     }
 
 }

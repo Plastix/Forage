@@ -16,7 +16,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Action0;
 import rx.subscriptions.Subscriptions;
 
 /**
@@ -48,13 +47,10 @@ public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, Go
     }
 
     private Subscription buildUnsubscriber() {
-        return Subscriptions.create(new Action0() {
-            @Override
-            public void call() {
-                LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, listener);
-                googleApiClient.unregisterConnectionCallbacks(LocationOnSubscribe.this);
-                googleApiClient.unregisterConnectionFailedListener(LocationOnSubscribe.this);
-            }
+        return Subscriptions.create(() -> {
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, listener);
+            googleApiClient.unregisterConnectionCallbacks(LocationOnSubscribe.this);
+            googleApiClient.unregisterConnectionFailedListener(LocationOnSubscribe.this);
         });
     }
 
@@ -69,12 +65,7 @@ public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, Go
     }
 
     private LocationListener buildListener() {
-        return new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                observer.onNext(location);
-            }
-        };
+        return location -> observer.onNext(location);
     }
 
     @Override
@@ -83,7 +74,7 @@ public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, Go
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         observer.onError(new Throwable("Failed to connect to Google Play Services!"));
 
     }

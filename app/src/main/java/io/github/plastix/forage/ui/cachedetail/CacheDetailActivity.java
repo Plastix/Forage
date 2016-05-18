@@ -134,12 +134,9 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
     }
 
     public void setFabClickListener(final Cache cache) {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = CompassActivity.newIntent(CacheDetailActivity.this, cache.location.toLocation());
-                startActivity(intent);
-            }
+        fab.setOnClickListener(v -> {
+            Intent intent = CompassActivity.newIntent(CacheDetailActivity.this, cache.location.toLocation());
+            startActivity(intent);
         });
     }
 
@@ -208,12 +205,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
         }
 
         private void animateIntoView() {
-            map.animate().withStartAction(new Runnable() {
-                @Override
-                public void run() {
-                    map.setVisibility(View.VISIBLE);
-                }
-            }).alpha(1f)
+            map.animate().withStartAction(() -> map.setVisibility(View.VISIBLE)).alpha(1f)
                     .setDuration(500);
         }
 

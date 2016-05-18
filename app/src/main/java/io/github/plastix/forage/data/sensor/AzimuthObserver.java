@@ -14,7 +14,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Action0;
 import rx.subscriptions.Subscriptions;
 
 
@@ -86,11 +85,6 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
     }
 
     private Subscription buildUnsubscriber() {
-        return Subscriptions.create(new Action0() {
-            @Override
-            public void call() {
-                sensorManager.unregisterListener(AzimuthObserver.this, compass);
-            }
-        });
+        return Subscriptions.create(() -> sensorManager.unregisterListener(AzimuthObserver.this, compass));
     }
 }

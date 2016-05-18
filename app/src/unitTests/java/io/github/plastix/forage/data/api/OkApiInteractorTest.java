@@ -42,12 +42,7 @@ public class OkApiInteractorTest {
     @Before
     public void beforeEachTest() {
         okApiService = mock(OkApiService.class);
-        Lazy<OkApiService> okApiServiceLazy = new Lazy<OkApiService>() {
-            @Override
-            public OkApiService get() {
-                return okApiService;
-            }
-        };
+        Lazy<OkApiService> okApiServiceLazy = () -> okApiService;
 
         okApiInteractor = new OkApiInteractor(okApiServiceLazy);
         lat = lon = radius = 0;

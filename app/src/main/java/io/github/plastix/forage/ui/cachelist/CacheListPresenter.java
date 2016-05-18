@@ -3,8 +3,6 @@ package io.github.plastix.forage.ui.cachelist;
 import android.location.Location;
 import android.util.Log;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.api.OkApiInteractor;
@@ -15,12 +13,8 @@ import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.github.plastix.forage.util.RxUtils;
 import io.realm.OrderedRealmCollection;
-import rx.Single;
 import rx.SingleSubscriber;
 import rx.Subscription;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.subscriptions.Subscriptions;
 
 public class CacheListPresenter extends RxPresenter<CacheListView> {
@@ -73,55 +67,26 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
         RxUtils.safeUnsubscribe(networkSubscription);
 
         networkInteractor.hasInternetConnectionCompletable()
-                .subscribe(new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        view.onErrorInternet();
-                    }
-                }, new Action0() {
-                    @Override
-                    public void call() {
-                        locationInteractor.isLocationAvailable()
-                                .subscribe(new Action1<Throwable>() {
-                                               @Override
-                                               public void call(Throwable throwable) {
-                                                   view.onErrorLocation();
-                                               }
-                                           }, new Action0() {
-                                               @Override
-                                               public void call() {
-                                                   networkSubscription = locationInteractor.getUpdatedLocation()
-                                                           .toObservable()
-                                                           .compose(CacheListPresenter.this.<Location>deliverFirst())
-                                                           .toSingle()
-                                                           .flatMap(new Func1<Location, Single<List<Cache>>>() {
-                                                               @Override
-                                                               public Single<List<Cache>> call(Location location) {
-                                                                   return apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES);
-                                                               }
-                                                           }).subscribe(new Action1<List<Cache>>() {
-                                                               @Override
-                                                               public void call(List<Cache> caches) {
-                                                                   // The adapter will update automatically after this database write
-                                                                   databaseInteractor.clearAndSaveGeocaches(caches);
-                                                                   RxUtils.safeUnsubscribe(networkSubscription);
-                                                               }
-                                                           }, new Action1<Throwable>() {
-                                                               @Override
-                                                               public void call(Throwable throwable) {
-                                                                   if (isViewAttached()) {
-                                                                       view.onErrorFetch();
-                                                                   }
-                                                                   Log.e("CacheListPresenter", throwable.getMessage(), throwable);
-                                                               }
-                                                           });
+                .subscribe(throwable -> view.onErrorInternet(), () -> locationInteractor.isLocationAvailable()
+                        .subscribe(throwable -> view.onErrorLocation(), () -> {
+                                       networkSubscription = locationInteractor.getUpdatedLocation()
+                                               .toObservable()
+                                               .compose(CacheListPresenter.this.<Location>deliverFirst())
+                                               .toSingle()
+                                               .flatMap(location -> apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES)).subscribe(caches -> {
+                                                   // The adapter will update automatically after this database write
+                                                   databaseInteractor.clearAndSaveGeocaches(caches);
+                                                   RxUtils.safeUnsubscribe(networkSubscription);
+                                               }, throwable -> {
+                                                   if (isViewAttached()) {
+                                                       view.onErrorFetch();
+                                                   }
+                                                   Log.e("CacheListPresenter", throwable.getMessage(), throwable);
+                                               });
 
-                                                   addSubscription(networkSubscription);
-                                               }
-                                           }
-                                );
-                    }
-                });
+                                       addSubscription(networkSubscription);
+                                   }
+                        ));
 
     }
 

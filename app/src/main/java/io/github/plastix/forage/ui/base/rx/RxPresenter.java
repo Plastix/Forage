@@ -12,7 +12,7 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Presenter that provides support for "pausing" and "resuming" Observables and automatically
  * unsubscribing from subscriptions when the presenter is destroyed.
- * <p/>
+ * <p>
  * Slightly adapted Code from https://github.com/alapshin/arctor
  *
  * @param <V> Generic type of view that the presenter interacts with.
@@ -72,8 +72,8 @@ public abstract class RxPresenter<V> extends Presenter<V> {
 
     /**
      * Returns an {@link rx.Observable.Transformer} that delays emission from the source {@link rx.Observable}.
-     * <p/>
-     * {@link #deliverFirst} delivers only the first onNext value that has been emitted by the source observable.
+     * <p>
+     * {@link DeliverFirst} delivers only the first onNext value that has been emitted by the source observable.
      *
      * @param <T> the type of source observable emissions
      */
@@ -83,8 +83,8 @@ public abstract class RxPresenter<V> extends Presenter<V> {
 
     /**
      * Returns an {@link rx.Observable.Transformer} that delays emission from the source {@link rx.Observable}.
-     * <p/>
-     * {@link #deliverLatest} keeps the latest onNext value and emits it when there is attached view.
+     * <p>
+     * {@link DeliverLatest} keeps the latest onNext value and emits it when there is attached view.
      * Terminates when source observable completes {link rx.Observable#onCompleted()}
      *
      * @param <T> the type of source observable emissions
@@ -96,8 +96,8 @@ public abstract class RxPresenter<V> extends Presenter<V> {
 
     /**
      * Returns an {@link rx.Observable.Transformer} that delays emission from the source {@link rx.Observable}.
-     * <p/>
-     * {@link #deliverLatestCache} keeps the latest onNext value and emits it if there is * attached view. Never completes.
+     * <p>
+     * {@link DeliverLatestCache} keeps the latest onNext value and emits it if there is * attached view. Never completes.
      *
      * @param <T> the type of source observable emissions
      */
@@ -107,8 +107,8 @@ public abstract class RxPresenter<V> extends Presenter<V> {
 
     /**
      * Returns an {@link rx.Observable.Transformer} that delays emission from the source {@link rx.Observable}.
-     * <p/>
-     * {@link #deliverReplay} keeps all onNext values and emits them each time a new view gets attached.
+     * <p>
+     * {@link DeliverReplay} keeps all onNext values and emits them each time a new view gets attached.
      *
      * @param <T> the type of source observable emissions
      */

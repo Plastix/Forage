@@ -1,7 +1,6 @@
 package io.github.plastix.forage.ui.cachelist;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
@@ -86,18 +85,12 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
         if (dialog == null) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.AppTheme_AlertDialog);
             dialogBuilder.setMessage(R.string.cachelist_nolocation);
-            dialogBuilder.setNegativeButton(R.string.cachelist_exit, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
+            dialogBuilder.setNegativeButton(R.string.cachelist_exit, (dialog1, which) -> {
+                finish();
             });
             final Intent settingsIntent = ActivityUtils.getApplicationSettingsIntent(this);
-            dialogBuilder.setPositiveButton(R.string.cachelist_open_settings, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    startActivity(settingsIntent);
-                }
+            dialogBuilder.setPositiveButton(R.string.cachelist_open_settings, (dialog1, which) -> {
+                startActivity(settingsIntent);
             });
             dialogBuilder.setCancelable(false);
             this.dialog = dialogBuilder.create();

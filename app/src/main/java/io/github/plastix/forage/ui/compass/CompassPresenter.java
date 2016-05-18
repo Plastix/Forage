@@ -15,9 +15,6 @@ import io.github.plastix.forage.util.AngleUtils;
 import io.github.plastix.forage.util.LocationUtils;
 import io.github.plastix.forage.util.RxUtils;
 import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.functions.Func2;
 
 public class CompassPresenter extends RxPresenter<CompassView> {
 
@@ -41,7 +38,7 @@ public class CompassPresenter extends RxPresenter<CompassView> {
         this.target = location;
     }
 
-    public void startCompass(){
+    public void startCompass() {
         if (!enabled) {
             rotateCompass();
             enabled = !enabled;
@@ -53,45 +50,28 @@ public class CompassPresenter extends RxPresenter<CompassView> {
                 Observable.combineLatest(
                         azimuthInteractor.getAzimuthObservable(),
                         locationInteractor.getLocationObservable(LOCATION_UPDATE_INTERVAL),
-                        new Func2<Float, Location, Pair<Float, Location>>() {
-                            @Override
-                            public Pair<Float, Location> call(Float azimuth, Location location) {
-                                return new Pair<>(azimuth, location);
-                            }
-                        })
+                        Pair::new)
                         .compose(RxUtils.<Pair<Float, Location>>subscribeOnComputationThreadTransformer())
-                        .map(new Func1<Pair<Float, Location>, Pair<Float, Location>>() {
-                            @Override
-                            public Pair<Float, Location> call(Pair<Float, Location> pair) {
-                                float azimuth = pair.first;
-                                Location location = pair.second;
+                        .map(pair -> {
+                            float azimuth = pair.first;
+                            Location location = pair.second;
 
-                                azimuth += (float) LocationUtils.getMagneticDeclination(location);
-                                float bearing = location.bearingTo(target);
+                            azimuth += (float) LocationUtils.getMagneticDeclination(location);
+                            float bearing = location.bearingTo(target);
 
-                                return new Pair<>(AngleUtils.normalize(azimuth - bearing), location);
+                            return new Pair<>(AngleUtils.normalize(azimuth - bearing), location);
 
-                            }
                         })
                         .compose(RxUtils.<Pair<Float, Location>>observeOnUIThreadTransformer())
                         .throttleFirst(COMPASS_UPDATE_INTERVAL, TimeUnit.MILLISECONDS)
                         .compose(this.<Pair<Float, Location>>deliverLatest())
-                        .subscribe(new Action1<Pair<Float, Location>>() {
-                            @Override
-                            public void call(Pair<Float, Location> pair) {
-                                if (isViewAttached()) {
-                                    view.rotateCompass(pair.first);
-                                    view.updateDistance(pair.second.distanceTo(target));
-                                    view.updateAccuracy(pair.second.getAccuracy());
-                                }
+                        .subscribe(pair -> {
+                            if (isViewAttached()) {
+                                view.rotateCompass(pair.first);
+                                view.updateDistance(pair.second.distanceTo(target));
+                                view.updateAccuracy(pair.second.getAccuracy());
                             }
-                        }, new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-                                // TODO Show error dialog on view
-                                throwable.printStackTrace();
-                            }
-                        }));
+                        }, Throwable::printStackTrace));
     }
 
     @Override

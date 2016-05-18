@@ -11,7 +11,6 @@ import javax.inject.Inject;
 
 import rx.Completable;
 import rx.Subscription;
-import rx.functions.Action0;
 import rx.subscriptions.Subscriptions;
 
 public class LocationCompletableOnSubscribe implements Completable.CompletableOnSubscribe, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -61,12 +60,9 @@ public class LocationCompletableOnSubscribe implements Completable.CompletableOn
     }
 
     private Subscription buildUnsubscriber() {
-        return Subscriptions.create(new Action0() {
-            @Override
-            public void call() {
-                googleApiClient.unregisterConnectionCallbacks(LocationCompletableOnSubscribe.this);
-                googleApiClient.unregisterConnectionFailedListener(LocationCompletableOnSubscribe.this);
-            }
+        return Subscriptions.create(() -> {
+            googleApiClient.unregisterConnectionCallbacks(LocationCompletableOnSubscribe.this);
+            googleApiClient.unregisterConnectionFailedListener(LocationCompletableOnSubscribe.this);
         });
     }
 }

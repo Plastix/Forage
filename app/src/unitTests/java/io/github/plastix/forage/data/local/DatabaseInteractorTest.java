@@ -29,12 +29,7 @@ public class DatabaseInteractorTest {
     @Before
     public void beforeEachTest() {
         realm = PowerMockito.mock(Realm.class);
-        realmLazy = new Lazy<Realm>() {
-            @Override
-            public Realm get() {
-                return realm;
-            }
-        };
+        realmLazy = () -> realm;
         databaseInteractor = new DatabaseInteractor(realmLazy);
     }
 
