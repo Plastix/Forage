@@ -62,7 +62,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:contentDescription="@string/compassfragment_compass_arrow_image_description"
+            android:contentDescription="@string/compass_arrow_image_description"
             android:tint="@color/white"
             app:srcCompat="@drawable/ic_arrow_upward"
             tools:ignore="MissingPrefix"/>

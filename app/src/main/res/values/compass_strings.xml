@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="compass_title">Compass</string>
+    <string name="compass_distance_label">Distance</string>
+    <string name="compass_accuracy">+/- %s</string>
+    <string name="compass_loading">Loading…</string>
+    <string name="compass_arrow_image_description">Compass Arrow Image</string>
+</resources>

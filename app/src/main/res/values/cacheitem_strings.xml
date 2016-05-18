@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cacheitem_type">%s Cache</string>
+    <string name="cacheitem_terrain_icon_description">Terrain Icon</string>
+    <string name="cacheitem_difficulty_icon_description">Difficulty Icon</string>
+    <string name="cacheitem_size_icon_description">Size Icon</string>
+</resources>
