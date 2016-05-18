@@ -12,7 +12,7 @@ import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
-import io.github.plastix.forage.ui.base.Presenter;
+import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.github.plastix.forage.util.RxUtils;
 import io.realm.OrderedRealmCollection;
 import rx.Single;
@@ -23,7 +23,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.subscriptions.Subscriptions;
 
-public class CacheListPresenter extends Presenter<CacheListView> {
+public class CacheListPresenter extends RxPresenter<CacheListView> {
 
     private static final double NEARBY_CACHE_RADIUS_MILES = 100;
 
@@ -32,9 +32,7 @@ public class CacheListPresenter extends Presenter<CacheListView> {
     private LocationInteractor locationInteractor;
     private NetworkInteractor networkInteractor;
 
-    private Subscription databaseSubscription;
     private Subscription networkSubscription = Subscriptions.unsubscribed();
-
 
     @Inject
     public CacheListPresenter(OkApiInteractor apiInteractor,
@@ -48,20 +46,25 @@ public class CacheListPresenter extends Presenter<CacheListView> {
     }
 
     public void getGeocachesFromDatabase() {
-        databaseSubscription = databaseInteractor.getGeocaches()
-                .subscribe(new SingleSubscriber<OrderedRealmCollection<Cache>>() {
-                    @Override
-                    public void onSuccess(OrderedRealmCollection<Cache> value) {
-                        if (isViewAttached()) {
-                            view.setGeocacheList(value);
-                        }
-                    }
+        addSubscription(
+                databaseInteractor.getGeocaches()
+                        .toObservable()
+                        .compose(this.<OrderedRealmCollection<Cache>>deliverFirst())
+                        .toSingle()
+                        .subscribe(new SingleSubscriber<OrderedRealmCollection<Cache>>() {
+                            @Override
+                            public void onSuccess(OrderedRealmCollection<Cache> value) {
+                                if (isViewAttached()) {
+                                    view.setGeocacheList(value);
+                                }
+                            }
 
-                    @Override
-                    public void onError(Throwable error) {
-                        Log.e("CacheListPresenter", error.getMessage(), error);
-                    }
-                });
+                            @Override
+                            public void onError(Throwable error) {
+                                // TODO show error dialog
+                                Log.e("CacheListPresenter", error.getMessage(), error);
+                            }
+                        }));
     }
 
 
@@ -87,27 +90,33 @@ public class CacheListPresenter extends Presenter<CacheListView> {
                                            }, new Action0() {
                                                @Override
                                                public void call() {
-                                                   networkSubscription = locationInteractor.getUpdatedLocation().flatMap(new Func1<Location, Single<List<Cache>>>() {
-                                                       @Override
-                                                       public Single<List<Cache>> call(Location location) {
-                                                           return apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES);
-                                                       }
-                                                   }).subscribe(new Action1<List<Cache>>() {
-                                                       @Override
-                                                       public void call(List<Cache> caches) {
-                                                           // The adapter will update automatically after this database write
-                                                           databaseInteractor.clearAndSaveGeocaches(caches);
-                                                           RxUtils.safeUnsubscribe(networkSubscription);
-                                                       }
-                                                   }, new Action1<Throwable>() {
-                                                       @Override
-                                                       public void call(Throwable throwable) {
-                                                           if (isViewAttached()) {
-                                                               view.onErrorFetch();
-                                                           }
-                                                           Log.e("CacheListPresenter", throwable.getMessage(), throwable);
-                                                       }
-                                                   });
+                                                   networkSubscription = locationInteractor.getUpdatedLocation()
+                                                           .toObservable()
+                                                           .compose(CacheListPresenter.this.<Location>deliverFirst())
+                                                           .toSingle()
+                                                           .flatMap(new Func1<Location, Single<List<Cache>>>() {
+                                                               @Override
+                                                               public Single<List<Cache>> call(Location location) {
+                                                                   return apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES);
+                                                               }
+                                                           }).subscribe(new Action1<List<Cache>>() {
+                                                               @Override
+                                                               public void call(List<Cache> caches) {
+                                                                   // The adapter will update automatically after this database write
+                                                                   databaseInteractor.clearAndSaveGeocaches(caches);
+                                                                   RxUtils.safeUnsubscribe(networkSubscription);
+                                                               }
+                                                           }, new Action1<Throwable>() {
+                                                               @Override
+                                                               public void call(Throwable throwable) {
+                                                                   if (isViewAttached()) {
+                                                                       view.onErrorFetch();
+                                                                   }
+                                                                   Log.e("CacheListPresenter", throwable.getMessage(), throwable);
+                                                               }
+                                                           });
+
+                                                   addSubscription(networkSubscription);
                                                }
                                            }
                                 );
@@ -128,17 +137,8 @@ public class CacheListPresenter extends Presenter<CacheListView> {
     }
 
     @Override
-    public void onViewDetached() {
-        super.onViewDetached();
-        RxUtils.safeUnsubscribe(databaseSubscription);
-    }
-
-    @Override
     public void onDestroyed() {
         databaseInteractor.onDestroy();
-        RxUtils.safeUnsubscribe(networkSubscription);
-        networkSubscription = null;
-        databaseSubscription = null;
     }
 
     public void clearCaches() {

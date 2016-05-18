@@ -5,46 +5,50 @@ import android.net.Uri;
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.api.auth.OAuthInteractor;
-import io.github.plastix.forage.ui.base.Presenter;
+import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import rx.SingleSubscriber;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.subscriptions.CompositeSubscription;
 
-public class LoginPresenter extends Presenter<LoginView> {
+public class LoginPresenter extends RxPresenter<LoginView> {
 
     private OAuthInteractor oAuthInteractor;
-    private CompositeSubscription subscriptions;
 
     @Inject
     public LoginPresenter(OAuthInteractor oAuthInteractor) {
         this.oAuthInteractor = oAuthInteractor;
-        subscriptions = new CompositeSubscription();
     }
 
     public void startOAuth() {
-        subscriptions.add(
-                oAuthInteractor.retrieveRequestToken().subscribe(new SingleSubscriber<String>() {
-                    @Override
-                    public void onSuccess(String value) {
-                        if (isViewAttached()) {
-                            view.openBrowser(value);
-                        }
-                    }
+        addSubscription(
+                oAuthInteractor.retrieveRequestToken()
+                        .toObservable()
+                        .compose(this.<String>deliverFirst())
+                        .toSingle()
+                        .subscribe(new SingleSubscriber<String>() {
+                            @Override
+                            public void onSuccess(String value) {
+                                if (isViewAttached()) {
+                                    view.openBrowser(value);
+                                }
+                            }
 
-                    @Override
-                    public void onError(Throwable error) {
-                        if (isViewAttached()) {
-                            view.onErrorRequestToken();
-                        }
-                    }
-                })
+                            @Override
+                            public void onError(Throwable error) {
+                                if (isViewAttached()) {
+                                    view.onErrorRequestToken();
+                                }
+                            }
+                        })
         );
     }
 
     public void oauthCallback(final Uri uri) {
-        subscriptions.add(
+        addSubscription(
                 oAuthInteractor.retrieveAccessToken(uri)
+                        .toObservable()
+                        .compose(deliverFirst())
+                        .toCompletable()
                         .subscribe(new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
@@ -64,14 +68,7 @@ public class LoginPresenter extends Presenter<LoginView> {
     }
 
     @Override
-    public void onViewDetached() {
-        super.onViewDetached();
-        subscriptions.clear();
-    }
-
-    @Override
     public void onDestroyed() {
         oAuthInteractor = null;
-        subscriptions = null;
     }
 }

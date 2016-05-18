@@ -58,7 +58,7 @@ public class CompassPresenterTest {
         Location location = LocationUtils.buildLocation(0, 0);
         when(locationInteractor.getLocationObservable(anyLong())).thenReturn(Observable.just(location));
 
-        compassPresenter.updateCompass();
+        compassPresenter.startCompass();
 
         // Wait for the compass presenter to update the view
         // We need this because we're applying backpressure operators to the observable
