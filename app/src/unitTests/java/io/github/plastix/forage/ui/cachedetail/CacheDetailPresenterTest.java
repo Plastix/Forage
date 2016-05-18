@@ -36,23 +36,23 @@ public class CacheDetailPresenterTest {
     public void getGeocache_shouldCallViewReturnedGeocache() {
         Cache cache = mock(Cache.class);
         String cacheCode = "geocache code";
-        when(databaseInteractor.getGeocache(cacheCode)).thenReturn(Single.just(cache));
+        when(databaseInteractor.getGeocacheCopy(cacheCode)).thenReturn(Single.just(cache));
 
         cacheDetailPresenter.getGeocache(cacheCode);
 
-        verify(databaseInteractor, only()).getGeocache(cacheCode);
+        verify(databaseInteractor, only()).getGeocacheCopy(cacheCode);
         verify(view, only()).returnedGeocache(cache);
     }
 
     @Test
     public void getGeocache_shouldCallViewError() {
         String cacheCode = "geocache code";
-        when(databaseInteractor.getGeocache(cacheCode))
+        when(databaseInteractor.getGeocacheCopy(cacheCode))
                 .thenReturn(Single.<Cache>error(new Throwable("Error")));
 
         cacheDetailPresenter.getGeocache(cacheCode);
 
-        verify(databaseInteractor, only()).getGeocache(cacheCode);
+        verify(databaseInteractor, only()).getGeocacheCopy(cacheCode);
         verify(view, only()).onError();
     }
 }
