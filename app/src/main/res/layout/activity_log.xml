@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Log Type:"
+                    android:text="@string/log_type"
                     android:textSize="18sp"
                     app:layout_columnSpan="1"
                     app:layout_rowSpan="1"/>
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="top|left"
-                    android:hint="Comment (Optional)"
+                    android:hint="@string/log_comment_hint"
                     android:inputType="textMultiLine"
                     android:minLines="5"
                     app:layout_columnSpan="2"
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:contentDescription="Submit Log"
+        android:contentDescription="@string/log_submit_description"
         android:src="@drawable/ic_send"
         android:tint="@color/white"/>
 

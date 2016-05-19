@@ -16,7 +16,7 @@
 
     <item
         android:id="@+id/cachelist_action_login"
-        android:title="Login"
+        android:title="@string/action_login"
         app:showAsAction="never"/>
 
     <item
