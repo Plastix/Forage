@@ -14,6 +14,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import butterknife.BindView;
 import io.github.plastix.forage.R;
+import io.github.plastix.forage.ui.about.AboutActivity;
 import io.github.plastix.forage.ui.base.BaseFragmentActivity;
 import io.github.plastix.forage.ui.login.LoginActivity;
 import io.github.plastix.forage.ui.map.MapActivity;
@@ -134,6 +135,9 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
                 return true;
             case R.id.cachelist_action_login:
                 startActivity(LoginActivity.newIntent(this));
+                return true;
+            case R.id.action_about:
+                startActivity(AboutActivity.newIntent(this));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

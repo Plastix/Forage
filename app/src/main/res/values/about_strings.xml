@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="version_info" formatted="false">Version %s-%s (Build %s)</string>
+    <string name="title_activity_about">About</string>
+    <string name="action_about">About</string>
+    <string name="about_info">A free and open source material design Geocaching client for Android</string>
+    <string name="about_opencaching">Powered by OpenCaching</string>
+    <string name="about_logo_description">Application Logo</string>
+    <string name="about_libraries_header_title">Third Party Libraries</string>
+</resources>
