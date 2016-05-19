@@ -71,7 +71,8 @@ public class CompassPresenter extends RxPresenter<CompassView> {
                                 view.updateDistance(pair.second.distanceTo(target));
                                 view.updateAccuracy(pair.second.getAccuracy());
                             }
-                        }, Throwable::printStackTrace));
+                        }, Throwable::printStackTrace)
+        );
     }
 
     @Override

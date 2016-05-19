@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.data.api.auth.OAuthInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
-import rx.SingleSubscriber;
 
 public class LoginPresenter extends RxPresenter<LoginView> {
 
@@ -23,21 +22,16 @@ public class LoginPresenter extends RxPresenter<LoginView> {
                         .toObservable()
                         .compose(this.<String>deliverFirst())
                         .toSingle()
-                        .subscribe(new SingleSubscriber<String>() {
-                            @Override
-                            public void onSuccess(String value) {
-                                if (isViewAttached()) {
-                                    view.openBrowser(value);
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable error) {
-                                if (isViewAttached()) {
-                                    view.onErrorRequestToken();
-                                }
-                            }
-                        })
+                        .subscribe(s -> {
+                                    if (isViewAttached()) {
+                                        view.openBrowser(s);
+                                    }
+                                },
+                                throwable -> {
+                                    if (isViewAttached()) {
+                                        view.onErrorRequestToken();
+                                    }
+                                })
         );
     }
 

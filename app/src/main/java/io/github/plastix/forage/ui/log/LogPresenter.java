@@ -8,7 +8,6 @@ import io.github.plastix.forage.data.api.response.SubmitLogResponse;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import retrofit2.adapter.rxjava.HttpException;
-import rx.SingleSubscriber;
 
 public class LogPresenter extends RxPresenter<LogView> {
 
@@ -37,31 +36,26 @@ public class LogPresenter extends RxPresenter<LogView> {
                                         view.showSubmittingDialog();
                                     }
                                 })
-                                .subscribe(new SingleSubscriber<SubmitLogResponse>() {
-                                    @Override
-                                    public void onSuccess(SubmitLogResponse response) {
-                                        if (isViewAttached()) {
-                                            if (response.isSuccessful) {
-                                                view.showSuccessfulSubmit();
-                                            } else {
-                                                view.showErrorDialog(response.message);
+                                .subscribe(submitLogResponse -> {
+                                            if (isViewAttached()) {
+                                                if (submitLogResponse.isSuccessful) {
+                                                    view.showSuccessfulSubmit();
+                                                } else {
+                                                    view.showErrorDialog(submitLogResponse.message);
+                                                }
                                             }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable error) {
-                                        if (isViewAttached()) {
-                                            // Non-200 HTTP Code
-                                            if (error instanceof HttpException) {
-                                                HttpException httpException = ((HttpException) error);
-                                                view.showErrorDialog(httpException.getMessage());
-                                            } else {
-                                                view.showErrorDialog(R.string.log_submit_error_unknown);
+                                        },
+                                        throwable -> {
+                                            if (isViewAttached()) {
+                                                // Non-200 HTTP Code
+                                                if (throwable instanceof HttpException) {
+                                                    HttpException httpException = ((HttpException) throwable);
+                                                    view.showErrorDialog(httpException.getMessage());
+                                                } else {
+                                                    view.showErrorDialog(R.string.log_submit_error_unknown);
+                                                }
                                             }
-                                        }
-                                    }
-                                })
+                                        })
                 ));
     }
 

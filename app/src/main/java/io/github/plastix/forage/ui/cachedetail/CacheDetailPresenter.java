@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
-import rx.SingleSubscriber;
 
 public class CacheDetailPresenter extends RxPresenter<CacheDetailView> {
 
@@ -21,21 +20,16 @@ public class CacheDetailPresenter extends RxPresenter<CacheDetailView> {
                 .toObservable()
                 .compose(this.<Cache>deliverFirst())
                 .toSingle()
-                .subscribe(new SingleSubscriber<Cache>() {
-                    @Override
-                    public void onSuccess(Cache value) {
-                        if (isViewAttached()) {
-                            view.returnedGeocache(value);
-                        }
+                .subscribe(cache -> {
+                    if (isViewAttached()) {
+                        view.returnedGeocache(cache);
                     }
-
-                    @Override
-                    public void onError(Throwable error) {
-                        if (isViewAttached()) {
-                            view.onError();
-                        }
+                }, throwable -> {
+                    if (isViewAttached()) {
+                        view.onError();
                     }
-                }));
+                })
+        );
     }
 
     @Override

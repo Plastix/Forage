@@ -37,11 +37,11 @@ public class LocationInteractorTest {
     @Test
     public void isLocationAvailable_returnsLocationCompletable() {
         Completable result = Completable.complete();
-        when(locationCompletableFactory.buldLocationCompletable()).thenReturn(result);
+        when(locationCompletableFactory.buildLocationCompletable()).thenReturn(result);
 
         Completable out = locationInteractor.isLocationAvailable();
 
-        verify(locationCompletableFactory, times(1)).buldLocationCompletable();
+        verify(locationCompletableFactory, times(1)).buildLocationCompletable();
         assertThat(out).isEqualTo(result);
     }
 

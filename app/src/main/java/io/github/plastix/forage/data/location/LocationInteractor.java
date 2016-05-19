@@ -70,7 +70,7 @@ public class LocationInteractor {
      */
     @NonNull
     public Completable isLocationAvailable() {
-        return completableFactory.buldLocationCompletable();
+        return completableFactory.buildLocationCompletable();
     }
 
 }

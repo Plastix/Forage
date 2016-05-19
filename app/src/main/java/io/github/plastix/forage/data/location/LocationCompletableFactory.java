@@ -16,7 +16,7 @@ public class LocationCompletableFactory {
         this.completableOnSubscribeProvider = completableOnSubscribeProvider;
     }
 
-    public Completable buldLocationCompletable() {
+    public Completable buildLocationCompletable() {
         return Completable.create(completableOnSubscribeProvider.get());
     }
 }

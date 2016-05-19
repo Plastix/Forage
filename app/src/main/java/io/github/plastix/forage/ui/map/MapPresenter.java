@@ -1,14 +1,11 @@
 package io.github.plastix.forage.ui.map;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.realm.OrderedRealmCollection;
-import rx.SingleSubscriber;
 
 public class MapPresenter extends RxPresenter<MapFragView> {
 
@@ -25,22 +22,15 @@ public class MapPresenter extends RxPresenter<MapFragView> {
                         .toObservable()
                         .compose(this.<OrderedRealmCollection<Cache>>deliverFirst())
                         .toSingle()
-                        .subscribe(new SingleSubscriber<List<Cache>>() {
-                            @Override
-                            public void onSuccess(List<Cache> value) {
-                                if (isViewAttached()) {
-                                    view.populateMap(value);
-                                }
+                        .subscribe(caches -> {
+                            if (isViewAttached()) {
+                                view.populateMap(caches);
                             }
-
-                            @Override
-                            public void onError(Throwable error) {
-
-                            }
+                        }, throwable -> {
+                            // TODO Dialog
                         })
         );
     }
-
 
     @Override
     public void onDestroyed() {

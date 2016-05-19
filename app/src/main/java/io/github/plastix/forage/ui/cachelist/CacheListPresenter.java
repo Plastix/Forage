@@ -13,7 +13,6 @@ import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.github.plastix.forage.util.RxUtils;
 import io.realm.OrderedRealmCollection;
-import rx.SingleSubscriber;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 
@@ -45,20 +44,16 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
                         .toObservable()
                         .compose(this.<OrderedRealmCollection<Cache>>deliverFirst())
                         .toSingle()
-                        .subscribe(new SingleSubscriber<OrderedRealmCollection<Cache>>() {
-                            @Override
-                            public void onSuccess(OrderedRealmCollection<Cache> value) {
-                                if (isViewAttached()) {
-                                    view.setGeocacheList(value);
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable error) {
-                                // TODO show error dialog
-                                Log.e("CacheListPresenter", error.getMessage(), error);
-                            }
-                        }));
+                        .subscribe(caches -> {
+                                    if (isViewAttached()) {
+                                        view.setGeocacheList(caches);
+                                    }
+                                },
+                                throwable -> {
+                                    // TODO show error dialog
+                                    Log.e("CacheListPresenter", throwable.getMessage(), throwable);
+                                })
+        );
     }
 
 
@@ -69,23 +64,23 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
         networkInteractor.hasInternetConnectionCompletable()
                 .subscribe(throwable -> view.onErrorInternet(), () -> locationInteractor.isLocationAvailable()
                         .subscribe(throwable -> view.onErrorLocation(), () -> {
-                                       networkSubscription = locationInteractor.getUpdatedLocation()
-                                               .toObservable()
-                                               .compose(CacheListPresenter.this.<Location>deliverFirst())
-                                               .toSingle()
-                                               .flatMap(location -> apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES)).subscribe(caches -> {
-                                                   // The adapter will update automatically after this database write
-                                                   databaseInteractor.clearAndSaveGeocaches(caches);
-                                                   RxUtils.safeUnsubscribe(networkSubscription);
-                                               }, throwable -> {
-                                                   if (isViewAttached()) {
-                                                       view.onErrorFetch();
-                                                   }
-                                                   Log.e("CacheListPresenter", throwable.getMessage(), throwable);
-                                               });
+                                    networkSubscription = locationInteractor.getUpdatedLocation()
+                                            .toObservable()
+                                            .compose(CacheListPresenter.this.<Location>deliverFirst())
+                                            .toSingle()
+                                            .flatMap(location -> apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES)).subscribe(caches -> {
+                                                // The adapter will update automatically after this database write
+                                                databaseInteractor.clearAndSaveGeocaches(caches);
+                                                RxUtils.safeUnsubscribe(networkSubscription);
+                                            }, throwable -> {
+                                                if (isViewAttached()) {
+                                                    view.onErrorFetch();
+                                                }
+                                                Log.e("CacheListPresenter", throwable.getMessage(), throwable);
+                                            });
 
-                                       addSubscription(networkSubscription);
-                                   }
+                                    addSubscription(networkSubscription);
+                                }
                         ));
 
     }
