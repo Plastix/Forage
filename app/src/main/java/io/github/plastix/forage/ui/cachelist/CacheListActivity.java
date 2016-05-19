@@ -1,16 +1,16 @@
 package io.github.plastix.forage.ui.cachelist;
 
 import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import butterknife.BindView;
 import io.github.plastix.forage.R;
@@ -39,7 +39,7 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
     @BindView(R.id.cachelist_toolbar)
     Toolbar toolbar;
 
-    private AlertDialog dialog;
+    private MaterialDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,17 +83,16 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
 
     private void buildDialog() {
         if (dialog == null) {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.AppTheme_AlertDialog);
-            dialogBuilder.setMessage(R.string.cachelist_nolocation);
-            dialogBuilder.setNegativeButton(R.string.cachelist_exit, (dialog1, which) -> {
-                finish();
-            });
-            final Intent settingsIntent = ActivityUtils.getApplicationSettingsIntent(this);
-            dialogBuilder.setPositiveButton(R.string.cachelist_open_settings, (dialog1, which) -> {
-                startActivity(settingsIntent);
-            });
-            dialogBuilder.setCancelable(false);
-            this.dialog = dialogBuilder.create();
+            dialog = new MaterialDialog.Builder(this)
+                    .title(R.string.required_permission_missing)
+                    .content(R.string.cachelist_nolocation)
+                    .positiveText(R.string.cachelist_open_settings)
+                    .onPositive((dialog1, which) ->
+                            startActivity(ActivityUtils.getApplicationSettingsIntent(CacheListActivity.this)))
+                    .negativeText(R.string.cachelist_exit)
+                    .onNegative((dialog1, which) -> finish())
+                    .cancelable(false)
+                    .build();
         }
     }
 
