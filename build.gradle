@@ -7,11 +7,18 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
 
+        // Backport of some Java 8 language features such as Lambdas and method references.
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+
+        // Needed for Lint + Retrolambda.
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+
+    // Part of workaround for Lint + Retrolambda.
+    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }
 
 allprojects {
