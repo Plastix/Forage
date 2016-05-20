@@ -24,7 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_toRightOf="@id/library_icon"
+        android:layout_toEndOf="@id/library_icon"
         android:fontFamily="sans-serif-light"
         android:textSize="24sp"
         tools:text="Library Name"/>

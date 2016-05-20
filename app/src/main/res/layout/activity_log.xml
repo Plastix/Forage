@@ -51,6 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     android:entries="@array/log_types"
                     app:layout_columnSpan="1"
                     app:layout_rowSpan="1">
@@ -62,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:gravity="top|left"
+                    android:gravity="top|start"
                     android:hint="@string/log_comment_hint"
                     android:inputType="textMultiLine"
                     android:minLines="5"
