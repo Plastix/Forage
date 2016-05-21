@@ -1,6 +1,7 @@
 package io.github.plastix.forage.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -18,12 +19,13 @@ public class ActivityUtils {
     /**
      * Returns an intent for launching the application settings for the app with the specified activity.
      *
-     * @param activity Activity of app to launch settings for.
+     * @param context Context instance
      * @return Intent object.
      */
-    public static Intent getApplicationSettingsIntent(@NonNull Activity activity) {
+    public static Intent getApplicationSettingsIntent(@NonNull Context context) {
         Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + activity.getPackageName()));
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+
         return intent;
     }
 
