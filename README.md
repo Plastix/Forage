@@ -1,13 +1,15 @@
-Forage [![LICENSE](https://img.shields.io/badge/License-Mozilla-blue.svg?style=flat)](http://mozilla.org/MPL/2.0/) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
-======
-> A geocaching Android app using MVP architecture and modern libraries 
+# Forage [![LICENSE](https://img.shields.io/badge/License-Mozilla-blue.svg?style=flat)](http://mozilla.org/MPL/2.0/) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
 
-_This project is currently under heavy development!_
+<img src="app/src/main/res/drawable/icon_large.png" align="left"
+width="200">
+
+Forage is an open source Material Design geocaching Android app using MVP architecture and modern libraries. Forage  integrates with the [OpenCaching API](http://www.opencaching.us/okapi/introduction.html). 
+
+**This project is currently under heavy development!**
 
 This is my first Android project in order to learn the Android SDK and relevant Android libraries. Please critique my code! If you are just starting with Android check out [this wiki page](https://github.com/Plastix/Forage/wiki/Android-Learning-Resources) for a comphrensive list of learning resources that I used. 
 
-Libraries
--------
+## Libraries
 * [Dagger 2](http://google.github.io/dagger/)
 * [Retrofit 2](http://square.github.io/retrofit/)
 * [RxJava](https://github.com/ReactiveX/RxJava) and [RxAndroid](https://github.com/ReactiveX/RxAndroid)
@@ -21,8 +23,7 @@ Libraries
 * [Google Play Location Services](https://developers.google.com/android/reference/com/google/android/gms/location/package-summary)
 * [Google Play Maps](https://developers.google.com/maps/documentation/android-api/)
 
-Testing Libraries
--------
+## Testing Libraries
 * [JUnit](http://junit.org/junit4/)
 * [Truth](https://github.com/google/truth)
 * [Mockito](http://mockito.org/)
@@ -31,8 +32,7 @@ Testing Libraries
 * [Espresso](https://google.github.io/android-testing-support-library/docs/espresso/index.html)
 * [UI Automator](http://developer.android.com/tools/testing-support-library/index.html#UIAutomator)
 
-Requirements
--------
+## Requirements
 To compile and run the project you'll need:
 
 - [Android SDK](http://developer.android.com/sdk/index.html)
@@ -57,8 +57,7 @@ GOOGLE_MAPS_API_KEY=PUT GOOGLE MAPS KEY HERE
 ```
 
 
-License
--------
+## License
 ```
 This Source Code is subject to the terms of the Mozilla Public License, v. 2.0. 
 If a copy of the MPL was not distributed with this file, You can obtain one at 
