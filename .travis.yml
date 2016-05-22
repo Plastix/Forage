@@ -1,5 +1,8 @@
-# Disabling sudo moves build to the Container Based Infrastructure on Travis CI
-sudo: false
+env:
+  # More memory to Gradle JVM
+  - GRADLE_OPTS="-Xmx2048m -XX:MaxPermSize=1024m"
+  # Disabling sudo moves build to the Container Based Infrastructure on Travis CI
+  - sudo: false
 
 language: android
 jdk: oraclejdk8
