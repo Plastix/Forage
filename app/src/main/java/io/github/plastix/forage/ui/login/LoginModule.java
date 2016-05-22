@@ -1,19 +1,11 @@
 package io.github.plastix.forage.ui.login;
 
 import dagger.Module;
-import dagger.Provides;
+import io.github.plastix.forage.ui.base.BaseModule;
 
 @Module
-public class LoginModule {
-
-    private LoginView loginView;
-
-    public LoginModule(LoginView loginView) {
-        this.loginView = loginView;
-    }
-
-    @Provides
-    public LoginView provideLoginView(){
-        return loginView;
+public class LoginModule extends BaseModule<LoginView> {
+    public LoginModule(LoginView view) {
+        super(view);
     }
 }

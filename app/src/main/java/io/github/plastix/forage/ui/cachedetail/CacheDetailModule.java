@@ -1,24 +1,15 @@
 package io.github.plastix.forage.ui.cachedetail;
 
 import dagger.Module;
-import dagger.Provides;
+import io.github.plastix.forage.ui.base.BaseModule;
 
 /**
  * Dagger module that provides dependencies for {@link CacheDetailPresenter} and {@link CacheDetailActivity}.
  */
 @Module
-public class CacheDetailModule {
-
-    private CacheDetailView cacheDetailView;
-
-    public CacheDetailModule(CacheDetailView cacheDetailView) {
-        this.cacheDetailView = cacheDetailView;
+public class CacheDetailModule extends BaseModule<CacheDetailView> {
+    public CacheDetailModule(CacheDetailView view) {
+        super(view);
     }
-
-    @Provides
-    public CacheDetailView provideCacheDetailView() {
-        return cacheDetailView;
-    }
-
 }
 

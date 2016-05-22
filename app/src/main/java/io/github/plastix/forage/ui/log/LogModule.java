@@ -1,19 +1,11 @@
 package io.github.plastix.forage.ui.log;
 
 import dagger.Module;
-import dagger.Provides;
+import io.github.plastix.forage.ui.base.BaseModule;
 
 @Module
-public class LogModule {
-
-    private LogView logView;
-
-    public LogModule(LogView logView) {
-        this.logView = logView;
-    }
-
-    @Provides
-    public LogView providesLogView() {
-        return logView;
+public class LogModule extends BaseModule<LogView> {
+    public LogModule(LogView view) {
+        super(view);
     }
 }
