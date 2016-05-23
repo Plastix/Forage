@@ -28,15 +28,19 @@
                 android:background="@color/color_primary"
                 android:fitsSystemWindows="true">
 
-                <fragment android:id="@+id/cachedetail_map"
-                          android:name="com.google.android.gms.maps.SupportMapFragment"
-                          xmlns:android="http://schemas.android.com/apk/res/android"
-                          android:layout_width="match_parent"
-                          android:layout_height="@dimen/cachedetail_backdrop_height"
-                          android:fitsSystemWindows="true"
-                          android:visibility="invisible"
-                          app:layout_collapseMode="parallax"
-                    />
+                <fragment
+                    android:id="@+id/cachedetail_map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/cachedetail_backdrop_height"
+                    android:fitsSystemWindows="true"
+                    android:visibility="invisible"
+                    app:layout_collapseMode="parallax"
+                    map:liteMode="true"
+                    map:mapType="normal"
+                    tools:ignore="MissingPrefix"/>
 
 
                 <View
