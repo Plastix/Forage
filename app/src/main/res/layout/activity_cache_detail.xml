@@ -28,16 +28,16 @@
                 android:background="@color/color_primary"
                 android:fitsSystemWindows="true">
 
-                <com.google.android.gms.maps.MapView android:id="@+id/cachedetail_map"
-                                                     xmlns:map="http://schemas.android.com/apk/res-auto"
-                                                     android:layout_width="match_parent"
-                                                     android:layout_height="@dimen/cachedetail_backdrop_height"
-                                                     android:alpha="0"
-                                                     android:fitsSystemWindows="true"
-                                                     android:visibility="invisible"
-                                                     app:layout_collapseMode="parallax"
-                                                     map:liteMode="true"
-                                                     map:mapType="normal"/>
+                <fragment android:id="@+id/cachedetail_map"
+                          android:name="com.google.android.gms.maps.SupportMapFragment"
+                          xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:layout_width="match_parent"
+                          android:layout_height="@dimen/cachedetail_backdrop_height"
+                          android:fitsSystemWindows="true"
+                          android:visibility="invisible"
+                          app:layout_collapseMode="parallax"
+                    />
+
 
                 <View
                     android:layout_width="match_parent"

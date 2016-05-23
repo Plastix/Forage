@@ -9,13 +9,12 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -50,9 +49,6 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
     @BindView(R.id.cachedetail_fab)
     FloatingActionButton fab;
 
-    @BindView(R.id.cachedetail_map)
-    MapView map;
-
     @BindView(R.id.cachedetail_description)
     TextView description;
 
@@ -80,6 +76,8 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
     @State
     String cacheName;
 
+    private SupportMapFragment map;
+
     /**
      * Static factory method that returns a new intent for opening a {@link CacheDetailActivity}.
      *
@@ -104,7 +102,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
         ActivityUtils.setSupportActionBarBack(getDelegate());
 
         this.cacheCode = getIntent().getStringExtra(EXTRA_CACHE_CODE);
-        this.map.onCreate(savedInstanceState);
+        this.map = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.cachedetail_map);
     }
 
     private void injectDependencies() {
@@ -145,36 +143,6 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
         finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        map.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        map.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        map.onResume();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        map.onLowMemory();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        map.onSaveInstanceState(outState);
-    }
-
     /**
      * Class to encapsulate Google Map config logic.
      */
@@ -201,14 +169,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
 
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-            animateIntoView();
         }
-
-        private void animateIntoView() {
-            map.animate().withStartAction(() -> map.setVisibility(View.VISIBLE)).alpha(1f)
-                    .setDuration(500);
-        }
-
     }
 
 }
