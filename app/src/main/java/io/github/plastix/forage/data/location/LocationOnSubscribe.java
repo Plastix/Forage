@@ -13,9 +13,9 @@ import com.google.android.gms.location.LocationServices;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.observers.SafeSubscriber;
 import rx.subscriptions.Subscriptions;
 
 /**
@@ -24,7 +24,7 @@ import rx.subscriptions.Subscriptions;
 public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private GoogleApiClient googleApiClient;
-    private Observer<? super Location> observer;
+    private Subscriber<? super Location> subscriber;
     private LocationListener listener;
     private LocationRequest locationRequest;
 
@@ -39,7 +39,13 @@ public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, Go
 
     @Override
     public void call(Subscriber<? super Location> subscriber) {
-        this.observer = subscriber;
+        this.subscriber = subscriber;
+
+        // Wrap the Subscriber to obey the Observable lifecycle
+        if (!(this.subscriber instanceof SafeSubscriber)) {
+            this.subscriber = new SafeSubscriber<>(subscriber);
+        }
+
         googleApiClient.registerConnectionCallbacks(this);
         googleApiClient.registerConnectionFailedListener(this);
         googleApiClient.connect();
@@ -48,6 +54,7 @@ public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, Go
 
     private Subscription buildUnsubscriber() {
         return Subscriptions.create(() -> {
+            this.locationRequest = null;
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, listener);
             googleApiClient.unregisterConnectionCallbacks(LocationOnSubscribe.this);
             googleApiClient.unregisterConnectionFailedListener(LocationOnSubscribe.this);
@@ -60,22 +67,21 @@ public class LocationOnSubscribe implements Observable.OnSubscribe<Location>, Go
         try {
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, listener);
         } catch (SecurityException e) {
-            observer.onError(new Throwable("Location permission not available!"));
+            subscriber.onError(new Throwable("Location permission not available!"));
         }
     }
 
     private LocationListener buildListener() {
-        return location -> observer.onNext(location);
+        return location -> subscriber.onNext(location);
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        observer.onError(new Throwable("Connection lost to Google Play Services"));
+        subscriber.onError(new Throwable("Connection lost to Google Play Services"));
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        observer.onError(new Throwable("Failed to connect to Google Play Services!"));
-
+        subscriber.onError(new Throwable("Failed to connect to Google Play Services!"));
     }
 }

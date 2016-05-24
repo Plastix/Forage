@@ -56,7 +56,6 @@ public class LocationCompletableOnSubscribe implements Completable.CompletableOn
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         completableSubscriber.onError(new Throwable("Failed to connect to Google Play Services!"));
-
     }
 
     private Subscription buildUnsubscriber() {
