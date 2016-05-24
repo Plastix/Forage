@@ -5,10 +5,9 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +16,7 @@ import icepick.State;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.base.PresenterFragment;
+import io.github.plastix.forage.util.AngleUtils;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
 
@@ -49,7 +49,6 @@ public class CompassFragment extends PresenterFragment<CompassPresenter, Compass
         super.onCreate(savedInstanceState);
 
         this.target = getArguments().getParcelable(EXTRA_CACHE_LOCATION);
-
     }
 
     private void injectDependencies() {
@@ -78,19 +77,16 @@ public class CompassFragment extends PresenterFragment<CompassPresenter, Compass
 
     @Override
     public void rotateCompass(final float degrees) {
+        Log.d(getClass().toString(), String.valueOf(degrees));
         // Rotate by negative degrees because Android rotates counter-clockwise
-        Animation an = new RotateAnimation(
-                currentAzimuth,
-                -degrees,
-                Animation.RELATIVE_TO_SELF,
-                CENTER,
-                Animation.RELATIVE_TO_SELF,
-                CENTER);
-        an.setDuration(250);
-        an.setInterpolator(new LinearInterpolator());
-        an.setFillAfter(true);
+        // Only animate by delta rotation
+        arrow.animate()
+                .rotationBy(AngleUtils.difference(currentAzimuth, -degrees))
+                .setDuration(250)
+                .setInterpolator(new LinearInterpolator())
+                .start();
+
         currentAzimuth = -degrees;
-        arrow.startAnimation(an);
     }
 
     @Override
