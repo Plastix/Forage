@@ -106,4 +106,10 @@ public class CompassFragment extends PresenterFragment<CompassPresenter, Compass
         this.accuracy.setText(resources.getString(R.string.compass_accuracy, formatted));
 
     }
+
+    @Override
+    public void showLocationUnavailableDialog() {
+        LocationUnavailableDialog.show(getActivity());
+    }
+
 }

@@ -12,4 +12,6 @@ public interface CompassView {
 
     void updateAccuracy(float accuracyInMeters);
 
+    void showLocationUnavailableDialog();
+
 }
