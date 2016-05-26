@@ -10,11 +10,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="io.github.plastix.forage.ui.login.LoginActivity">
 
+    <TextView
+        android:id="@+id/login_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/login_info_text"
+        />
+
+
     <Button
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/login_info"
         android:layout_centerHorizontal="true"
         android:text="@string/login_button"/>
 </RelativeLayout>
