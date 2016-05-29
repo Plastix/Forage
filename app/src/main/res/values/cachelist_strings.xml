@@ -11,6 +11,4 @@
     <string name="cachelist_title">Geocaches</string>
     <string name="cachelist_action_map_title">Map</string>
     <string name="cachelist_action_navigate_title">Navigate To</string>
-    <string name="cachelist_action_clear">Clear</string>
-    <string name="cachelist_action_fetch_geocaches">Fetch Geocaches</string>
 </resources>

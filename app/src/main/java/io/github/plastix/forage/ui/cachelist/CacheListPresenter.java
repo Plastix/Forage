@@ -100,9 +100,4 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
     public void onDestroyed() {
         databaseInteractor.onDestroy();
     }
-
-    public void clearCaches() {
-        databaseInteractor.clearGeocaches();
-    }
-
 }

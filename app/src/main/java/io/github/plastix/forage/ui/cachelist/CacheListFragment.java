@@ -7,9 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import java.lang.ref.WeakReference;
@@ -50,9 +47,6 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     public void onCreate(Bundle savedInstanceState) {
         injectDependencies();
         super.onCreate(savedInstanceState);
-
-        // Tell the activity we have menu items to contribute to the toolbar
-        setHasOptionsMenu(true);
     }
 
     private void injectDependencies() {
@@ -146,28 +140,6 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     @Override
     public void onRefresh() {
         downloadGeocaches();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu items from the Fragment's menu
-        inflater.inflate(R.menu.menu_cache_list_fragment, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_fetch:
-                downloadGeocaches();
-                return true;
-            case R.id.action_clear:
-                presenter.clearCaches();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override
