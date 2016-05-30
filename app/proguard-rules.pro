@@ -16,26 +16,15 @@
 #   public *;
 #}
 
-# Realm
--keep class io.realm.annotations.RealmModule
--keep @io.realm.annotations.RealmModule class *
--keep class io.realm.internal.Keep
--keep @io.realm.internal.Keep class * { *; }
--dontwarn javax.**
--dontwarn io.realm.**
-
 # Butterknife
--keep class butterknife.** { *; }
--dontwarn butterknife.internal.**
--keep class **$$ViewBinder { *; }
+# Retain generated class which implement ViewBinder.
+-keep public class * implements butterknife.internal.ViewBinder { public <init>(); }
 
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
-
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
+# Prevent obfuscation of types which use ButterKnife annotations since the simple name
+# is used to reflectively look up the generated ViewBinder.
+-keep class butterknife.*
+-keepclasseswithmembernames class * { @butterknife.* <methods>; }
+-keepclasseswithmembernames class * { @butterknife.* <fields>; }
 
 # Retrofit
 -dontwarn retrofit2.**
@@ -68,3 +57,6 @@
 -keepclasseswithmembernames class * {
     @icepick.* <fields>;
 }
+
+# Retrolambda
+-dontwarn java.lang.invoke.*

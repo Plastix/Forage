@@ -121,3 +121,6 @@ Temporary Items
 !gradle/wrapper/*
 !gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.properties
+
+# Hide signing config from VSC
+signing.properties

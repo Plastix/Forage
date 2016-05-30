@@ -56,6 +56,17 @@ OKAPI_US_CONSUMER_SECRET=PUT OKAPI CONSUMER SECRET HERE
 GOOGLE_MAPS_API_KEY=PUT GOOGLE MAPS KEY HERE
 ```
 
+## Release Builds
+A release build needs to be signed with an Android Keystore. The easiest way to generate one is to open
+Android Studio and go to `Build -> Generate Signed Apk -> Create New...` After that you need to create a
+`signing.properties` file in the root directory and add the following info to it:
+```INI
+STORE_FILE=/path/to/your.keystore
+STORE_PASSWORD=yourkeystorepass
+KEY_ALIAS=projectkeyalias
+KEY_PASSWORD=keyaliaspassword
+```
+Running `gradle assembleRelease` will then build and sign a release version of the app.
 
 ## License
 ```
