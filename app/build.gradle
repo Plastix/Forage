@@ -154,10 +154,10 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
 
     // LeakCanary
-    // 1.4-beta1 required for Android M
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
+    // >=1.4-beta1 required for Android M
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
     // Ice Pick
     compile 'frankiesardo:icepick:3.1.0'
