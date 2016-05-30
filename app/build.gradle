@@ -170,6 +170,7 @@ dependencies {
     compile 'oauth.signpost:signpost-core:1.2.1.2'
     compile 'io.realm:android-adapters:1.2.1'
     compile 'com.afollestad.material-dialogs:core:0.8.5.9'
+    compile 'com.jakewharton.timber:timber:4.1.2'
 
     // Unit Testing
     testCompile 'junit:junit:4.12'

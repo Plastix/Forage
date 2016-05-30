@@ -20,6 +20,7 @@ This is my first Android project in order to learn the Android SDK and relevant 
 * [Material Dialogs](https://github.com/afollestad/material-dialogs)
 * [Google Support Libraries](http://developer.android.com/tools/support-library/index.html)
 * [Retrolambda](https://github.com/evant/gradle-retrolambda)
+* [Timber](https://github.com/JakeWharton/timber)
 * [Google Play Location Services](https://developers.google.com/android/reference/com/google/android/gms/location/package-summary)
 * [Google Play Maps](https://developers.google.com/maps/documentation/android-api/)
 

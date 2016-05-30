@@ -4,10 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import javax.inject.Inject;
 
 import dagger.Lazy;
 import io.github.plastix.forage.dev_tools.DevMetricsProxy;
+import timber.log.Timber;
 
 public class ForageApplication extends Application {
 
@@ -43,7 +46,8 @@ public class ForageApplication extends Application {
 
         //Use debug tools only in debug builds
         if (BuildConfig.DEBUG) {
-//            LeakCanary.install(this);
+            LeakCanary.install(this);
+            Timber.plant(new Timber.DebugTree());
             devMetricsProxy.get().apply();
         }
     }

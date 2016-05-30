@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -77,7 +76,6 @@ public class CompassFragment extends PresenterFragment<CompassPresenter, Compass
 
     @Override
     public void rotateCompass(final float degrees) {
-        Log.d(getClass().toString(), String.valueOf(degrees));
         // Rotate by negative degrees because Android rotates counter-clockwise
         // Only animate by delta rotation
         arrow.animate()

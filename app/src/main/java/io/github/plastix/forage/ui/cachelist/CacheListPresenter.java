@@ -1,7 +1,6 @@
 package io.github.plastix.forage.ui.cachelist;
 
 import android.location.Location;
-import android.util.Log;
 
 import javax.inject.Inject;
 
@@ -15,6 +14,7 @@ import io.github.plastix.forage.util.RxUtils;
 import io.realm.OrderedRealmCollection;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
+import timber.log.Timber;
 
 public class CacheListPresenter extends RxPresenter<CacheListView> {
 
@@ -51,7 +51,7 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
                                 },
                                 throwable -> {
                                     // TODO show error dialog
-                                    Log.e("CacheListPresenter", throwable.getMessage(), throwable);
+                                    Timber.e(throwable.getMessage(), throwable);
                                 })
         );
     }
@@ -76,7 +76,7 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
                                                 if (isViewAttached()) {
                                                     view.onErrorFetch();
                                                 }
-                                                Log.e("CacheListPresenter", throwable.getMessage(), throwable);
+                                                Timber.e(throwable.getMessage(), throwable);
                                             });
 
                                     addSubscription(networkSubscription);
