@@ -69,6 +69,9 @@ KEY_PASSWORD=keyaliaspassword
 ```
 Running `gradle assembleRelease` will then build and sign a release version of the app.
 
+## Contributions
+* [naalty](https://www.reddit.com/user/naalty): Design of the Forage app icon
+
 ## License
 ```
 This Source Code is subject to the terms of the Mozilla Public License, v. 2.0. 
