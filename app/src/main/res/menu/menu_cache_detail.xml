@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/cachedetail_action_log"
+        android:icon="@drawable/ic_create"
+        android:title="@string/cachelist_action_map_title"
+        app:showAsAction="ifRoom"/>
+
+</menu>

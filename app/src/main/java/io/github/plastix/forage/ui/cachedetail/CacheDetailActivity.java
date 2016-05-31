@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,7 +32,9 @@ import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.ui.compass.CompassActivity;
+import io.github.plastix.forage.ui.log.LogActivity;
 import io.github.plastix.forage.util.ActivityUtils;
+import io.github.plastix.forage.util.MenuUtils;
 
 /**
  * Activity that represents the Geocache detail view screen of the app.
@@ -136,6 +142,32 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
             Intent intent = CompassActivity.newIntent(CacheDetailActivity.this, cache.location.toLocation());
             startActivity(intent);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_cache_detail, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        @ColorInt int color = ContextCompat.getColor(this, R.color.white);
+        MenuUtils.tintMenuItemIcon(color, menu.findItem(R.id.cachedetail_action_log));
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cachedetail_action_log:
+                startActivity(LogActivity.newIntent(this, cacheCode));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
