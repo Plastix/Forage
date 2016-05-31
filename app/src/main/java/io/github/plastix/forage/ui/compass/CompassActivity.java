@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
+import android.view.WindowManager;
 
 import butterknife.BindView;
 import io.github.plastix.forage.R;
@@ -48,8 +49,10 @@ public class CompassActivity extends BaseFragmentActivity<CompassFragment> {
         setContentView(R.layout.activity_compass);
 
         setSupportActionBar(toolbar);
-
         ActivityUtils.setSupportActionBarBack(getDelegate());
+
+        // Don't dim the screen
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
