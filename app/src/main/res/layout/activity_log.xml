@@ -84,7 +84,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/log_submit_description"
-        android:src="@drawable/ic_send"
-        android:tint="@color/white"/>
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_send"/>
 
 </android.support.design.widget.CoordinatorLayout>

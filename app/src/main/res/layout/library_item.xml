@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -15,8 +16,8 @@
         android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
         android:contentDescription="@string/library_icon_description"
-        android:src="@drawable/ic_extension"
-        android:tint="@color/color_accent"/>
+        android:tint="@color/color_accent"
+        app:srcCompat="@drawable/ic_extension"/>
 
     <TextView
         android:id="@+id/library_title"
@@ -25,8 +26,8 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
-        android:layout_toRightOf="@id/library_icon"
         android:layout_toEndOf="@id/library_icon"
+        android:layout_toRightOf="@id/library_icon"
         android:fontFamily="sans-serif-light"
         android:textSize="24sp"
         tools:text="Library Name"/>
