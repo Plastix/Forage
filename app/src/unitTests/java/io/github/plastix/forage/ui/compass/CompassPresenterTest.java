@@ -16,6 +16,7 @@ import io.github.plastix.forage.RxSchedulersOverrideRule;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.sensor.AzimuthInteractor;
 import io.github.plastix.forage.util.LocationUtils;
+import rx.Completable;
 import rx.Observable;
 
 import static org.mockito.Matchers.anyFloat;
@@ -57,6 +58,7 @@ public class CompassPresenterTest {
 
         Location location = LocationUtils.buildLocation(0, 0);
         when(locationInteractor.getLocationObservable(anyLong())).thenReturn(Observable.just(location));
+        when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
 
         compassPresenter.startCompass();
 

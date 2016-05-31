@@ -98,8 +98,7 @@ public class CacheListPresenterTest {
 
         cacheListPresenter.getGeocachesFromInternet();
 
-        verify(view).onErrorLocation();
-        verify(view).onErrorLocation();
+        verify(view).onErrorFetch();
     }
 
     @Test
