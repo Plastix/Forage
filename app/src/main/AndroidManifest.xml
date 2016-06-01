@@ -51,7 +51,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/login_title"
-            android:launchMode="singleTop">
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
