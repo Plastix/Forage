@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -163,7 +164,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cachedetail_action_log:
-                startActivity(LogActivity.newIntent(this, cacheCode));
+                presenter.openLogScreen();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -173,6 +174,16 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
     @Override
     public void onError() {
         finish();
+    }
+
+    @Override
+    public void openLogScreen() {
+        startActivity(LogActivity.newIntent(this, cacheCode));
+    }
+
+    @Override
+    public void onErrorRequiresLogin() {
+        Toast.makeText(CacheDetailActivity.this, R.string.cachedetail_error_requires_login, Toast.LENGTH_SHORT).show();
     }
 
     /**

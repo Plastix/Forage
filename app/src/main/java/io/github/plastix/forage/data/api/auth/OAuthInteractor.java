@@ -71,7 +71,7 @@ public class OAuthInteractor {
         return userToken.isSet() & userTokenSecret.isSet();
     }
 
-    public void clearSavedOAuthTokens(){
+    public void clearSavedOAuthTokens() {
         userToken.delete();
         userTokenSecret.delete();
     }

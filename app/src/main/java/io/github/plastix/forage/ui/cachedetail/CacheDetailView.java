@@ -11,4 +11,8 @@ public interface CacheDetailView {
     void returnedGeocache(Cache cache);
 
     void onError();
+
+    void openLogScreen();
+
+    void onErrorRequiresLogin();
 }
