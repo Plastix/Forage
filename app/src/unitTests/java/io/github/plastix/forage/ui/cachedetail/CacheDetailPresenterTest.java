@@ -3,6 +3,7 @@ package io.github.plastix.forage.ui.cachedetail;
 import org.junit.Before;
 import org.junit.Test;
 
+import io.github.plastix.forage.data.api.auth.OAuthInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import rx.Single;
@@ -16,13 +17,15 @@ public class CacheDetailPresenterTest {
 
     private CacheDetailPresenter cacheDetailPresenter;
     private DatabaseInteractor databaseInteractor;
+    private OAuthInteractor oAuthInteractor;
     private CacheDetailView view;
 
     @Before
     public void beforeEachTest() {
         view = mock(CacheDetailView.class);
         databaseInteractor = mock(DatabaseInteractor.class);
-        cacheDetailPresenter = new CacheDetailPresenter(databaseInteractor);
+        oAuthInteractor = mock(OAuthInteractor.class);
+        cacheDetailPresenter = new CacheDetailPresenter(databaseInteractor, oAuthInteractor);
         cacheDetailPresenter.onViewAttached(view);
     }
 
@@ -54,5 +57,23 @@ public class CacheDetailPresenterTest {
 
         verify(databaseInteractor, only()).getGeocacheCopy(cacheCode);
         verify(view, only()).onError();
+    }
+
+    @Test
+    public void openLogScreen_shouldOpenActivity() {
+        when(oAuthInteractor.hasSavedOAuthTokens()).thenReturn(true);
+
+        cacheDetailPresenter.openLogScreen();
+
+        verify(view, only()).openLogScreen();
+    }
+
+    @Test
+    public void openLogScreen_shouldShowError() {
+        when(oAuthInteractor.hasSavedOAuthTokens()).thenReturn(false);
+
+        cacheDetailPresenter.openLogScreen();
+
+        verify(view, only()).onErrorRequiresLogin();
     }
 }
