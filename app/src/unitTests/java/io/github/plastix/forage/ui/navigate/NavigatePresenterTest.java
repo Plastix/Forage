@@ -9,6 +9,7 @@ import static org.mockito.Matchers.anyDouble;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class NavigatePresenterTest {
 
@@ -69,5 +70,13 @@ public class NavigatePresenterTest {
         verify(navigateView, times(1)).openCompassScreen(Double.valueOf(lat), Double.valueOf(lon));
     }
 
+    @Test
+    public void navigate_noViewAttached() {
+        navigatePresenter.onViewDetached();
+        String lat = "latitude";
+        String lon = "longitude";
+        navigatePresenter.navigate(lat, lon);
 
+        verifyZeroInteractions(navigateView);
+    }
 }
