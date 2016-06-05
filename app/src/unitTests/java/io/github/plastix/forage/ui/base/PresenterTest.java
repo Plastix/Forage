@@ -31,6 +31,17 @@ public class PresenterTest {
         assertThat(presenter.getView()).isNull();
     }
 
+    @Test
+    public void isViewAttached_shouldReturnCorrectState() {
+        presenter.onViewAttached(view);
+
+        assertThat(presenter.isViewAttached()).isTrue();
+
+        presenter.onViewDetached();
+
+        assertThat(presenter.isViewAttached()).isFalse();
+    }
+
     private class FakeView {
     }
 
