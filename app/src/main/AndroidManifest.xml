@@ -37,7 +37,7 @@
         <activity
             android:name=".ui.map.MapActivity"
             android:label="@string/map_title"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar.Transparent"/>
         <activity
             android:name=".ui.navigate.NavigateActivity"
             android:label="@string/navigate_title"

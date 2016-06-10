@@ -4,7 +4,7 @@ import dagger.Subcomponent;
 import io.github.plastix.forage.ui.base.ActivityScope;
 
 /**
- * Dagger component to inject all required dependencies into {@link MapFragment}.
+ * Dagger component to inject all required dependencies into {@link MapActivity}.
  */
 @ActivityScope
 @Subcomponent(
@@ -13,5 +13,5 @@ import io.github.plastix.forage.ui.base.ActivityScope;
         }
 )
 public interface MapComponent {
-    void injectTo(MapFragment mapFragment);
+    void injectTo(MapActivity mapActivity);
 }

@@ -4,19 +4,24 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
+import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.realm.OrderedRealmCollection;
+import timber.log.Timber;
 
-public class MapPresenter extends RxPresenter<MapFragView> {
+public class MapPresenter extends RxPresenter<MapActivityView> {
 
     private DatabaseInteractor databaseInteractor;
+    private LocationInteractor locationInteractor;
 
     @Inject
-    public MapPresenter(DatabaseInteractor databaseInteractor) {
+    public MapPresenter(DatabaseInteractor databaseInteractor,
+                        LocationInteractor locationInteractor) {
         this.databaseInteractor = databaseInteractor;
+        this.locationInteractor = locationInteractor;
     }
 
-    public void getGeocaches() {
+    public void setupMap() {
         addSubscription(
                 databaseInteractor.getGeocaches()
                         .toObservable()
@@ -24,16 +29,31 @@ public class MapPresenter extends RxPresenter<MapFragView> {
                         .toSingle()
                         .subscribe(caches -> {
                             if (isViewAttached()) {
-                                view.populateMap(caches);
+                                view.addMapMarkers(caches);
                             }
                         }, throwable -> {
                             // TODO Dialog
                         })
+        );
+
+        addSubscription(locationInteractor.getUpdatedLocation()
+                .toObservable()
+                .compose(deliverFirst())
+                .toSingle()
+                .subscribe(location -> {
+                            if (isViewAttached()) {
+                                view.animateMapCamera(location);
+                            }
+                        }, throwable -> Timber.e(throwable, "Error fetching location!")
+
+                )
         );
     }
 
     @Override
     public void onDestroyed() {
         databaseInteractor.onDestroy();
+        databaseInteractor = null;
+        locationInteractor = null;
     }
 }
