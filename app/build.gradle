@@ -136,8 +136,8 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:23.4.0'
 
     // Google Play Services
-    compile 'com.google.android.gms:play-services-location:9.0.1'
-    compile 'com.google.android.gms:play-services-maps:9.0.1'
+    compile 'com.google.android.gms:play-services-location:9.0.2'
+    compile 'com.google.android.gms:play-services-maps:9.0.2'
 
     // RxJava
     compile 'io.reactivex:rxjava:1.1.5'
