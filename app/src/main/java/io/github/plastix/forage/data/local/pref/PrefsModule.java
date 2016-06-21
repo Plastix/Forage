@@ -13,8 +13,6 @@ import io.github.plastix.forage.ApplicationScope;
 @Module
 public class PrefsModule {
 
-    // TODO Factor strings out into constants
-
     @Provides
     @Singleton
     public SharedPreferences provideSharedPreferences(@ApplicationScope Context context) {
@@ -25,13 +23,13 @@ public class PrefsModule {
     @Singleton
     @Provides
     public StringPreference provideOAuthUserToken(SharedPreferences sharedPreferences) {
-        return new StringPreference(sharedPreferences, "OAUTH_USER_TOKEN", null);
+        return new StringPreference(sharedPreferences, SharedPrefConstants.KEY_OAUTH_USER_TOKEN, null);
     }
 
     @OAuthUserTokenSecret
     @Singleton
     @Provides
     public StringPreference provideOAuthUserTokenSecret(SharedPreferences sharedPreferences) {
-        return new StringPreference(sharedPreferences, "OAUTH_USER_TOKEN_SECRET", null);
+        return new StringPreference(sharedPreferences, SharedPrefConstants.KEY_OAUTH_USER_TOKEN_SECRET, null);
     }
 }
