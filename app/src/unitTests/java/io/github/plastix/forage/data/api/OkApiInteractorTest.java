@@ -10,6 +10,7 @@ import java.util.List;
 
 import dagger.Lazy;
 import io.github.plastix.forage.RxSchedulersOverrideRule;
+import io.github.plastix.forage.data.api.response.SubmitLogResponse;
 import io.github.plastix.forage.data.local.model.Cache;
 import rx.Single;
 import rx.singles.BlockingSingle;
@@ -85,4 +86,30 @@ public class OkApiInteractorTest {
 
     }
 
+    @Test
+    public void submitLog_shouldReturnResponseFromApi() {
+        SubmitLogResponse response = mock(SubmitLogResponse.class);
+        when(
+                okApiService.submitLog(anyString(), anyString(), anyString())
+        ).thenReturn(Single.just(response));
+
+        BlockingSingle<SubmitLogResponse> result = okApiInteractor.submitLog("", "", "").toBlocking();
+
+        assertThat(result.value()).isSameAs(response);
+    }
+
+    @Test
+    public void submitLog_shouldReturnErrorFromApi() {
+        Exception error = new RuntimeException();
+        when(
+                okApiService.submitLog(anyString(), anyString(), anyString())
+        ).thenReturn(Single.error(error));
+
+        try {
+            okApiInteractor.submitLog("", "", "").toBlocking().value();
+            assert_().fail("Should have throw an error!", error);
+        } catch (Exception e) {
+            assertThat(e).isSameAs(error);
+        }
+    }
 }
