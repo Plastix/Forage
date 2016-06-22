@@ -18,16 +18,12 @@ import retrofit2.adapter.rxjava.HttpException;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assert_;
 
-/**
- * TODO test invalid JSON response?
- */
 @RunWith(ForageRoboelectricIntegrationTestRunner.class)
 public class OkApiServiceIntegrationTest {
 
     private ApplicationComponent applicationComponent = ForageRoboelectricIntegrationTestRunner.
             forageApplication().getComponent();
     private MockWebServer mockWebServer;
-    private HostSelectionInterceptor interceptor;
     private OkApiService okApiService;
 
     @Before
@@ -35,8 +31,8 @@ public class OkApiServiceIntegrationTest {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
         okApiService = applicationComponent.okApiService();
-        interceptor = applicationComponent.hostInteceptor();
 
+        HostSelectionInterceptor interceptor = applicationComponent.hostInteceptor();
         interceptor.setHost(mockWebServer.url("").toString());
     }
 
@@ -118,6 +114,37 @@ public class OkApiServiceIntegrationTest {
                 assertThat(httpException.code()).isEqualTo(errorCode);
                 assertThat(httpException.message()).isEqualTo("Nope!");
             }
+        }
+    }
+
+    @Test
+    public void searchAndRetrieve_shouldHandleEmptyJson() {
+        mockWebServer.enqueue(new MockResponse().setBody("{}"));
+        List<Cache> caches = okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().value();
+
+        assertThat(caches).isEmpty();
+    }
+
+    @Test
+    public void searchAndRetrieve_shouldThrowErrorOnInvalidJson() {
+        String jsonResponse = "{\n" +
+                "  \"CACHE1\":{\n" +
+                "    \"code\":\"CACHE1\",\n" +
+                "    \"name\":\"Cache Name 1\",\n" +
+                "    \"location\":\"45|45\",\n" +
+                "    \"type\":\"Traditional\",\n" +
+                "    \"status\":\"Available\",\n" +
+                "    \"terrain\":1,\n" +
+                "    \"difficulty\":2.5,\n" +
+                "    \"size2\":\"micro\",\n" +
+                "    \"description\":\"<p>Cache Description 1<\\/p>\"\n" +
+                "  ";
+        mockWebServer.enqueue(new MockResponse().setBody(jsonResponse));
+        try {
+            List<Cache> caches = okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().value();
+            assert_().fail("Should throw error!");
+        } catch (Exception ignored) {
+            // Pass
         }
     }
 }
