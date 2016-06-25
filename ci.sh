@@ -6,5 +6,4 @@
 # - Runs Android Lint
 # - Runs Unit Tests under JVM
 # - Packages the APK
-# - Runs functional UI tests on the device/emulator.
-./gradlew clean build connectedAndroidTest -PdisablePreDex
+./gradlew clean build test -PdisablePreDex
