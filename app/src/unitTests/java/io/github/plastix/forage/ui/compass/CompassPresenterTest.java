@@ -66,8 +66,8 @@ public class CompassPresenterTest {
         // We need this because we're applying backpressure operators to the observable
         TimeUnit.MILLISECONDS.sleep(500);
 
-        verify(view, times(1)).updateDistance(anyFloat());
-        verify(view, times(1)).updateAccuracy(anyFloat());
+        verify(view, times(1)).setDistance(anyFloat());
+        verify(view, times(1)).setAccuracy(anyFloat());
         verify(view, times(1)).rotateCompass(anyFloat());
     }
 }

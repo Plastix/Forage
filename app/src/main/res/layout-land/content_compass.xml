@@ -4,7 +4,8 @@
                                       android:layout_width="match_parent"
                                       android:layout_height="match_parent"
                                       app:columnCount="2"
-                                      tools:context="io.github.plastix.forage.ui.compass.CompassFragment">
+                                      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                      app:rowCount="3">
 
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingTop="34dp"
+        android:paddingTop="24dp"
         android:text="@string/compass_distance_label"
         android:textSize="20sp"
         android:textStyle="bold"

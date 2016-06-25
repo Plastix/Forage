@@ -11,9 +11,9 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.util.AngleUtils;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.observers.SafeSubscriber;
 import rx.subscriptions.Subscriptions;
 
 
@@ -22,7 +22,7 @@ import rx.subscriptions.Subscriptions;
  */
 public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEventListener {
 
-    private Observer<? super Float> observer;
+    private Subscriber<? super Float> subscriber;
     private SensorManager sensorManager;
     private WindowManager windowManager;
     private Sensor compass;
@@ -42,8 +42,13 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
 
     @Override
     public void call(Subscriber<? super Float> subscriber) {
-        this.observer = subscriber;
+        this.subscriber = subscriber;
         this.compass = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+
+        // Wrap the Subscriber to obey the Observable lifecycle
+        if (!(this.subscriber instanceof SafeSubscriber)) {
+            this.subscriber = new SafeSubscriber<>(subscriber);
+        }
 
         registerSensors();
 
@@ -61,13 +66,13 @@ public class AzimuthObserver implements Observable.OnSubscribe<Float>, SensorEve
             float azimuth = (float) (Math.toDegrees(result[0]));
             azimuth += AngleUtils.getRotationOffset(windowManager);
 
-            observer.onNext(azimuth);
+            subscriber.onNext(azimuth);
         }
 
     }
 
     /**
-     * Sets the delay that the Android sensor should update the observer.
+     * Sets the delay that the Android sensor should update the subscriber.
      *
      * @param microSeconds Delay in microseconds.
      */

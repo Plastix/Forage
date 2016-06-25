@@ -75,8 +75,8 @@ public class CompassPresenter extends RxPresenter<CompassView> {
                         .subscribe(pair -> {
                             if (isViewAttached()) {
                                 view.rotateCompass(pair.first);
-                                view.updateDistance(pair.second.distanceTo(target));
-                                view.updateAccuracy(pair.second.getAccuracy());
+                                view.setDistance(pair.second.distanceTo(target));
+                                view.setAccuracy(pair.second.getAccuracy());
                             }
                         }, Throwable::printStackTrace)
         );

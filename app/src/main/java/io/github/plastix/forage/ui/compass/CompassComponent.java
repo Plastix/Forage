@@ -4,7 +4,7 @@ import dagger.Subcomponent;
 import io.github.plastix.forage.ui.base.ActivityScope;
 
 /**
- * Dagger component to inject all required dependencies into {@link CompassFragment}.
+ * Dagger component to inject all required dependencies into {@link CompassActivity}.
  */
 @ActivityScope
 @Subcomponent(
@@ -13,6 +13,6 @@ import io.github.plastix.forage.ui.base.ActivityScope;
         }
 )
 public interface CompassComponent {
-    void injectTo(CompassFragment compassFragment);
+    void injectTo(CompassActivity compassActivity);
 }
 

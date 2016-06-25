@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="io.github.plastix.forage.ui.compass.CompassFragment">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
         android:id="@+id/compass_distance_label"
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-        android:paddingTop="34dp"
+        android:paddingTop="24dp"
         android:text="@string/compass_distance_label"
         android:textSize="20sp"
         android:textStyle="bold"/>
@@ -42,13 +43,13 @@
         tools:text="+/- 32 ft"/>
 
     <FrameLayout
+        android:id="@+id/compass_framelayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/compass_accuracy"
         android:layout_centerHorizontal="true"
-        android:ellipsize="end"
-        android:paddingTop="16dp"
-        android:singleLine="true">
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp">
 
         <View
             android:id="@+id/compass_backdrop"
