@@ -1,6 +1,6 @@
-# Forage [![LICENSE](https://img.shields.io/badge/License-Mozilla-blue.svg?style=flat)](http://mozilla.org/MPL/2.0/) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
+# Forage [![LICENSE](https://img.shields.io/badge/License-Mozilla-blue.svg?style=flat)](http://mozilla.org/MPL/2.0/) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16) [![CircleCI](https://circleci.com/gh/Plastix/Forage.svg?style=svg)](https://circleci.com/gh/Plastix/Forage)
 
-<img src="app/src/main/res/drawable/icon_large.png" align="left"
+<img src="app/src/main/res/mipmap-xxxhdpi/icon_large.png" align="left"
 width="200">
 
 Forage is an open source Material Design geocaching Android app using MVP architecture and modern libraries. Forage  integrates with the [OpenCaching API](http://www.opencaching.us/okapi/introduction.html). 
