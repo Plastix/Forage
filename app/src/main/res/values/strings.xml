@@ -8,8 +8,10 @@
 
     <string name="unit_feet">ft</string>
     <string name="unit_miles">mi</string>
-    <string name="required_permission_missing">Required Permission Missing</string>
+    <string name="required_permission_missing">Permission Denied!</string>
     <string name="library_icon_description">Library Icon</string>
     <string name="action_login">Login</string>
+    <string name="open_settings">Settings</string>
+    <string name="exit">Exit</string>
 
 </resources>

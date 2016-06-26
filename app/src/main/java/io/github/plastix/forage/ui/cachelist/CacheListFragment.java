@@ -2,6 +2,7 @@ package io.github.plastix.forage.ui.cachelist;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,8 +19,10 @@ import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.base.PresenterFragment;
+import io.github.plastix.forage.ui.misc.PermissionRationaleDialog;
 import io.github.plastix.forage.ui.misc.SimpleDividerItemDecoration;
 import io.github.plastix.forage.util.ActivityUtils;
+import io.github.plastix.forage.util.PermissionUtils;
 import io.realm.OrderedRealmCollection;
 
 /**
@@ -27,6 +30,9 @@ import io.realm.OrderedRealmCollection;
  */
 public class CacheListFragment extends PresenterFragment<CacheListPresenter, CacheListView> implements CacheListView,
         SwipeRefreshLayout.OnRefreshListener {
+
+    private static final int LOCATION_REQUEST_CODE = 0;
+    private static final String LOCATION_PERMISSION = android.Manifest.permission.ACCESS_FINE_LOCATION;
 
     @Inject
     SimpleDividerItemDecoration itemDecorator;
@@ -118,8 +124,20 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
         stopRefresh();
         Snackbar.make(recyclerView, resID, Snackbar.LENGTH_LONG)
                 .setAction(R.string.cachelist_retry, v -> {
-                    downloadGeocaches();
+                    onRefresh();
                 }).show();
+    }
+
+    /**
+     * SwipeRefreshView callback.
+     */
+    @Override
+    public void onRefresh() {
+        if (PermissionUtils.hasPermission(getContext(), LOCATION_PERMISSION)) {
+            downloadGeocaches();
+        } else {
+            requestPermissions(new String[]{LOCATION_PERMISSION}, LOCATION_REQUEST_CODE);
+        }
     }
 
     private void downloadGeocaches() {
@@ -137,14 +155,6 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
         makeErrorSnackbar(R.string.cachelist_error_no_location);
     }
 
-    /**
-     * SwipeRefreshView callback.
-     */
-    @Override
-    public void onRefresh() {
-        downloadGeocaches();
-    }
-
     @Override
     public void onDestroyView() {
         recyclerView.setAdapter(null);
@@ -154,6 +164,19 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
         super.onDestroyView();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case LOCATION_REQUEST_CODE: {
+                if (PermissionUtils.hasAllPermissionsGranted(grantResults)) {
+                    downloadGeocaches();
+                } else {
+                    PermissionRationaleDialog.show(getActivity(), R.string.cachelist_nolocation);
+                }
+            }
+        }
+    }
 
     private static class DataChangeListener extends RecyclerView.AdapterDataObserver {
 

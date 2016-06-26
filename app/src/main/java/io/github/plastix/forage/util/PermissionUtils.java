@@ -1,10 +1,8 @@
 package io.github.plastix.forage.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
 /**
@@ -14,35 +12,6 @@ public class PermissionUtils {
 
     private PermissionUtils() {
         throw new UnsupportedOperationException("No Instantiation!");
-    }
-
-    /**
-     * Checks if specified permissions are granted and requests them if not.
-     *
-     * @param activity    Activity to request permissions from.
-     * @param requestCode Int request code
-     * @param permissions Permissions to request
-     */
-    public static void requestPermissions(@NonNull Activity activity, int requestCode, String... permissions) {
-        if (!hasPermissions(activity, permissions)) {
-            ActivityCompat.requestPermissions(activity, permissions, requestCode);
-        }
-    }
-
-    /**
-     * Returns whether the application has access to the specified permissions.
-     *
-     * @param context     Required context.
-     * @param permissions List of permissions to check.
-     * @return True if all are granted, else false.
-     */
-    public static boolean hasPermissions(@NonNull Context context, @NonNull String... permissions) {
-        for (String perm : permissions) {
-            if (!hasPermission(context, perm)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
