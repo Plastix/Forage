@@ -43,7 +43,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
                 android:contentDescription="@string/about_logo_description"
-                android:src="@drawable/icon_large"/>
+                android:src="@mipmap/icon_large"/>
 
 
             <TextView
