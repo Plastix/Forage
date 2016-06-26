@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="version_info" formatted="false">Version %1$s-%2$s (Build %3$s)</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="version_info" formatted="false"
+            tools:ignore="StringFormatInvalid">Version %1$s-%2$s (Build %3$s)</string>
     <string name="title_activity_about">About</string>
     <string name="action_about">About</string>
     <string name="about_info">A free and open source material design Geocaching client for Android</string>
