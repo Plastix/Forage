@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -21,10 +22,10 @@ public class PermissionRationaleDialog extends DialogFragment {
     private static final String ID = "PermissionRationaleDialog";
     private static final String KEY_CONTENT_ID = "ContentID";
 
-    @IntegerRes
+    @StringRes
     private int contentId;
 
-    public static void show(FragmentActivity context, @IntegerRes int contentId) {
+    public static void show(FragmentActivity context, @StringRes int contentId) {
         FragmentManager fragmentManager = context.getSupportFragmentManager();
 
         if (fragmentManager.findFragmentByTag(ID) == null) {
