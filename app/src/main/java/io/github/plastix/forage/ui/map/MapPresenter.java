@@ -1,5 +1,8 @@
 package io.github.plastix.forage.ui.map;
 
+import android.Manifest;
+import android.support.annotation.RequiresPermission;
+
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.local.DatabaseInteractor;
@@ -36,6 +39,10 @@ public class MapPresenter extends RxPresenter<MapActivityView> {
                         })
         );
 
+    }
+
+    @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    void centerMapOnLocation() {
         addSubscription(locationInteractor.getUpdatedLocation()
                 .toObservable()
                 .compose(deliverFirst())

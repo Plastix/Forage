@@ -1,10 +1,14 @@
 package io.github.plastix.forage.ui.map;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,12 +30,16 @@ import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.ui.cachedetail.CacheDetailActivity;
 import io.github.plastix.forage.util.ActivityUtils;
+import io.github.plastix.forage.util.PermissionUtils;
 
 /**
  * Activity that represents the map screen of the app.
  */
 public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView> implements
         MapActivityView, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+
+    private static final int LOCATION_REQUEST_CODE = 0;
+    private static final String LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION;
 
     @BindView(R.id.map_toolbar)
     Toolbar toolbar;
@@ -93,7 +101,6 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.setMyLocationEnabled(true);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
         googleMap.setOnInfoWindowClickListener(this);
@@ -101,6 +108,19 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
 
         this.googleMap = googleMap;
         presenter.setupMap();
+
+        if (PermissionUtils.hasPermission(this, LOCATION_PERMISSION)) {
+            enableMapLocation(googleMap);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{LOCATION_PERMISSION}, LOCATION_REQUEST_CODE);
+        }
+    }
+
+    // Android Lint doesn't understand PermissionUtils
+    @SuppressLint("MissingPermission")
+    private void enableMapLocation(GoogleMap googleMap) {
+        googleMap.setMyLocationEnabled(true);
+        presenter.centerMapOnLocation();
     }
 
     @Override
@@ -114,6 +134,18 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
         super.onStart();
 
         mapFrag.getMapAsync(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case LOCATION_REQUEST_CODE: {
+                if (PermissionUtils.hasAllPermissionsGranted(grantResults)) {
+                    enableMapLocation(googleMap);
+                }
+            }
+        }
     }
 
     @Override

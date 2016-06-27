@@ -43,35 +43,49 @@ public class MapPresenterTest {
     }
 
     @Test
-    public void getGeocaches_shouldCallViewPopulateMap() {
+    public void setupMap_shouldCallViewPopulateMap() {
         //noinspection unchecked
         OrderedRealmCollection<Cache> caches = mock(OrderedRealmCollection.class);
         when(databaseInteractor.getGeocaches()).thenReturn(Single.just(caches));
-
-        Location location = mock(Location.class);
-        when(locationInteractor.getUpdatedLocation()).thenReturn(Single.just(location));
 
         mapPresenter.setupMap();
 
         verify(databaseInteractor, only()).getGeocaches();
         verify(view, times(1)).addMapMarkers(caches);
-
-        verify(locationInteractor, only()).getUpdatedLocation();
-        verify(view, times(1)).animateMapCamera(location);
     }
 
     @Test
-    public void getGeocaches_errorDoesNothing() {
+    public void setupMap_errorDoesNothing() {
         when(databaseInteractor.getGeocaches()).
                 thenReturn(Single.<OrderedRealmCollection<Cache>>error(new Throwable("Error")));
-        when(locationInteractor.getUpdatedLocation()).thenReturn(Single.error(new Throwable("Error 2")));
+
 
         mapPresenter.setupMap();
 
         verify(databaseInteractor, only()).getGeocaches();
         verify(view, never()).addMapMarkers(anyListOf(Cache.class));
+    }
+
+    @Test
+    public void centerMapOnLocation_shouldCallView() {
+        Location location = mock(Location.class);
+        when(locationInteractor.getUpdatedLocation()).thenReturn(Single.just(location));
+
+        mapPresenter.centerMapOnLocation();
+
+        verify(locationInteractor, only()).getUpdatedLocation();
+        verify(view, times(1)).animateMapCamera(location);
+
+    }
+
+    @Test
+    public void centerMapOnLocation_errorDoesNothing() {
+        when(locationInteractor.getUpdatedLocation()).thenReturn(Single.error(new Throwable("Error 2")));
+
+        mapPresenter.centerMapOnLocation();
 
         verify(locationInteractor, only()).getUpdatedLocation();
         verify(view, never()).animateMapCamera(any(Location.class));
+
     }
 }
