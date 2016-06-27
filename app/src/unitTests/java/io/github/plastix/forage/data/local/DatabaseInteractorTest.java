@@ -24,12 +24,11 @@ public class DatabaseInteractorTest {
 
     private DatabaseInteractor databaseInteractor;
     private Realm realm;
-    private Lazy<Realm> realmLazy;
 
     @Before
     public void beforeEachTest() {
         realm = PowerMockito.mock(Realm.class);
-        realmLazy = () -> realm;
+        Lazy<Realm> realmLazy = () -> realm;
         databaseInteractor = new DatabaseInteractor(realmLazy);
     }
 

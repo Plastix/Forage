@@ -1,12 +1,6 @@
 package io.github.plastix.forage.tests;
 
 import android.content.ComponentName;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObjectNotFoundException;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -25,17 +19,6 @@ import io.github.plastix.forage.util.TestUtils;
 import io.github.plastix.forage.util.UiAutomatorUtils;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeDown;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

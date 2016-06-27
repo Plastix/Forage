@@ -101,7 +101,7 @@ android {
         disable 'UnusedAttribute'
 
         warningsAsErrors false
-        abortOnError false
+        abortOnError true // Fail early.
     }
 
     testOptions.unitTests.all {

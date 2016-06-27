@@ -1,10 +1,6 @@
 package io.github.plastix.forage.util;
 
 import android.os.Build;
-import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObjectNotFoundException;
-import android.support.test.uiautomator.UiSelector;
 
 public class UiAutomatorUtils {
 

@@ -141,7 +141,7 @@ public class OkApiServiceIntegrationTest {
                 "  ";
         mockWebServer.enqueue(new MockResponse().setBody(jsonResponse));
         try {
-            List<Cache> caches = okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().value();
+            okApiService.searchAndRetrieve("", "", "", "", false, "").toBlocking().value();
             assert_().fail("Should throw error!");
         } catch (Exception ignored) {
             // Pass
