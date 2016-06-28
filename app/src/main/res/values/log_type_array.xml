@@ -5,4 +5,11 @@
         <item>Didn\'t find it</item>
         <item>Comment</item>
     </string-array>
+
+    <string-array name="log_types_event">
+        <item>Will attend</item>
+        <item>Attended</item>
+        <item>Comment</item>
+    </string-array>
+
 </resources>

@@ -1,5 +1,6 @@
 package io.github.plastix.forage.ui.log;
 
+import android.support.annotation.ArrayRes;
 import android.support.annotation.StringRes;
 
 public interface LogView {
@@ -13,5 +14,7 @@ public interface LogView {
     void showErrorInternetDialog();
 
     void showSuccessfulSubmit();
+
+    void setLogTypes(@ArrayRes int options);
 
 }

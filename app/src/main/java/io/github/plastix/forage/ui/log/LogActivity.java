@@ -3,9 +3,11 @@ package io.github.plastix.forage.ui.log;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.ArrayRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -60,12 +62,27 @@ public class LogActivity extends PresenterActivity<LogPresenter, LogView> implem
                 .plus(new LogModule(this)).injectTo(this);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.getLogTypes(cacheCode);
+    }
+
     @OnClick(R.id.log_fab)
     public void submitLog() {
         String com = comment.getText().toString();
         String type = logType.getSelectedItem().toString();
         presenter.submitLog(cacheCode, com, type);
+    }
 
+    @Override
+    public void setLogTypes(@ArrayRes int options) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, options,
+                android.R.layout.simple_spinner_item);
+
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+
+        logType.setAdapter(adapter);
     }
 
     @Override
