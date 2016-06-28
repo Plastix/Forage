@@ -75,9 +75,7 @@ public class LogPresenter extends RxPresenter<LogView> {
                                 }
                             }
 
-                        }, throwable -> {
-                            Timber.e(throwable, "Error fetching geocache from database!");
-                        })
+                        }, throwable -> Timber.e(throwable, "Error fetching geocache from database!"))
         );
     }
 
