@@ -4,6 +4,8 @@ import android.location.Location;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
@@ -23,15 +25,19 @@ import static org.mockito.Mockito.when;
 public class MapPresenterTest {
 
     private MapPresenter mapPresenter;
+
+    @Mock
     private DatabaseInteractor databaseInteractor;
+
+    @Mock
     private LocationInteractor locationInteractor;
+
+    @Mock
     private MapActivityView view;
 
     @Before
     public void beforeEachTest() {
-        view = mock(MapActivityView.class);
-        databaseInteractor = mock(DatabaseInteractor.class);
-        locationInteractor = mock(LocationInteractor.class);
+        MockitoAnnotations.initMocks(this);
         mapPresenter = new MapPresenter(databaseInteractor, locationInteractor);
         mapPresenter.onViewAttached(view);
     }

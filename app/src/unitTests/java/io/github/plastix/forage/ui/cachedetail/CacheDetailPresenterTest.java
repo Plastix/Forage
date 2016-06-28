@@ -2,6 +2,8 @@ package io.github.plastix.forage.ui.cachedetail;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import io.github.plastix.forage.data.api.auth.OAuthInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
@@ -16,15 +18,19 @@ import static org.mockito.Mockito.when;
 public class CacheDetailPresenterTest {
 
     private CacheDetailPresenter cacheDetailPresenter;
+
+    @Mock
     private DatabaseInteractor databaseInteractor;
+
+    @Mock
     private OAuthInteractor oAuthInteractor;
+
+    @Mock
     private CacheDetailView view;
 
     @Before
     public void beforeEachTest() {
-        view = mock(CacheDetailView.class);
-        databaseInteractor = mock(DatabaseInteractor.class);
-        oAuthInteractor = mock(OAuthInteractor.class);
+        MockitoAnnotations.initMocks(this);
         cacheDetailPresenter = new CacheDetailPresenter(databaseInteractor, oAuthInteractor);
         cacheDetailPresenter.onViewAttached(view);
     }

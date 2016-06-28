@@ -4,6 +4,8 @@ import android.location.Location;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
@@ -25,25 +27,30 @@ import static org.mockito.Mockito.when;
 public class CacheListPresenterTest {
 
     private CacheListPresenter cacheListPresenter;
+
+    @Mock
     private CacheListView view;
 
+    @Mock
     private OkApiInteractor okApiInteractor;
+
+    @Mock
     private DatabaseInteractor databaseInteractor;
+
+    @Mock
     private LocationInteractor locationInteractor;
+
+    @Mock
     private NetworkInteractor networkInteractor;
 
     @Before
     public void beforeEachTest() {
-        okApiInteractor = mock(OkApiInteractor.class);
-        databaseInteractor = mock(DatabaseInteractor.class);
-        locationInteractor = mock(LocationInteractor.class);
-        networkInteractor = mock(NetworkInteractor.class);
+        MockitoAnnotations.initMocks(this);
 
         cacheListPresenter = new CacheListPresenter(okApiInteractor,
                 databaseInteractor,
                 locationInteractor,
                 networkInteractor);
-        view = mock(CacheListView.class);
 
         cacheListPresenter.onViewAttached(view);
 
