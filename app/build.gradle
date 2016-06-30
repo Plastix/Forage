@@ -164,8 +164,8 @@ dependencies {
     provided 'frankiesardo:icepick-processor:3.2.0'
 
     // Other Third Party Libraries
-    compile 'com.jakewharton:butterknife:8.0.1'
-    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.jakewharton:butterknife:8.1.0'
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'se.akerfeldt:okhttp-signpost:1.1.0'
     compile 'oauth.signpost:signpost-core:1.2.1.2'
     compile 'io.realm:android-adapters:1.2.1'
