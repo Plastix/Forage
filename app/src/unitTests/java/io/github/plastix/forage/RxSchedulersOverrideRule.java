@@ -7,8 +7,7 @@ import org.junit.runners.model.Statement;
 import rx.Scheduler;
 import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
-import rx.plugins.RxJavaPlugins;
-import rx.plugins.RxJavaSchedulersHook;
+import rx.plugins.RxJavaHooks;
 import rx.schedulers.Schedulers;
 
 /**
@@ -16,25 +15,13 @@ import rx.schedulers.Schedulers;
  * always subscribeOn and observeOn Schedulers.immediate().
  * Warning, this rule will reset RxAndroidPlugins and RxJavaPlugins before and after each test so
  * if the application code uses RxJava plugins this may affect the behaviour of the testing method.
- * <p/>
+ * <p>
  * This code is adapted from Ribot's Android Boilerplate (Apache 2 license)
  * https://github.com/ribot/android-boilerplate
  */
 public class RxSchedulersOverrideRule implements TestRule {
 
-    private final RxJavaSchedulersHook mRxJavaSchedulersHook = new RxJavaSchedulersHook() {
-        @Override
-        public Scheduler getIOScheduler() {
-            return Schedulers.immediate();
-        }
-
-        @Override
-        public Scheduler getNewThreadScheduler() {
-            return Schedulers.immediate();
-        }
-    };
-
-    private final RxAndroidSchedulersHook mRxAndroidSchedulersHook = new RxAndroidSchedulersHook() {
+    private final RxAndroidSchedulersHook rxAndroidSchedulersHook = new RxAndroidSchedulersHook() {
         @Override
         public Scheduler getMainThreadScheduler() {
             return Schedulers.immediate();
@@ -47,15 +34,18 @@ public class RxSchedulersOverrideRule implements TestRule {
             @Override
             public void evaluate() throws Throwable {
                 RxAndroidPlugins.getInstance().reset();
-                RxAndroidPlugins.getInstance().registerSchedulersHook(mRxAndroidSchedulersHook);
+                RxAndroidPlugins.getInstance().registerSchedulersHook(rxAndroidSchedulersHook);
 
-                RxJavaPlugins.getInstance().reset();
-                RxJavaPlugins.getInstance().registerSchedulersHook(mRxJavaSchedulersHook);
+                RxJavaHooks.reset();
+                RxJavaHooks.setOnIOScheduler(scheduler -> Schedulers.immediate());
+                RxJavaHooks.setOnNewThreadScheduler(scheduler -> Schedulers.immediate());
+                RxJavaHooks.setOnComputationScheduler(scheduler -> Schedulers.immediate());
+
 
                 base.evaluate();
 
                 RxAndroidPlugins.getInstance().reset();
-                RxJavaPlugins.getInstance().reset();
+                RxJavaHooks.reset();
             }
         };
     }

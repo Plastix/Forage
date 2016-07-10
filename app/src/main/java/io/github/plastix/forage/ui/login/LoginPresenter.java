@@ -41,13 +41,13 @@ public class LoginPresenter extends RxPresenter<LoginView> {
                         .toObservable()
                         .compose(deliverFirst())
                         .toCompletable()
-                        .subscribe(throwable -> {
-                            if (isViewAttached()) {
-                                view.onErrorAccessToken();
-                            }
-                        }, () -> {
+                        .subscribe(() -> {
                             if (isViewAttached()) {
                                 view.onAuthSuccess();
+                            }
+                        }, throwable -> {
+                            if (isViewAttached()) {
+                                view.onErrorAccessToken();
                             }
                         })
         );

@@ -61,27 +61,29 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
         // Cancel any currently running request
         RxUtils.safeUnsubscribe(networkSubscription);
 
-        networkInteractor.hasInternetConnectionCompletable()
-                .subscribe(throwable -> view.onErrorInternet(), () -> locationInteractor.isLocationAvailable()
-                        .subscribe(throwable -> view.onErrorLocation(), () -> {
-                                    networkSubscription = locationInteractor.getUpdatedLocation()
-                                            .toObservable()
-                                            .compose(CacheListPresenter.this.<Location>deliverFirst())
-                                            .toSingle()
-                                            .flatMap(location -> apiInteractor.getNearbyCaches(location.getLatitude(), location.getLongitude(), NEARBY_CACHE_RADIUS_MILES)).subscribe(caches -> {
-                                                // The adapter will update automatically after this database write
-                                                databaseInteractor.clearAndSaveGeocaches(caches);
-                                                RxUtils.safeUnsubscribe(networkSubscription);
-                                            }, throwable -> {
-                                                if (isViewAttached()) {
-                                                    view.onErrorFetch();
-                                                }
-                                                Timber.e(throwable.getMessage(), throwable);
-                                            });
-
-                                    addSubscription(networkSubscription);
+        networkInteractor.hasInternetConnectionCompletable().subscribe(
+                () -> locationInteractor.isLocationAvailable().subscribe(() -> {
+                    networkSubscription = locationInteractor.getUpdatedLocation()
+                            .toObservable()
+                            .compose(CacheListPresenter.this.<Location>deliverFirst())
+                            .toSingle()
+                            .flatMap(location -> apiInteractor.getNearbyCaches(location.getLatitude(),
+                                    location.getLongitude(),
+                                    NEARBY_CACHE_RADIUS_MILES))
+                            .subscribe(caches -> {
+                                // The adapter will update automatically after this database write
+                                databaseInteractor.clearAndSaveGeocaches(caches);
+                                RxUtils.safeUnsubscribe(networkSubscription);
+                            }, throwable -> {
+                                if (isViewAttached()) {
+                                    view.onErrorFetch();
                                 }
-                        ));
+                                Timber.e(throwable.getMessage(), throwable);
+                            });
+
+                    addSubscription(networkSubscription);
+                }, throwable -> view.onErrorLocation()),
+                throwable -> view.onErrorInternet());
 
     }
 

@@ -28,11 +28,7 @@ public class LogPresenter extends RxPresenter<LogView> {
 
     public void submitLog(final String cacheCode, final String comment, final String type) {
         networkInteractor.hasInternetConnectionCompletable()
-                .subscribe(throwable -> {
-                    if (isViewAttached()) {
-                        view.showErrorInternetDialog();
-                    }
-                }, () -> addSubscription(
+                .subscribe(() -> addSubscription(
                         okApiInteractor.submitLog(cacheCode, type, comment)
                                 .toObservable()
                                 .compose(LogPresenter.this.<SubmitLogResponse>deliverFirst())
@@ -62,7 +58,11 @@ public class LogPresenter extends RxPresenter<LogView> {
                                                 }
                                             }
                                         })
-                ));
+                ), throwable -> {
+                    if (isViewAttached()) {
+                        view.showErrorInternetDialog();
+                    }
+                });
     }
 
     public void getLogTypes(String cacheCode) {
