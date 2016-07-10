@@ -11,6 +11,8 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import icepick.State;
 import io.github.plastix.forage.ForageApplication;
@@ -27,6 +29,9 @@ import io.github.plastix.forage.util.UnitUtils;
 public class CompassActivity extends PresenterActivity<CompassPresenter, CompassView> implements CompassView {
 
     private static final String EXTRA_CACHE_LOCATION = "CACHE_LOCATION";
+
+    @Inject
+    LinearInterpolator linearInterpolator;
 
     @BindView(R.id.compass_toolbar)
     Toolbar toolbar;
@@ -96,7 +101,7 @@ public class CompassActivity extends PresenterActivity<CompassPresenter, Compass
         arrow.animate()
                 .rotationBy(AngleUtils.difference(currentAzimuth, -degrees))
                 .setDuration(250)
-                .setInterpolator(new LinearInterpolator())
+                .setInterpolator(linearInterpolator)
                 .start();
 
         currentAzimuth = -degrees;
