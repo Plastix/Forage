@@ -37,12 +37,12 @@ This is my first Android project in order to learn the Android SDK and relevant 
 To compile and run the project you'll need:
 
 - [Android SDK](http://developer.android.com/sdk/index.html)
-- [Android Marshmallow (API 23)](http://developer.android.com/tools/revisions/platforms.html)
+- [Android N (API 24)](http://developer.android.com/tools/revisions/platforms.html)
 - Android SDK Tools
 - Android SDK Build Tools `23.0.3`
 - Android Support Repository
 - Android Support Libraries
-- JDK 7
+- JDK 1.8
 - Valid API keys
 
 API keys are not stored in the repo! Thus, you will need the following API keys:
