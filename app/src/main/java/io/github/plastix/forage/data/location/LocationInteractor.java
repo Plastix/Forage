@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.location.LocationRequest;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
+import rx.AsyncEmitter;
 import rx.Completable;
 import rx.Observable;
 import rx.Single;
@@ -18,14 +20,14 @@ public class LocationInteractor {
 
     private static final int LOCATION_FASTEST_INTERVAL_MILLIS = 250;
 
-    private LocationObservableFactory observableFactory;
-    private LocationCompletableFactory completableFactory;
+    private Provider<LocationAsyncEmitter> locationEmitterProvider;
+    private Provider<LocationAvailableAsyncEmitter> locationAvailableProvider;
 
     @Inject
-    public LocationInteractor(@NonNull LocationObservableFactory observableFactory,
-                              @NonNull LocationCompletableFactory completableFactory) {
-        this.observableFactory = observableFactory;
-        this.completableFactory = completableFactory;
+    public LocationInteractor(@NonNull Provider<LocationAsyncEmitter> locationEmitterProvider,
+                              @NonNull Provider<LocationAvailableAsyncEmitter> locationAvailableProvider) {
+        this.locationEmitterProvider = locationEmitterProvider;
+        this.locationAvailableProvider = locationAvailableProvider;
     }
 
     /**
@@ -40,7 +42,12 @@ public class LocationInteractor {
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setNumUpdates(1);
 
-        return observableFactory.buildObservable(request).take(1).toSingle();
+        LocationAsyncEmitter locationEmitter = locationEmitterProvider.get();
+        locationEmitter.setLocationRequest(request);
+
+        return Observable.fromAsync(locationEmitter, AsyncEmitter.BackpressureMode.DROP)
+                .take(1)
+                .toSingle();
     }
 
     /**
@@ -53,13 +60,16 @@ public class LocationInteractor {
      */
     @NonNull
     public Observable<Location> getLocationObservable(long intervalInMillis) {
+
         LocationRequest request = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setFastestInterval(LOCATION_FASTEST_INTERVAL_MILLIS)
                 .setInterval(intervalInMillis);
 
+        LocationAsyncEmitter locationEmitter = locationEmitterProvider.get();
+        locationEmitter.setLocationRequest(request);
 
-        return observableFactory.buildObservable(request);
+        return Observable.fromAsync(locationEmitter, AsyncEmitter.BackpressureMode.DROP);
     }
 
     /**
@@ -70,7 +80,8 @@ public class LocationInteractor {
      */
     @NonNull
     public Completable isLocationAvailable() {
-        return completableFactory.buildLocationCompletable();
+        return Observable.fromAsync(locationAvailableProvider.get(),
+                AsyncEmitter.BackpressureMode.NONE).toCompletable();
     }
 
 }

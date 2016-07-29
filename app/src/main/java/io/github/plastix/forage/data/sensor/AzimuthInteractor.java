@@ -1,11 +1,11 @@
 package io.github.plastix.forage.data.sensor;
 
-import android.hardware.SensorManager;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import rx.AsyncEmitter;
 import rx.Observable;
 
 
@@ -14,10 +14,10 @@ import rx.Observable;
  */
 public class AzimuthInteractor {
 
-    private Provider<AzimuthObserver> azimuthProvider;
+    private Provider<AzimuthAsyncEmitter> azimuthProvider;
 
     @Inject
-    public AzimuthInteractor(@NonNull Provider<AzimuthObserver> azimuthProvider) {
+    public AzimuthInteractor(@NonNull Provider<AzimuthAsyncEmitter> azimuthProvider) {
         this.azimuthProvider = azimuthProvider;
     }
 
@@ -28,8 +28,7 @@ public class AzimuthInteractor {
      */
     @NonNull
     public Observable<Float> getAzimuthObservable() {
-        AzimuthObserver observer = azimuthProvider.get();
-        observer.setSensorDelay(SensorManager.SENSOR_DELAY_UI);
-        return Observable.create(observer);
+        AzimuthAsyncEmitter azimuthAsyncEmitter = azimuthProvider.get();
+        return Observable.fromAsync(azimuthAsyncEmitter, AsyncEmitter.BackpressureMode.DROP);
     }
 }
