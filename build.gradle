@@ -11,6 +11,8 @@ buildscript {
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
 
         // Needed for Lint + Retrolambda.
+        // This dependency can be removed with AS Gradle Plugin 2.2.0
+        // See https://mobile.twitter.com/JakeWharton/status/760836175586267136
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
 
         // NOTE: Do not place your application dependencies here; they belong

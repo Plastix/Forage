@@ -183,6 +183,9 @@ dependencies {
     testCompile 'org.powermock:powermock-classloading-xstream:1.6.2'
     testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
 
+    // Custom Retrolambda version
+    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'
+
     // Functional UI Testing
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
     androidTestCompile 'com.android.support:support-annotations:24.1.1'
