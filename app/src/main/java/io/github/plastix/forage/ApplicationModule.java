@@ -45,7 +45,7 @@ public class ApplicationModule {
     @NonNull
     @Provides
     @Singleton
-    public Resources provideResources(@NonNull @ApplicationScope Context context) {
+    public static Resources provideResources(@NonNull @ApplicationScope Context context) {
         return context.getResources();
     }
 }

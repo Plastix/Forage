@@ -1,19 +1,11 @@
 package io.github.plastix.forage.ui.navigate;
 
 import dagger.Module;
-import dagger.Provides;
+import io.github.plastix.forage.ui.base.BaseModule;
 
 @Module
-public class NavigateModule {
-
-    private NavigateView view;
-
+public class NavigateModule extends BaseModule<NavigateView> {
     public NavigateModule(NavigateView view) {
-        this.view = view;
-    }
-
-    @Provides
-    public NavigateView provideNavigateView() {
-        return view;
+        super(view);
     }
 }

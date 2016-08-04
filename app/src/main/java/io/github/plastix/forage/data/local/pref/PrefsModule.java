@@ -15,21 +15,21 @@ public class PrefsModule {
 
     @Provides
     @Singleton
-    public SharedPreferences provideSharedPreferences(@ApplicationScope Context context) {
+    public static SharedPreferences provideSharedPreferences(@ApplicationScope Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @OAuthUserToken
     @Singleton
     @Provides
-    public StringPreference provideOAuthUserToken(SharedPreferences sharedPreferences) {
+    public static StringPreference provideOAuthUserToken(SharedPreferences sharedPreferences) {
         return new StringPreference(sharedPreferences, SharedPrefConstants.KEY_OAUTH_USER_TOKEN, null);
     }
 
     @OAuthUserTokenSecret
     @Singleton
     @Provides
-    public StringPreference provideOAuthUserTokenSecret(SharedPreferences sharedPreferences) {
+    public static StringPreference provideOAuthUserTokenSecret(SharedPreferences sharedPreferences) {
         return new StringPreference(sharedPreferences, SharedPrefConstants.KEY_OAUTH_USER_TOKEN_SECRET, null);
     }
 }

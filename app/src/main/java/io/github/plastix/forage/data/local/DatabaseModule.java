@@ -19,14 +19,14 @@ public class DatabaseModule {
 
     @NonNull
     @Provides
-    public Realm provideRealm(@NonNull RealmConfiguration realmConfiguration) {
+    public static Realm provideRealm(@NonNull RealmConfiguration realmConfiguration) {
         return Realm.getInstance(realmConfiguration);
     }
 
     @NonNull
     @Provides
     @Singleton
-    public RealmConfiguration provideDefaultRealmConfig(@NonNull @ApplicationScope Context context) {
+    public static RealmConfiguration provideDefaultRealmConfig(@NonNull @ApplicationScope Context context) {
         return new RealmConfiguration.Builder(context)
                 .deleteRealmIfMigrationNeeded()
                 .name(Realm.DEFAULT_REALM_NAME)

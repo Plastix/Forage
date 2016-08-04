@@ -17,14 +17,14 @@ public class SensorModule {
     @NonNull
     @Provides
     @Singleton
-    public SensorManager provideSensorManager(@NonNull @ApplicationScope Context context) {
+    public static SensorManager provideSensorManager(@NonNull @ApplicationScope Context context) {
         return (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
     }
 
     @NonNull
     @Provides
     @Singleton
-    public WindowManager provideWindowManager(@NonNull @ApplicationScope Context context) {
+    public static WindowManager provideWindowManager(@NonNull @ApplicationScope Context context) {
         return (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
     }
 }

@@ -36,14 +36,14 @@ public class OkApiModule {
     @Provides
     @Singleton
     @Named("BASE_ENDPOINT")
-    public String provideBaseURL() {
+    public static String provideBaseURL() {
         return ApiConstants.BASE_ENDPOINT;
     }
 
     @NonNull
     @Provides
     @Singleton
-    public OkHttpOAuthProvider provideOkHttpOAuthProvider(OkHttpClient okHttpClient) {
+    public static OkHttpOAuthProvider provideOkHttpOAuthProvider(OkHttpClient okHttpClient) {
         return new OkHttpOAuthProvider(
                 ApiConstants.REQUEST_TOKEN_ENDPOINT,
                 ApiConstants.ACCESS_TOKEN_ENDPOINT,
@@ -56,21 +56,21 @@ public class OkApiModule {
     @NonNull
     @Provides
     @Singleton
-    public OkHttpOAuthConsumer provideOkHttpOAuthConsumer() {
+    public static OkHttpOAuthConsumer provideOkHttpOAuthConsumer() {
         return new OkHttpOAuthConsumer(BuildConfig.OKAPI_US_CONSUMER_KEY, BuildConfig.OKAPI_US_CONSUMER_SECRET);
     }
 
     @NonNull
     @Provides
     @Singleton
-    public HostSelectionInterceptor provideUrlInterceptor() {
+    public static HostSelectionInterceptor provideUrlInterceptor() {
         return new HostSelectionInterceptor();
     }
 
     @NonNull
     @Singleton
     @Provides
-    public OkHttpClient provideOkHttp(HostSelectionInterceptor host, OAuthSigningInterceptor signingInterceptor) {
+    public static OkHttpClient provideOkHttp(HostSelectionInterceptor host, OAuthSigningInterceptor signingInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(host)
                 .addInterceptor(signingInterceptor)
@@ -80,7 +80,7 @@ public class OkApiModule {
     @NonNull
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(@NonNull @Named("BASE_ENDPOINT") String baseUrl,
+    public static Retrofit provideRetrofit(@NonNull @Named("BASE_ENDPOINT") String baseUrl,
                                     @NonNull GsonConverterFactory gsonConverter,
                                     @NonNull RxJavaCallAdapterFactory rxAdapter,
                                     @NonNull OkHttpClient client) {
@@ -96,7 +96,7 @@ public class OkApiModule {
     @NonNull
     @Provides
     @Singleton
-    public GsonConverterFactory provideGsonConverterFactory(@NonNull Gson gson) {
+    public static GsonConverterFactory provideGsonConverterFactory(@NonNull Gson gson) {
         return GsonConverterFactory.create(gson);
     }
 
@@ -106,7 +106,7 @@ public class OkApiModule {
     @NonNull
     @Provides
     @Singleton
-    public Gson provideGson(@NonNull ListTypeAdapterFactory jsonArrayTypeAdapterFactory,
+    public static Gson provideGson(@NonNull ListTypeAdapterFactory jsonArrayTypeAdapterFactory,
                             @NonNull HtmlAdapter htmlAdapter,
                             @NonNull StringCapitalizerAdapter stringCapitalizerAdapter) {
 
@@ -131,14 +131,14 @@ public class OkApiModule {
     @NonNull
     @Provides
     @Singleton
-    public RxJavaCallAdapterFactory providesRxAdapter() {
+    public static RxJavaCallAdapterFactory providesRxAdapter() {
         return RxJavaCallAdapterFactory.create();
     }
 
     @NonNull
     @Provides
     @Singleton
-    public OkApiService provideOkApiService(@NonNull Retrofit retrofit) {
+    public static OkApiService provideOkApiService(@NonNull Retrofit retrofit) {
         return retrofit.create(OkApiService.class);
     }
 

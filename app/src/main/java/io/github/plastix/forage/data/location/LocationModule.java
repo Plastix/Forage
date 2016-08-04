@@ -21,7 +21,7 @@ public class LocationModule {
     @NonNull
     @Provides
     @Singleton
-    public GoogleApiClient provideGoogleApiClient(@NonNull @ApplicationScope Context context) {
+    public static GoogleApiClient provideGoogleApiClient(@NonNull @ApplicationScope Context context) {
         return new GoogleApiClient.Builder(context).addApi(LocationServices.API).build();
     }
 }

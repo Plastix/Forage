@@ -16,7 +16,7 @@ public class NetworkModule {
     @NonNull
     @Provides
     @Singleton
-    public ConnectivityManager provideConnectivityManager(@NonNull @ApplicationScope Context context) {
+    public static ConnectivityManager provideConnectivityManager(@NonNull @ApplicationScope Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
