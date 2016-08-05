@@ -58,6 +58,7 @@ public class CompassPresenterTest {
 
         Location location = LocationUtils.buildLocation(0, 0);
         when(locationInteractor.getLocationObservable(anyLong())).thenReturn(Observable.just(location));
+
         when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
 
         compassPresenter.startCompass();

@@ -5,7 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import javax.inject.Inject;
 
@@ -27,17 +34,30 @@ public class LocationAvailableAsyncEmitter implements Action1<AsyncEmitter<Void>
         GoogleApiClient.OnConnectionFailedListener onConnectionFailedListener = connectionResult ->
                 locationAsyncEmitter.onError(new Throwable("Failed to connect to Google Play Services!"));
 
+        ResultCallback<LocationSettingsResult> pendingResultCallback = locationSettingsResult -> {
+            Status status = locationSettingsResult.getStatus();
+            if (status.getStatusCode() == LocationSettingsStatusCodes.SUCCESS) {
+                locationAsyncEmitter.onCompleted();
+            } else {
+                locationAsyncEmitter.onError(new Throwable("Location services not enabled!"));
+            }
+        };
+
         GoogleApiClient.ConnectionCallbacks connectionCallbacks = new GoogleApiClient.ConnectionCallbacks() {
             @Override
             public void onConnected(@Nullable Bundle bundle) {
                 try {
-                    boolean locationAvailable = LocationServices.FusedLocationApi.getLocationAvailability(googleApiClient).isLocationAvailable();
+                    LocationRequest request = LocationRequest.create()
+                            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-                    if (locationAvailable) {
-                        locationAsyncEmitter.onCompleted();
-                    } else {
-                        locationAsyncEmitter.onError(new Throwable("Location not available!"));
-                    }
+                    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                            .addLocationRequest(request)
+                            .setAlwaysShow(true);
+
+                    PendingResult<LocationSettingsResult> result =
+                            LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+
+                    result.setResultCallback(pendingResultCallback);
 
                 } catch (SecurityException e) {
                     locationAsyncEmitter.onError(new Throwable("Location permission not available?"));

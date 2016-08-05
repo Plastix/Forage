@@ -34,7 +34,7 @@ public class LocationInteractor {
      * Gets the updated location using Google Play Location Services.
      * The caller must have location permissions before calling this method!
      *
-     * @return An rx.Observable that emits one Location object.
+     * @return An rx.Single that emits the updated location.
      */
     @NonNull
     public Single<Location> getUpdatedLocation() {
@@ -73,10 +73,10 @@ public class LocationInteractor {
     }
 
     /**
-     * Returns whether location is available on the device using Google Play Location Services using an
+     * Returns whether location is available on the device using Google Play Location Services through an
      * RxJava Completable.
      *
-     * @return Completable calls onComplete() when location is available, and onError() when not.
+     * @return rx.Completable calls onComplete() when location is available, and onError() when not.
      */
     @NonNull
     public Completable isLocationAvailable() {

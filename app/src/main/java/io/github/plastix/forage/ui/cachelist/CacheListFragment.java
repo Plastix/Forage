@@ -15,13 +15,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.base.PresenterFragment;
 import io.github.plastix.forage.ui.misc.PermissionRationaleDialog;
 import io.github.plastix.forage.ui.misc.SimpleDividerItemDecoration;
 import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.PermissionUtils;
-import io.realm.OrderedRealmCollection;
 
 /**
  * Fragment that is responsible for the Geocache list.
@@ -99,18 +97,6 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
 
     }
 
-    private void stopRefresh() {
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void setRefreshing() {
-        // TODO: Post fix required due to Support V4 bug
-        // Will be fixed in 24.2.0
-        // See https://code.google.com/p/android/issues/detail?id=77712
-        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
-    }
-
     @Override
     public void onErrorInternet() {
         makeErrorSnackbar(R.string.cachelist_error_no_internet);
@@ -122,6 +108,10 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
                 .setAction(R.string.cachelist_retry, v -> {
                     onRefresh();
                 }).show();
+    }
+
+    private void stopRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     /**
@@ -138,6 +128,14 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
 
     private void downloadGeocaches() {
         presenter.getGeocachesFromInternet();
+    }
+
+    @Override
+    public void setRefreshing() {
+        // TODO: Post fix required due to Support V4 bug
+        // Will be fixed in 24.2.0
+        // See https://code.google.com/p/android/issues/detail?id=77712
+        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
     }
 
     @Override

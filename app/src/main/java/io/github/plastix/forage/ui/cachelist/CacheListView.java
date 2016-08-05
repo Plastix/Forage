@@ -13,5 +13,4 @@ public interface CacheListView {
     void onErrorLocation();
 
     void setRefreshing();
-
 }

@@ -44,12 +44,12 @@ public class CompassPresenter extends RxPresenter<CompassView> {
                 rotateCompass();
                 enabled = !enabled;
             }
+
         }, throwable -> {
             if (isViewAttached()) {
                 view.showLocationUnavailableDialog();
             }
         });
-
     }
 
     private void rotateCompass() {

@@ -1,5 +1,6 @@
 package io.github.plastix.forage.ui.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,16 +17,26 @@ import io.github.plastix.forage.R;
  */
 public abstract class BaseFragmentActivity<T extends Fragment> extends BaseActivity {
 
+    private String FRAGMENT_TAG;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FRAGMENT_TAG = getFragmentTag();
         attachFragment();
     }
 
+    /**
+     * Overloaded by the subclass to return a unique tag to store the fragment as.
+     *
+     * @return Fragment tag String.
+     */
+    protected abstract String getFragmentTag();
+
     private void attachFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(getFragmentTag());
+        Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
 
         if (fragment == null) {
 
@@ -37,16 +48,9 @@ public abstract class BaseFragmentActivity<T extends Fragment> extends BaseActiv
             fragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
-            fragmentManager.beginTransaction().replace(getContainerViewId(), fragment, getFragmentTag()).commit();
+            fragmentManager.beginTransaction().replace(getContainerViewId(), fragment, FRAGMENT_TAG).commit();
         }
     }
-
-    /**
-     * Overloaded by the subclass to return a unique tag to store the fragment as.
-     *
-     * @return Fragment tag String.
-     */
-    protected abstract String getFragmentTag();
 
     /**
      * Overloaded by the subclass to return a new instance of the Fragment. (Type T)
@@ -73,6 +77,17 @@ public abstract class BaseFragmentActivity<T extends Fragment> extends BaseActiv
 
         return super.onOptionsItemSelected(item);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Forward onActivityResult to child Fragment
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        if (fragment != null && !fragment.isRemoving()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 }

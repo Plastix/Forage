@@ -17,6 +17,10 @@ public abstract class Presenter<V> {
         this.view = null;
     }
 
+    /**
+     * Called when the Presenter instance is being removed. Make sure to release any resources used
+     * by the presenter here.
+     */
     public abstract void onDestroyed();
 
     /**
