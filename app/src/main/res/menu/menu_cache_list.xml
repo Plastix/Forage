@@ -11,18 +11,18 @@
 
     <item
         android:id="@+id/cachelist_action_navigate"
-        android:title="@string/cachelist_action_navigate_title"
+        android:title="@string/cachelist_action_navigate"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/cachelist_action_login"
-        android:title="@string/action_login"
+        android:title="@string/cachelist_action_login"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_about"
         android:orderInCategory="50"
-        android:title="@string/action_about"
+        android:title="@string/cachelist_action_about"
         app:showAsAction="never"/>
 
 </menu>

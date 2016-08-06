@@ -112,7 +112,7 @@ public class LogActivity extends PresenterActivity<LogPresenter, LogView> implem
         dialog = new MaterialDialog.Builder(this)
                 .title(R.string.log_submit_error_title)
                 .content(message)
-                .positiveText(R.string.btn_ok)
+                .positiveText(R.string.log_submit_dialog_ok)
                 .show();
     }
 
@@ -122,7 +122,7 @@ public class LogActivity extends PresenterActivity<LogPresenter, LogView> implem
         dialog = new MaterialDialog.Builder(this)
                 .title(R.string.log_submit_error_title)
                 .content(R.string.log_submit_no_internet)
-                .positiveText(R.string.btn_ok)
+                .positiveText(R.string.log_submit_dialog_ok)
                 .show();
 
     }

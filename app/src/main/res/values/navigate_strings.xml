@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="navigate_title">Navigate to Geocache</string>
-    <string name="navigate_button_title">Open Compass</string>
-    <string name="navigate_longitude">Longitude</string>
-    <string name="navigate_latitude">Latitude</string>
-    <string name="navigate_invalid_latitude">Invalid latitude format!</string>
-    <string name="navigate_invalid_longitude">Invalid longitude format!</string>
-</resources>

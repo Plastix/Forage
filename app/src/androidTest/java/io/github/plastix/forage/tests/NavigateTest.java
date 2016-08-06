@@ -33,7 +33,7 @@ public class NavigateTest {
 
     @Test
     public void testToolbarTitle() {
-        navigateScreen.shouldDisplayTitle(app.getString(R.string.navigate_title));
+        navigateScreen.shouldDisplayTitle(app.getString(R.string.navigate_screen_title));
     }
 
     @Test

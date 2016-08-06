@@ -31,16 +31,16 @@
             android:theme="@style/AppTheme.NoActionBar.Transparent"/>
         <activity
             android:name=".ui.compass.CompassActivity"
-            android:label="@string/compass_title"
+            android:label="@string/compass_screen_title"
             android:parentActivityName=".ui.cachedetail.CacheDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.map.MapActivity"
-            android:label="@string/map_title"
+            android:label="@string/map_screen_title"
             android:theme="@style/AppTheme.NoActionBar.Transparent"/>
         <activity
             android:name=".ui.navigate.NavigateActivity"
-            android:label="@string/navigate_title"
+            android:label="@string/navigate_screen_title"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <!-- Register Google Maps API Key -->
@@ -50,7 +50,7 @@
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/login_title"
+            android:label="@string/login_screen_title"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -65,12 +65,12 @@
         </activity>
         <activity
             android:name=".ui.log.LogActivity"
-            android:label="@string/log_title"
+            android:label="@string/log_screen_title"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".ui.about.AboutActivity"
-            android:label="@string/title_activity_about"
+            android:label="@string/about_screen_title"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

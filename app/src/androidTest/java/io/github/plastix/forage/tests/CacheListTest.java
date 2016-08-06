@@ -45,7 +45,7 @@ public class CacheListTest {
     public void testToolbarTitle() {
         UiAutomatorUtils.allowPermissionsIfNeeded(device);
 
-        cacheListScreen.shouldDisplayTitle(TestUtils.app().getString(R.string.cachelist_title));
+        cacheListScreen.shouldDisplayTitle(TestUtils.app().getString(R.string.cachelist_screen_title));
     }
 
 
@@ -68,7 +68,7 @@ public class CacheListTest {
 
         // We must click based on the text
         // Android menu items don't the ID of the menu item
-        onView(withText(R.string.cachelist_action_navigate_title)).perform(click());
+        onView(withText(R.string.cachelist_action_navigate)).perform(click());
 
         // Verify that an Navigate intent has been launched
         intended(hasComponent(new ComponentName(InstrumentationRegistry.getTargetContext(), NavigateActivity.class)));

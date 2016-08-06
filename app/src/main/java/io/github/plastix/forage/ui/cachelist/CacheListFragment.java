@@ -68,7 +68,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ActivityUtils.setSupportActionBarTitle(getActivity(), R.string.cachelist_title);
+        ActivityUtils.setSupportActionBarTitle(getActivity(), R.string.cachelist_screen_title);
 
         adapter = new CacheAdapter(getContext(), null, true);
         recyclerView.setAdapter(adapter);

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="login_button">Login with OpenCaching</string>
-    <string name="login_info_text">Pressing the button below will open an OpenCaching web page in your browser. Login into OpenCaching and allow Forage to access your account. Forage never has access to your password!</string>
-    <string name="login_title">Login</string>
-</resources>

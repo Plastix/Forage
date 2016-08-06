@@ -57,12 +57,12 @@ public class PermissionRationaleDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new MaterialDialog.Builder(getActivity())
-                .title(R.string.required_permission_missing)
+                .title(R.string.permission_dialog_permission_missing)
                 .content(contentId)
-                .positiveText(R.string.open_settings)
+                .positiveText(R.string.permission_dialog_settings)
                 .onPositive((dialog1, which) ->
                         startActivity(ActivityUtils.getApplicationSettingsIntent(getActivity())))
-                .negativeText(R.string.exit)
+                .negativeText(R.string.permission_dialog_exit)
                 .onNegative((dialog1, which) -> getActivity().finish())
                 .cancelable(false)
                 .build();

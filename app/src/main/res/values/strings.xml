@@ -1,17 +1,108 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- App Strings -->
     <string name="app_name">Forage</string>
-    <string name="btn_ok">OK</string>
 
-    <string name="emptyview_no_geocaches_icon_description">No Geocaches Icon</string>
-
-    <string name="map_title">Geocache Map</string>
-
+    <!-- Misc Strings -->
     <string name="unit_feet">ft</string>
     <string name="unit_miles">mi</string>
-    <string name="required_permission_missing">Permission Denied!</string>
     <string name="library_icon_description">Library Icon</string>
-    <string name="action_login">Login</string>
-    <string name="open_settings">Settings</string>
-    <string name="exit">Exit</string>
+
+    <!-- Permission Rationale Dialog Strings -->
+    <string name="permission_dialog_exit">Exit</string>
+    <string name="permission_dialog_settings">Settings</string>
+    <string name="permission_dialog_permission_missing">Permission Denied!</string>
+
+    <!-- Location Unavailable Dialog Strings -->
+    <string name="location_dialog_ok">OK</string>
+
+
+    <!-- Screen specific strings-->
+
+    <!-- About Screen Strings -->
+     <string name="about_version_info" formatted="false"
+             tools:ignore="StringFormatInvalid">Version %1$s-%2$s (Build %3$s)</string>
+    <string name="about_screen_title">About</string>
+    <string name="about_info">A free and open source material design Geocaching client for Android</string>
+    <string name="about_opencaching">Powered by OpenCaching</string>
+    <string name="about_logo_description">Application Logo</string>
+    <string name="about_libraries_header_title">Third Party Libraries</string>
+
+    <!-- Cache Detail Strings -->
+    <string name="cachedetail_difficulty_header">Difficulty</string>
+    <string name="cachedetail_terrain_header">Terrain</string>
+    <string name="cachedetail_description_header">Description</string>
+    <string name="cachedetail_cacheinfo_header">Cache Info</string>
+    <string name="cachedetail_size_header">Size</string>
+    <string name="cachedetail_rating">%s/5</string>
+    <string name="cachedetail_error_requires_login">You must be logged in to submit a cache log!</string>
+
+    <!-- Cache Item layout Strings -->
+    <string name="cacheitem_type">%s Cache</string>
+    <string name="cacheitem_terrain_icon_description">Terrain Icon</string>
+    <string name="cacheitem_difficulty_icon_description">Difficulty Icon</string>
+    <string name="cacheitem_size_icon_description">Size Icon</string>
+
+    <!-- Cache List Strings -->
+    <string name="cachelist_no_caches">No Downloaded Geocaches!</string>
+    <string name="cachelist_no_caches_icon_description">No Geocaches Icon</string>
+    <string name="cachelist_nolocation">Forage needs access to your location to find nearby geocaches. To grant this permission, click Settings, choose Permissions and turn on Location.</string>
+    <string name="cachelist_error_no_internet">Unable to download Geocaches! No Internet connection.</string>
+    <string name="cachelist_error_failed_parse">Error fetching Geocaches!</string>
+    <string name="cachelist_retry">Retry</string>
+    <string name="cachelist_error_no_location">Unable to download Geocaches! No Location available.</string>
+    <string name="cachelist_screen_title">Geocaches</string>
+    <string name="cachelist_action_about">About</string>
+    <string name="cachelist_action_map_title">Map</string>
+    <string name="cachelist_action_navigate">Navigate To</string>
+    <string name="cachelist_action_login">Login</string>
+
+    <!-- Compass Strings -->
+    <string name="compass_screen_title">Compass</string>
+    <string name="compass_distance_label">Distance</string>
+    <string name="compass_accuracy">+/- %s</string>
+    <string name="compass_loading">Loading…</string>
+    <string name="compass_arrow_image_description">Compass Arrow Image</string>
+    <string name="compass_location_unavailable">Location Unavailable!</string>
+    <string name="compass_location_unavailable_dialog">Forage cannot get your current location in order to direct you to the geocache. Make sure Location Services is enabled.</string>
+
+    <!-- Log Strings -->
+    <string name="log_screen_title">Submit Log</string>
+    <string name="log_progress_title">Submitting Geocache Log</string>
+    <string name="log_progress_content">Please wait…</string>
+    <string name="log_submit_error_title">Error submitting Log</string>
+    <string name="log_submit_no_internet">No internet connection!</string>
+    <string name="log_submit_success">Log submitted successfully!</string>
+    <string name="log_submit_error_unknown">Unexpected error submitting log!</string>
+    <string name="log_submit_dialog_ok">OK</string>
+    <string name="log_type">Log Type:</string>
+    <string name="log_comment_hint">Comment (Optional)</string>
+    <string name="log_submit_description">Submit Log</string>
+    <string-array name="log_types">
+        <item>Found it</item>
+        <item>Didn\'t find it</item>
+        <item>Comment</item>
+    </string-array>
+    <string-array name="log_types_event">
+        <item>Will attend</item>
+        <item>Attended</item>
+        <item>Comment</item>
+    </string-array>
+
+    <!-- Login Strings -->
+    <string name="login_screen_title">Login</string>
+    <string name="login_button">Login with OpenCaching</string>
+    <string name="login_info_text">Pressing the button below will open an OpenCaching web page in your browser. Login into OpenCaching and allow Forage to access your account. Forage never has access to your password!</string>
+
+    <!-- Navigate Strings -->
+    <string name="navigate_screen_title">Navigate to Geocache</string>
+    <string name="navigate_button">Open Compass</string>
+    <string name="navigate_longitude">Longitude</string>
+    <string name="navigate_latitude">Latitude</string>
+    <string name="navigate_invalid_latitude">Invalid latitude format!</string>
+    <string name="navigate_invalid_longitude">Invalid longitude format!</string>
+
+    <!-- Map Strings -->
+    <string name="map_screen_title">Geocache Map</string>
 
 </resources>

@@ -31,7 +31,7 @@ public class LocationUnavailableDialog extends DialogFragment {
         return new MaterialDialog.Builder(getActivity())
                 .title(R.string.compass_location_unavailable)
                 .content(R.string.compass_location_unavailable_dialog)
-                .positiveText(R.string.btn_ok)
+                .positiveText(R.string.location_dialog_ok)
                 .onPositive((dialog, which) -> getActivity().finish())
                 .show();
     }

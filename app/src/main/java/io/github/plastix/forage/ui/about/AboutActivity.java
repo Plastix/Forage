@@ -53,7 +53,7 @@ public class AboutActivity extends BaseActivity {
         ActivityUtils.setSupportActionBarBack(getDelegate());
 
 
-        String raw = getString(R.string.version_info);
+        String raw = getString(R.string.about_version_info);
         String ver = String.format(raw,
                 BuildConfig.VERSION_NAME,
                 BuildConfig.BUILD_TYPE,
