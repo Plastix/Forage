@@ -2,14 +2,14 @@ package io.github.plastix.forage;
 
 import android.support.annotation.NonNull;
 
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.lang.reflect.Method;
 
 // Custom runner allows us set config in one place instead of setting it in each test class.
-public class ForageRoboelectricIntegrationTestRunner extends RobolectricGradleTestRunner {
+public class ForageRoboelectricIntegrationTestRunner extends RobolectricTestRunner {
 
     // This value should be changed as soon as Robolectric will support newer api.
     private static final int SDK_EMULATE_LEVEL = 23;
