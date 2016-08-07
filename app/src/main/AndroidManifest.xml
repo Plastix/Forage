@@ -50,8 +50,9 @@
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/login_screen_title"
-            android:launchMode="singleInstance">
+            android:label="@string/login_title"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 

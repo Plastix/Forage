@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_button">Log In</string>
+    <string name="login_info_text">Log in to your OpenCaching account to start.</string>
+    <string name="login_title">Log In</string>
+</resources>

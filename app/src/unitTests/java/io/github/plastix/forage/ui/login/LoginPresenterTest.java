@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import io.github.plastix.forage.data.api.auth.OAuthInteractor;
+import io.github.plastix.forage.data.network.NetworkInteractor;
 import rx.Completable;
 import rx.Single;
 
@@ -28,33 +29,56 @@ public class LoginPresenterTest {
     @Mock
     private OAuthInteractor oAuthInteractor;
 
+    @Mock
+    private NetworkInteractor networkInteractor;
+
     @Before
     public void beforeEachTest() {
         MockitoAnnotations.initMocks(this);
-        presenter = new LoginPresenter(oAuthInteractor);
+        presenter = new LoginPresenter(oAuthInteractor, networkInteractor);
         presenter.onViewAttached(loginView);
 
     }
 
     @Test
     public void startOAuth_opensBrowserOnSuccess() {
+        when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(Completable.complete());
+
         String OAUTH_CALLBACK = "Redirect URL";
         when(oAuthInteractor.retrieveRequestToken()).thenReturn(Single.just(OAUTH_CALLBACK));
 
         presenter.startOAuth();
 
+        verify(networkInteractor, times(1)).hasInternetConnectionCompletable();
+        verify(loginView, times(1)).showLoading();
         verify(loginView, times(1)).openBrowser(OAUTH_CALLBACK);
         verifyNoMoreInteractions(loginView);
     }
 
     @Test
+    public void startOAuth_callsViewIfNoInternet() {
+        when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(
+                Completable.error(new Throwable("No Internet!")));
+
+        presenter.startOAuth();
+
+        verify(networkInteractor, times(1)).hasInternetConnectionCompletable();
+        verify(loginView, times(1)).onErrorNoInternet();
+        verifyNoMoreInteractions(loginView);
+
+    }
+
+    @Test
     public void startOAuth_errorReturnedToView() {
+        when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(Completable.complete());
         when(oAuthInteractor.retrieveRequestToken()).
                 thenReturn(Single.error(new Throwable("Error!")));
 
         presenter.startOAuth();
 
+        verify(networkInteractor, times(1)).hasInternetConnectionCompletable();
         verify(loginView, times(1)).onErrorRequestToken();
+        verify(loginView, times(1)).showLoading();
         verifyNoMoreInteractions(loginView);
     }
 
@@ -66,6 +90,7 @@ public class LoginPresenterTest {
         presenter.oauthCallback(uri);
 
         verify(loginView, times(1)).onAuthSuccess();
+        verify(loginView, times(1)).showLoading();
         verifyNoMoreInteractions(loginView);
     }
 
@@ -78,6 +103,7 @@ public class LoginPresenterTest {
         presenter.oauthCallback(uri);
 
         verify(loginView, times(1)).onErrorAccessToken();
+        verify(loginView, times(1)).showLoading();
         verifyNoMoreInteractions(loginView);
     }
 }

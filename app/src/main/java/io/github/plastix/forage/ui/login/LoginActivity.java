@@ -5,16 +5,38 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
+import android.support.annotation.StringRes;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.plastix.forage.ForageApplication;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.api.ApiConstants;
 import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.util.ActivityUtils;
+import timber.log.Timber;
 
+// TODO Log out support?
+// Update button if we have stored OAuth tokens?
 public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> implements LoginView {
+
+    @BindView(R.id.login_coordinator_layout)
+    CoordinatorLayout coordinatorLayout;
+
+    @BindView(R.id.login_toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.login_loading_spinner)
+    ProgressBar progressBar;
+
+    @BindView(R.id.login_button)
+    Button loginButton;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -25,17 +47,13 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> 
         injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setSupportActionBar(toolbar);
         ActivityUtils.setSupportActionBarBack(getDelegate());
     }
 
     private void injectDependencies() {
         ForageApplication.getComponent(this)
                 .plus(new LoginModule(this)).injectTo(this);
-    }
-
-    @OnClick(R.id.login_button)
-    public void buttonClick() {
-        presenter.startOAuth();
     }
 
     @Override
@@ -47,18 +65,51 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> 
 
     @Override
     public void onErrorRequestToken() {
-        Toast.makeText(LoginActivity.this, "Error fetching OAuth Request Token", Toast.LENGTH_SHORT).show();
+        makeErrorSnackbar(R.string.login_error_request_token);
+    }
+
+    private void makeErrorSnackbar(@StringRes int resID) {
+        stopLoading();
+        Snackbar.make(coordinatorLayout, resID, Snackbar.LENGTH_LONG)
+                .setAction(R.string.login_error_retry, view -> {
+                    loginButtonClick();
+                })
+                .show();
+    }
+
+    @Override
+    public void stopLoading() {
+        loginButton.setEnabled(true);
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @OnClick(R.id.login_button)
+    public void loginButtonClick() {
+        presenter.startOAuth();
     }
 
     @Override
     public void onErrorAccessToken() {
-        Toast.makeText(LoginActivity.this, "Error authorizing with OpenCaching!", Toast.LENGTH_SHORT).show();
+        makeErrorSnackbar(R.string.login_error_access_token);
+    }
 
+    @Override
+    public void onErrorNoInternet() {
+        Timber.e("No internet!");
+        makeErrorSnackbar(R.string.login_error_no_internet);
     }
 
     @Override
     public void onAuthSuccess() {
-        Toast.makeText(LoginActivity.this, "Successfully authenticated with OpenCaching!", Toast.LENGTH_SHORT).show();
+        stopLoading();
+        Snackbar.make(coordinatorLayout, R.string.login_authentication_success, Snackbar.LENGTH_LONG)
+                .show();
+    }
+
+    @Override
+    public void showLoading() {
+        loginButton.setEnabled(false);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override

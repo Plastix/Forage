@@ -8,7 +8,7 @@ public class NavigateScreen {
 
     @NonNull
     public NavigateScreen shouldDisplayTitle(@NonNull String title) {
-        onView(allOf(withText(title), withParent(withId(R.id.navigate_toolbar))))
+        onView(allOf(withText(title), withParent(withId(R.id.login_toolbar))))
                 .check(matches(isDisplayed()));
         return this;
     }

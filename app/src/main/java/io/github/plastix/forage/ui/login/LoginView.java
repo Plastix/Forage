@@ -8,5 +8,11 @@ public interface LoginView {
 
     void onErrorAccessToken();
 
+    void onErrorNoInternet();
+
     void onAuthSuccess();
+
+    void showLoading();
+
+    void stopLoading();
 }

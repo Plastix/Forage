@@ -105,4 +105,11 @@
     <!-- Map Strings -->
     <string name="map_screen_title">Geocache Map</string>
 
+    <string name="login_welcome_text">Welcome to Forage!</string>
+    <string name="login_error_retry">Retry</string>
+    <string name="login_error_request_token">Error connecting with OpenCaching!</string>
+    <string name="login_error_access_token">Error authenticating with OpenCaching!</string>
+    <string name="login_authentication_success">Successfully authenticated with OpenCaching!</string>
+    <string name="login_error_no_internet">No internet connection!</string>
+
 </resources>
