@@ -101,7 +101,6 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache_detail);
 
@@ -112,9 +111,11 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
         this.map = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.cachedetail_map);
     }
 
-    private void injectDependencies() {
+    @Override
+    protected void injectDependencies() {
         ForageApplication.getComponent(this)
-                .plus(new CacheDetailModule(this)).injectTo(this);
+                .plus(new CacheDetailModule(this))
+                .injectTo(this);
     }
 
     @Override

@@ -51,13 +51,14 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        injectDependencies();
         super.onCreate(savedInstanceState);
     }
 
-    private void injectDependencies() {
+    @Override
+    protected void injectDependencies() {
         ForageApplication.getComponent(getContext())
-                .plus(new CacheListModule(this)).injectTo(this);
+                .plus(new CacheListModule(this))
+                .injectTo(this);
     }
 
     @Override

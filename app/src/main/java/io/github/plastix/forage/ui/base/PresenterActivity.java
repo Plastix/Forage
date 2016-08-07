@@ -21,28 +21,28 @@ public abstract class PresenterActivity<T extends Presenter<V>, V> extends BaseA
     // Internal ID to reference the Loader from the LoaderManager
     private static final int LOADER_ID = 1;
     protected T presenter;
-    protected Provider<T> presenterFactory;
 
-    /**
-     * Called automatically when Dagger injects dependencies into the class.
-     * Because this provider is needed by the loader in {@link #onCreate(Bundle)}, injections must
-     * happen before onCreate().
-     *
-     * @param presenterFactory Instance of provider.
-     */
     @Inject
-    public void setPresenterFactory(Provider<T> presenterFactory) {
-        this.presenterFactory = presenterFactory;
-    }
+    protected Provider<PresenterLoader<T>> presenterLoaderProvider;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        injectDependencies();
+        initLoader();
+    }
+
+    /**
+     * Subclasses must call this method to inject dependencies from Dagger 2.
+     */
+    protected abstract void injectDependencies();
+
+    private void initLoader() {
         getSupportLoaderManager().initLoader(LOADER_ID, null, new LoaderManager.LoaderCallbacks<T>() {
             @Override
             public Loader<T> onCreateLoader(int id, Bundle args) {
-                return new PresenterLoader<>(PresenterActivity.this, presenterFactory);
+                return presenterLoaderProvider.get();
             }
 
             @Override

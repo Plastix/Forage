@@ -42,16 +42,17 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setSupportActionBar(toolbar);
         ActivityUtils.setSupportActionBarBack(getDelegate());
     }
 
-    private void injectDependencies() {
+    @Override
+    protected void injectDependencies() {
         ForageApplication.getComponent(this)
-                .plus(new LoginModule(this)).injectTo(this);
+                .plus(new LoginModule(this))
+                .injectTo(this);
     }
 
     @Override

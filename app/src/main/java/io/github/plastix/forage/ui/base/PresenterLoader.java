@@ -3,7 +3,10 @@ package io.github.plastix.forage.ui.base;
 import android.content.Context;
 import android.support.v4.content.Loader;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
+
+import io.github.plastix.forage.ApplicationScope;
 
 /**
  * Synchronous Loader used to hold presenter instances outside of the Activity/Fragment lifecycle.
@@ -16,7 +19,8 @@ public class PresenterLoader<T extends Presenter> extends Loader<T> {
     private T presenter;
     private Provider<T> presenterFactory;
 
-    public PresenterLoader(Context context, Provider<T> presenterFactory) {
+    @Inject
+    public PresenterLoader(@ApplicationScope Context context, Provider<T> presenterFactory) {
         super(context);
         this.presenterFactory = presenterFactory;
     }

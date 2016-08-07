@@ -46,14 +46,14 @@ public class NavigateActivity extends PresenterActivity<NavigatePresenter, Navig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate);
         setSupportActionBar(toolbar);
         ActivityUtils.setSupportActionBarBack(getDelegate());
     }
 
-    private void injectDependencies() {
+    @Override
+    protected void injectDependencies() {
         ForageApplication.getComponent(getBaseContext())
                 .plus(new NavigateModule(this))
                 .injectTo(this);

@@ -19,25 +19,26 @@ public abstract class PresenterFragment<T extends Presenter<V>, V> extends BaseF
     private static final int LOADER_ID = 1;
 
     protected T presenter;
-    private Provider<T> presenterFactory;
+
+    @Inject
+    protected Provider<PresenterLoader<T>> presenterLoaderProvider;
 
     // Boolean flag to avoid delivering the Presenter twice. Calling initLoader in onActivityCreated means
     // onLoadFinished will be called twice during configuration change.
     private boolean delivered = false;
 
-    @Inject
-    public void setPresenterFactory(Provider<T> presenterFactory) {
-        this.presenterFactory = presenterFactory;
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        initLoader();
+    }
+
+    private void initLoader() {
         getLoaderManager().initLoader(LOADER_ID, null, new LoaderManager.LoaderCallbacks<T>() {
             @Override
             public Loader<T> onCreateLoader(int id, Bundle args) {
-                return new PresenterLoader<>(getContext(), presenterFactory);
+                return presenterLoaderProvider.get();
             }
 
             @Override
@@ -64,6 +65,17 @@ public abstract class PresenterFragment<T extends Presenter<V>, V> extends BaseF
     protected void onPresenterDestroyed() {
         // hook for subclasses
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        injectDependencies();
+    }
+
+    /**
+     * Subclasses must call this method to inject dependencies from Dagger 2.
+     */
+    protected abstract void injectDependencies();
 
     @Override
     public void onResume() {

@@ -60,7 +60,6 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
@@ -72,8 +71,8 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
         markers = new HashMap<>();
     }
 
-
-    private void injectDependencies() {
+    @Override
+    protected void injectDependencies() {
         ForageApplication.getComponent(this)
                 .plus(new MapModule(this))
                 .injectTo(this);

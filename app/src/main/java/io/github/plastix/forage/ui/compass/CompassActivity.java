@@ -68,7 +68,6 @@ public class CompassActivity extends PresenterActivity<CompassPresenter, Compass
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compass);
 
@@ -82,9 +81,11 @@ public class CompassActivity extends PresenterActivity<CompassPresenter, Compass
         arrow.setRotation(currentAzimuth);
     }
 
-    private void injectDependencies() {
+    @Override
+    protected void injectDependencies() {
         ForageApplication.getComponent(this)
-                .plus(new CompassModule(this)).injectTo(this);
+                .plus(new CompassModule(this))
+                .injectTo(this);
     }
 
     @Override

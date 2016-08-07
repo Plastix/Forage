@@ -47,7 +47,6 @@ public class LogActivity extends PresenterActivity<LogPresenter, LogView> implem
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        injectDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
         setSupportActionBar(toolbar);
@@ -56,10 +55,11 @@ public class LogActivity extends PresenterActivity<LogPresenter, LogView> implem
         cacheCode = getIntent().getStringExtra(EXTRA_CACHE_CODE);
     }
 
-
-    private void injectDependencies() {
+    @Override
+    protected void injectDependencies() {
         ForageApplication.getComponent(this)
-                .plus(new LogModule(this)).injectTo(this);
+                .plus(new LogModule(this))
+                .injectTo(this);
     }
 
     @Override
