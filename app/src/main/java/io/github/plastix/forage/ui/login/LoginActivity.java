@@ -22,8 +22,6 @@ import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.util.ActivityUtils;
 import timber.log.Timber;
 
-// TODO Log out support?
-// Update button if we have stored OAuth tokens?
 public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> implements LoginView {
 
     @BindView(R.id.login_coordinator_layout)
@@ -58,9 +56,19 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> 
 
     @Override
     public void openBrowser(String authUrl) {
+        // Hide the progress bar when the we're in the the web browsers
+        // Users can navigate out of the browser and come back to Forage without logging in
+        stopLoading();
+
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(authUrl));
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
+    }
+
+    @Override
+    public void stopLoading() {
+        loginButton.setEnabled(true);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -75,12 +83,6 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> 
                     loginButtonClick();
                 })
                 .show();
-    }
-
-    @Override
-    public void stopLoading() {
-        loginButton.setEnabled(true);
-        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.login_button)
