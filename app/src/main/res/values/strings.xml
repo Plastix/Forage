@@ -91,8 +91,14 @@
 
     <!-- Login Strings -->
     <string name="login_screen_title">Login</string>
-    <string name="login_button">Login with OpenCaching</string>
-    <string name="login_info_text">Pressing the button below will open an OpenCaching web page in your browser. Login into OpenCaching and allow Forage to access your account. Forage never has access to your password!</string>
+    <string name="login_button">Log In</string>
+    <string name="login_info_text">Log in to your OpenCaching account to start.</string>
+    <string name="login_welcome_text">Welcome to Forage!</string>
+    <string name="login_error_retry">Retry</string>
+    <string name="login_error_request_token">Error connecting with OpenCaching!</string>
+    <string name="login_error_access_token">Error authenticating with OpenCaching!</string>
+    <string name="login_authentication_success">Successfully authenticated with OpenCaching!</string>
+    <string name="login_error_no_internet">No internet connection!</string>
 
     <!-- Navigate Strings -->
     <string name="navigate_screen_title">Navigate to Geocache</string>
@@ -105,11 +111,5 @@
     <!-- Map Strings -->
     <string name="map_screen_title">Geocache Map</string>
 
-    <string name="login_welcome_text">Welcome to Forage!</string>
-    <string name="login_error_retry">Retry</string>
-    <string name="login_error_request_token">Error connecting with OpenCaching!</string>
-    <string name="login_error_access_token">Error authenticating with OpenCaching!</string>
-    <string name="login_authentication_success">Successfully authenticated with OpenCaching!</string>
-    <string name="login_error_no_internet">No internet connection!</string>
 
 </resources>

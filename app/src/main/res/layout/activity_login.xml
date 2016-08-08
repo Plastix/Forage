@@ -70,8 +70,8 @@
             style="@android:style/Widget.ProgressBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:indeterminate="true"/>
+            android:indeterminate="true"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 
