@@ -149,8 +149,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
 
     // Dagger 2
-    apt 'com.google.dagger:dagger-compiler:2.4'
-    compile 'com.google.dagger:dagger:2.4'
+    apt 'com.google.dagger:dagger-compiler:2.6'
+    compile 'com.google.dagger:dagger:2.6'
     provided 'javax.annotation:jsr250-api:1.0'
 
     // LeakCanary
