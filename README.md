@@ -8,6 +8,11 @@ Forage is an open source Material Design geocaching Android app using MVP archit
 **This project is currently under heavy development!**
 
 This is my first Android project in order to learn the Android SDK and relevant Android libraries. Please critique my code! If you are just starting with Android check out [this wiki page](https://github.com/Plastix/Forage/wiki/Android-Learning-Resources) for a comphrensive list of learning resources that I used. 
+## Screenshots
+<img src="art/screenshots/forage_cache_list_empty.png" width="49%" />
+<img src="art/screenshots/forage_cache_list.png" width="49%" />
+<img src="art/screenshots/forage_detail.png" width="49%" />
+<img src="art/screenshots/forage_map.png" width="49%" />
 
 ## Libraries
 * [Dagger 2](http://google.github.io/dagger/)
