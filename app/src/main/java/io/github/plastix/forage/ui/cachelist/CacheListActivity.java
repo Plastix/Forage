@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import butterknife.BindView;
+import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.about.AboutActivity;
 import io.github.plastix.forage.ui.base.BaseFragmentActivity;
@@ -88,5 +89,10 @@ public class CacheListActivity extends BaseFragmentActivity<CacheListFragment> {
     @Override
     protected int getContainerViewId() {
         return CACHE_LIST_FRAME_ID;
+    }
+
+    @Override
+    protected void injectDependencies(ApplicationComponent component) {
+        // No injections
     }
 }

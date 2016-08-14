@@ -32,12 +32,12 @@ public class ApplicationModule {
 
     /**
      * Allow the application context to be injected but require that it be annotated with
-     * {@link ApplicationScope @Annotation} to explicitly differentiate it from an activity context.
+     * {@link ForApplication @Annotation} to explicitly differentiate it from an activity context.
      */
     @NonNull
     @Provides
     @Singleton
-    @ApplicationScope
+    @ForApplication
     public Context provideApplicationContext() {
         return app.getApplicationContext();
     }
@@ -45,7 +45,7 @@ public class ApplicationModule {
     @NonNull
     @Provides
     @Singleton
-    public static Resources provideResources(@NonNull @ApplicationScope Context context) {
+    public static Resources provideResources(@NonNull @ForApplication Context context) {
         return context.getResources();
     }
 }

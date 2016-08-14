@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.plastix.forage.ApplicationScope;
+import io.github.plastix.forage.ForApplication;
 
 /**
  * Dagger module to provide a location dependencies.
@@ -21,7 +21,7 @@ public class LocationModule {
     @NonNull
     @Provides
     @Singleton
-    public static GoogleApiClient provideGoogleApiClient(@NonNull @ApplicationScope Context context) {
+    public static GoogleApiClient provideGoogleApiClient(@NonNull @ForApplication Context context) {
         return new GoogleApiClient.Builder(context).addApi(LocationServices.API).build();
     }
 }

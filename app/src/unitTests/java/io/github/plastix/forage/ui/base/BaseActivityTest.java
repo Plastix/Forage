@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.github.plastix.forage.ui.base.BaseActivity;
+import io.github.plastix.forage.ApplicationComponent;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -24,6 +24,10 @@ public class BaseActivityTest {
     }
 
     private class FakeBaseActivity extends BaseActivity {
+        @Override
+        protected void injectDependencies(ApplicationComponent component) {
+
+        }
     }
 
 }

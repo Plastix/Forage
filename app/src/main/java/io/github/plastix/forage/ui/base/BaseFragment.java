@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import icepick.Icepick;
+import io.github.plastix.forage.ApplicationComponent;
+import io.github.plastix.forage.ForageApplication;
 
 /**
  * Support Fragment base to extend all other Fragments from.
@@ -22,8 +24,11 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        injectDependencies(ForageApplication.getComponent(getContext()));
         Icepick.restoreInstanceState(this, savedInstanceState);
     }
+
+    protected abstract void injectDependencies(ApplicationComponent component);
 
     @Nullable
     @Override

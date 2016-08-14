@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.BuildConfig;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.base.BaseActivity;
@@ -70,4 +71,8 @@ public class AboutActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void injectDependencies(ApplicationComponent component) {
+        // No injections
+    }
 }

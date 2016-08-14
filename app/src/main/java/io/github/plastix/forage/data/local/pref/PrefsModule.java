@@ -8,14 +8,14 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.plastix.forage.ApplicationScope;
+import io.github.plastix.forage.ForApplication;
 
 @Module
 public class PrefsModule {
 
     @Provides
     @Singleton
-    public static SharedPreferences provideSharedPreferences(@ApplicationScope Context context) {
+    public static SharedPreferences provideSharedPreferences(@ForApplication Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 

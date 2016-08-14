@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import io.github.plastix.forage.ForageApplication;
+import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.base.PresenterFragment;
@@ -55,9 +55,8 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     }
 
     @Override
-    protected void injectDependencies() {
-        ForageApplication.getComponent(getContext())
-                .plus(new CacheListModule(this))
+    protected void injectDependencies(ApplicationComponent component) {
+        component.plus(new CacheListModule(this))
                 .injectTo(this);
     }
 

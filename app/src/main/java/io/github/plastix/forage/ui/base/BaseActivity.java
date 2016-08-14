@@ -8,6 +8,8 @@ import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 import icepick.Icepick;
+import io.github.plastix.forage.ApplicationComponent;
+import io.github.plastix.forage.ForageApplication;
 
 /**
  * AppCompatActivity base to extend all other activities from.
@@ -18,8 +20,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        injectDependencies(ForageApplication.getComponent(this));
         Icepick.restoreInstanceState(this, savedInstanceState);
     }
+
+    protected abstract void injectDependencies(ApplicationComponent component);
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

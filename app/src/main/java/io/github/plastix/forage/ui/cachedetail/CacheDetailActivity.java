@@ -28,7 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import icepick.State;
-import io.github.plastix.forage.ForageApplication;
+import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.base.PresenterActivity;
@@ -112,9 +112,8 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
     }
 
     @Override
-    protected void injectDependencies() {
-        ForageApplication.getComponent(this)
-                .plus(new CacheDetailModule(this))
+    protected void injectDependencies(ApplicationComponent component) {
+        component.plus(new CacheDetailModule(this))
                 .injectTo(this);
     }
 

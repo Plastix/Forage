@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import io.github.plastix.forage.ForageApplication;
+import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.ui.base.PresenterActivity;
@@ -72,9 +72,8 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
     }
 
     @Override
-    protected void injectDependencies() {
-        ForageApplication.getComponent(this)
-                .plus(new MapModule(this))
+    protected void injectDependencies(ApplicationComponent component) {
+        component.plus(new MapModule(this))
                 .injectTo(this);
     }
 

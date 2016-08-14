@@ -1,7 +1,7 @@
 package io.github.plastix.forage.ui.log;
 
 import dagger.Subcomponent;
-import io.github.plastix.forage.ui.base.ActivityScope;
+import io.github.plastix.forage.ui.ActivityScope;
 
 @ActivityScope
 @Subcomponent(modules = {

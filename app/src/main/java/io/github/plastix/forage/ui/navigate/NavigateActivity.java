@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.github.plastix.forage.ForageApplication;
+import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.ui.compass.CompassActivity;
@@ -53,9 +53,8 @@ public class NavigateActivity extends PresenterActivity<NavigatePresenter, Navig
     }
 
     @Override
-    protected void injectDependencies() {
-        ForageApplication.getComponent(getBaseContext())
-                .plus(new NavigateModule(this))
+    protected void injectDependencies(ApplicationComponent component) {
+        component.plus(new NavigateModule(this))
                 .injectTo(this);
     }
 

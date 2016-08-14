@@ -67,17 +67,6 @@ public abstract class PresenterFragment<T extends Presenter<V>, V> extends BaseF
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        injectDependencies();
-    }
-
-    /**
-     * Subclasses must call this method to inject dependencies from Dagger 2.
-     */
-    protected abstract void injectDependencies();
-
-    @Override
     public void onResume() {
         super.onResume();
         presenter.onViewAttached(getPresenterView());

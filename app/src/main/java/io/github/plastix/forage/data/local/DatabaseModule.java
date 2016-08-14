@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.plastix.forage.ApplicationScope;
+import io.github.plastix.forage.ForApplication;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -26,7 +26,7 @@ public class DatabaseModule {
     @NonNull
     @Provides
     @Singleton
-    public static RealmConfiguration provideDefaultRealmConfig(@NonNull @ApplicationScope Context context) {
+    public static RealmConfiguration provideDefaultRealmConfig(@NonNull @ForApplication Context context) {
         return new RealmConfiguration.Builder(context)
                 .deleteRealmIfMigrationNeeded()
                 .name(Realm.DEFAULT_REALM_NAME)

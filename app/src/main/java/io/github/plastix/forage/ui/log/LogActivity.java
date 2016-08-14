@@ -16,7 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import butterknife.BindView;
 import butterknife.OnClick;
 import icepick.State;
-import io.github.plastix.forage.ForageApplication;
+import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.util.ActivityUtils;
@@ -56,9 +56,8 @@ public class LogActivity extends PresenterActivity<LogPresenter, LogView> implem
     }
 
     @Override
-    protected void injectDependencies() {
-        ForageApplication.getComponent(this)
-                .plus(new LogModule(this))
+    protected void injectDependencies(ApplicationComponent component) {
+        component.plus(new LogModule(this))
                 .injectTo(this);
     }
 

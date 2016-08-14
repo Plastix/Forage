@@ -51,21 +51,17 @@ public interface ApplicationComponent {
 
     ///
     // Getters
+    // These provide dependencies from the real app to tests without the need to inject to the test
     //
 
-    // Provide Gson from the real app to the tests without need to inject to the test.
     Gson gson();
 
-    // Provide OkHttp Host Interceptor from the real app to the tests without need to inject to the test.
     HostSelectionInterceptor hostInteceptor();
 
-    // Provide OkApiService from the real app to the tests without need to inject to the test.
     OkApiService okApiService();
 
-    // Provide DatabaseInteractor from the real app to the tests without need to inject to the test.
     DatabaseInteractor databaseInteractor();
 
-    // Provide GoogleApiClient from the real app to the tests without need to inject to the test.
     GoogleApiClient googleClient();
 
     ///

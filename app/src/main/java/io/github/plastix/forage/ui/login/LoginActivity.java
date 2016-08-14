@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.github.plastix.forage.ForageApplication;
+import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.api.ApiConstants;
 import io.github.plastix.forage.ui.base.PresenterActivity;
@@ -49,9 +49,8 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> 
     }
 
     @Override
-    protected void injectDependencies() {
-        ForageApplication.getComponent(this)
-                .plus(new LoginModule(this))
+    protected void injectDependencies(ApplicationComponent component) {
+        component.plus(new LoginModule(this))
                 .injectTo(this);
     }
 

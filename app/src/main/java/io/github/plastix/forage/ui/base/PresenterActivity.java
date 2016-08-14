@@ -29,14 +29,8 @@ public abstract class PresenterActivity<T extends Presenter<V>, V> extends BaseA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        injectDependencies();
         initLoader();
     }
-
-    /**
-     * Subclasses must call this method to inject dependencies from Dagger 2.
-     */
-    protected abstract void injectDependencies();
 
     private void initLoader() {
         getSupportLoaderManager().initLoader(LOADER_ID, null, new LoaderManager.LoaderCallbacks<T>() {
