@@ -6,12 +6,10 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
-import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.github.plastix.forage.util.RxUtils;
-import io.realm.OrderedRealmCollection;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 import timber.log.Timber;
@@ -37,25 +35,6 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
         this.locationInteractor = locationInteractor;
         this.networkInteractor = networkInteractor;
     }
-
-    public void getGeocachesFromDatabase() {
-        addSubscription(
-                databaseInteractor.getGeocaches()
-                        .toObservable()
-                        .compose(this.<OrderedRealmCollection<Cache>>deliverFirst())
-                        .toSingle()
-                        .subscribe(caches -> {
-                                    if (isViewAttached()) {
-                                        view.setGeocacheList(caches);
-                                    }
-                                },
-                                throwable -> {
-                                    // TODO show error dialog
-                                    Timber.e(throwable.getMessage(), throwable);
-                                })
-        );
-    }
-
 
     public void getGeocachesFromInternet() {
         // Cancel any currently running request

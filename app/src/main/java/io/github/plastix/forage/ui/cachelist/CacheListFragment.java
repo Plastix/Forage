@@ -10,8 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.lang.ref.WeakReference;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -35,6 +33,12 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     private static final String LOCATION_PERMISSION = android.Manifest.permission.ACCESS_FINE_LOCATION;
 
     @Inject
+    CacheAdapter adapter;
+
+    @Inject
+    LinearLayoutManager linearLayoutManager;
+
+    @Inject
     SimpleDividerItemDecoration itemDecorator;
 
     @BindView(R.id.cachelist_recyclerview)
@@ -46,7 +50,6 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     @BindView(R.id.empty_view)
     View emptyView;
 
-    private CacheAdapter adapter;
     private DataChangeListener dataChangeListener;
 
     @Override
@@ -69,21 +72,25 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ActivityUtils.setSupportActionBarTitle(getActivity(), R.string.cachelist_screen_title);
-
-        adapter = new CacheAdapter(getContext(), null, true);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(itemDecorator);
-
-        this.dataChangeListener = new DataChangeListener(this);
-        adapter.registerAdapterDataObserver(dataChangeListener);
-
-        swipeRefreshLayout.setOnRefreshListener(this);
+        setupRecyclerView();
+        setupSwipeRefresh();
         updateEmptyView();
     }
 
+    private void setupRecyclerView() {
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(itemDecorator);
+
+        dataChangeListener = new DataChangeListener(this);
+        adapter.registerAdapterDataObserver(dataChangeListener);
+    }
+
+    private void setupSwipeRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
     private void updateEmptyView() {
-        stopRefresh();
         if (recyclerView.getAdapter() == null || adapter.getItemCount() == 0) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
@@ -97,20 +104,9 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        presenter.getGeocachesFromDatabase();
-    }
-
-    @Override
-    public void setGeocacheList(OrderedRealmCollection<Cache> caches) {
-        adapter.updateData(caches);
-    }
-
-    @Override
     public void setRefreshing() {
         // TODO: Post fix required due to Support V4 bug
-        // Will be fixed in 24.1.0
+        // Will be fixed in 24.2.0
         // See https://code.google.com/p/android/issues/detail?id=77712
         swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
     }
@@ -141,7 +137,6 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     }
 
     private void downloadGeocaches() {
-        swipeRefreshLayout.setRefreshing(true);
         presenter.getGeocachesFromInternet();
     }
 
@@ -180,19 +175,16 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
 
     private static class DataChangeListener extends RecyclerView.AdapterDataObserver {
 
-        private final WeakReference<CacheListFragment> fragmentWeakReference;
+        private final CacheListFragment fragment;
 
-        public DataChangeListener(CacheListFragment fragmentWeakReference) {
-            this.fragmentWeakReference = new WeakReference<>(fragmentWeakReference);
+        public DataChangeListener(CacheListFragment fragment) {
+            this.fragment = fragment;
         }
 
         @Override
         public void onChanged() {
-            super.onChanged();
-            CacheListFragment fragment = fragmentWeakReference.get();
-            if (fragment != null) {
-                fragment.updateEmptyView();
-            }
+            fragment.stopRefresh();
+            fragment.updateEmptyView();
 
         }
     }
