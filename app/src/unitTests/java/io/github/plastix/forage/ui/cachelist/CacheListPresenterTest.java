@@ -75,7 +75,10 @@ public class CacheListPresenterTest {
     @Test
     public void fetchGeocaches_networkErrorUpdatesView() {
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(
-                Completable.error(new Throwable()));
+                Completable.error(new NetworkInteractor.NetworkUnavailableException()));
+
+        when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
+
 
         cacheListPresenter.getGeocachesFromInternet();
 
@@ -87,7 +90,7 @@ public class CacheListPresenterTest {
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(
                 Completable.complete());
 
-        when(locationInteractor.isLocationAvailable()).thenReturn(Completable.error(new Throwable()));
+        when(locationInteractor.isLocationAvailable()).thenReturn(Completable.error(new LocationInteractor.LocationUnavailableException()));
 
         cacheListPresenter.getGeocachesFromInternet();
 

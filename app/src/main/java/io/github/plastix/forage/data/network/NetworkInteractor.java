@@ -30,7 +30,16 @@ public class NetworkInteractor {
         if (hasInternetConnection()) {
             return Completable.complete();
         } else {
-            return Completable.error(new Throwable("Network connection not available!"));
+            return Completable.error(new NetworkUnavailableException("Network unavailable!"));
+        }
+    }
+
+    public static class NetworkUnavailableException extends Throwable {
+        public NetworkUnavailableException(String message) {
+            super(message);
+        }
+
+        public NetworkUnavailableException() {
         }
     }
 }
