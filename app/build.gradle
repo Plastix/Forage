@@ -129,11 +129,12 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Google Support Library
-    compile 'com.android.support:support-v4:24.1.1'
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.android.support:recyclerview-v7:24.1.1'
-    compile 'com.android.support:gridlayout-v7:24.1.1'
+    compile 'com.android.support:support-compat:24.2.0'
+    compile 'com.android.support:support-fragment:24.2.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:recyclerview-v7:24.2.0'
+    compile 'com.android.support:gridlayout-v7:24.2.0'
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-location:9.2.1'
@@ -187,7 +188,7 @@ dependencies {
 
     // Functional UI Testing
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
-    androidTestCompile 'com.android.support:support-annotations:24.1.1'
+    androidTestCompile 'com.android.support:support-annotations:24.2.0'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
     androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
         // Fix dependency error

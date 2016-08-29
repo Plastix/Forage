@@ -132,12 +132,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
 
     @Override
     public void setRefreshing() {
-        // TODO: Post fix required due to Support V4 bug
-        // Will be fixed in 24.2.0
-        // See https://code.google.com/p/android/issues/detail?id=77712
-        if (!swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
-        }
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
