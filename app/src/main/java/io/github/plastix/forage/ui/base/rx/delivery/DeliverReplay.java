@@ -5,7 +5,7 @@ import rx.Subscription;
 import rx.subjects.ReplaySubject;
 
 /**
- * From https://github.com/alapshin/arctor
+ * Adapted from https://github.com/alapshin/arctor (MIT License)
  */
 public class DeliverReplay<T> implements Observable.Transformer<T, T> {
 

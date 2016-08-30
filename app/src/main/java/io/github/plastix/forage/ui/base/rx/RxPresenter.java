@@ -3,7 +3,6 @@ package io.github.plastix.forage.ui.base.rx;
 import io.github.plastix.forage.ui.base.Presenter;
 import io.github.plastix.forage.ui.base.rx.delivery.DeliverFirst;
 import io.github.plastix.forage.ui.base.rx.delivery.DeliverLatest;
-import io.github.plastix.forage.ui.base.rx.delivery.DeliverLatestCache;
 import io.github.plastix.forage.ui.base.rx.delivery.DeliverReplay;
 import rx.Subscription;
 import rx.subjects.BehaviorSubject;
@@ -93,17 +92,6 @@ public abstract class RxPresenter<V> extends Presenter<V> {
         return new DeliverLatest<>(viewLifecycle);
     }
 
-
-    /**
-     * Returns an {@link rx.Observable.Transformer} that delays emission from the source {@link rx.Observable}.
-     * <p>
-     * {@link DeliverLatestCache} keeps the latest onNext value and emits it if there is * attached view. Never completes.
-     *
-     * @param <T> the type of source observable emissions
-     */
-    public <T> DeliverLatestCache<T> deliverLatestCache() {
-        return new DeliverLatestCache<>(viewLifecycle);
-    }
 
     /**
      * Returns an {@link rx.Observable.Transformer} that delays emission from the source {@link rx.Observable}.

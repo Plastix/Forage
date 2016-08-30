@@ -3,7 +3,9 @@ package io.github.plastix.forage.ui.base.rx.delivery;
 import rx.Observable;
 
 /**
- * From https://github.com/alapshin/arctor
+ * Transformer which couples data Observable with view Observable.
+ * <p>
+ * Adapted from https://github.com/alapshin/arctor (MIT License)
  */
 public class DeliverFirst<T> implements Observable.Transformer<T, T> {
 
@@ -15,12 +17,22 @@ public class DeliverFirst<T> implements Observable.Transformer<T, T> {
 
     @Override
     public Observable<T> call(Observable<T> observable) {
+        // This is nearly identical to DeliverLatest except we call take(1) on the data observable first
+        // See DeliverLatest transformer!
         return Observable
                 .combineLatest(
                         view,
-                        observable,
-                        (flag, value) -> flag ? value : null)
+                        observable.take(1)
+                                .materialize()
+                                .delay(notification -> {
+                                    if (notification.isOnCompleted()) {
+                                        return view.first(view1 -> view1);
+                                    } else {
+                                        return Observable.empty();
+                                    }
+                                }),
+                        (isViewAttached, notification) -> isViewAttached ? notification : null)
                 .filter(value -> value != null)
-                .take(1);
+                .dematerialize();
     }
 }
