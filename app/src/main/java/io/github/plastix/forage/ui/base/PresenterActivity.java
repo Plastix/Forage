@@ -1,6 +1,7 @@
 package io.github.plastix.forage.ui.base;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -16,7 +17,8 @@ import javax.inject.Provider;
  *
  * @param <T> Type of Presenter.
  */
-public abstract class PresenterActivity<T extends Presenter<V>, V> extends BaseActivity {
+public abstract class PresenterActivity<T extends Presenter<V>, V> extends BaseActivity
+        implements LoaderManager.LoaderCallbacks<T> {
 
     // Internal ID to reference the Loader from the LoaderManager
     private static final int LOADER_ID = 1;
@@ -33,32 +35,32 @@ public abstract class PresenterActivity<T extends Presenter<V>, V> extends BaseA
     }
 
     private void initLoader() {
-        getSupportLoaderManager().initLoader(LOADER_ID, null, new LoaderManager.LoaderCallbacks<T>() {
-            @Override
-            public Loader<T> onCreateLoader(int id, Bundle args) {
-                return presenterLoaderProvider.get();
-            }
-
-            @Override
-            public void onLoadFinished(Loader<T> loader, T data) {
-                presenter = data;
-                onPresenterPrepared(presenter);
-            }
-
-            @Override
-            public void onLoaderReset(Loader<T> loader) {
-                presenter = null;
-                onPresenterDestroyed();
-            }
-        });
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
-    protected void onPresenterPrepared(T presenter) {
-        // hook for subclasses
+    @Override
+    public void onLoadFinished(Loader<T> loader, T presenter) {
+        onPresenterProvided(presenter);
     }
 
+    @CallSuper
+    protected void onPresenterProvided(T presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void onLoaderReset(Loader<T> loader) {
+        onPresenterDestroyed();
+    }
+
+    @CallSuper
     protected void onPresenterDestroyed() {
-        // hook for subclasses
+        presenter = null;
+    }
+
+    @Override
+    public Loader<T> onCreateLoader(int id, Bundle args) {
+        return presenterLoaderProvider.get();
     }
 
     @Override
@@ -75,8 +77,8 @@ public abstract class PresenterActivity<T extends Presenter<V>, V> extends BaseA
 
     @Override
     protected void onStop() {
-        presenter.onViewDetached();
         super.onStop();
+        presenter.onViewDetached();
     }
 
 }

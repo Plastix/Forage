@@ -88,8 +88,8 @@ public class CompassActivity extends PresenterActivity<CompassPresenter, Compass
     }
 
     @Override
-    protected void onPresenterPrepared(CompassPresenter presenter) {
-        super.onPresenterPrepared(presenter);
+    protected void onPresenterProvided(CompassPresenter presenter) {
+        super.onPresenterProvided(presenter);
         presenter.setTargetLocation(target);
         presenter.startCompass();
     }

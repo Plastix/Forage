@@ -1,6 +1,7 @@
 package io.github.plastix.forage.ui.base;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -13,7 +14,8 @@ import javax.inject.Provider;
  *
  * @param <T> Type of Presenter.
  */
-public abstract class PresenterFragment<T extends Presenter<V>, V> extends BaseFragment {
+public abstract class PresenterFragment<T extends Presenter<V>, V> extends BaseFragment
+        implements LoaderManager.LoaderCallbacks<T> {
 
     // Internal ID to reference the Loader from the LoaderManager
     private static final int LOADER_ID = 1;
@@ -23,10 +25,6 @@ public abstract class PresenterFragment<T extends Presenter<V>, V> extends BaseF
     @Inject
     protected Provider<PresenterLoader<T>> presenterLoaderProvider;
 
-    // Boolean flag to avoid delivering the Presenter twice. Calling initLoader in onActivityCreated means
-    // onLoadFinished will be called twice during configuration change.
-    private boolean delivered = false;
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -35,35 +33,32 @@ public abstract class PresenterFragment<T extends Presenter<V>, V> extends BaseF
     }
 
     private void initLoader() {
-        getLoaderManager().initLoader(LOADER_ID, null, new LoaderManager.LoaderCallbacks<T>() {
-            @Override
-            public Loader<T> onCreateLoader(int id, Bundle args) {
-                return presenterLoaderProvider.get();
-            }
-
-            @Override
-            public void onLoadFinished(Loader<T> loader, T data) {
-                if (!delivered) {
-                    presenter = data;
-                    delivered = true;
-                    onPresenterPrepared(presenter);
-                }
-            }
-
-            @Override
-            public void onLoaderReset(Loader<T> loader) {
-                presenter = null;
-                onPresenterDestroyed();
-            }
-        });
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
-    protected void onPresenterPrepared(T presenter) {
-        // hook for subclasses
+    @Override
+    public Loader<T> onCreateLoader(int id, Bundle args) {
+        return presenterLoaderProvider.get();
     }
 
+    @Override
+    public void onLoadFinished(Loader<T> loader, T presenter) {
+        onPresenterProvided(presenter);
+    }
+
+    @CallSuper
+    protected void onPresenterProvided(T presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void onLoaderReset(Loader<T> loader) {
+        onPresenterDestroyed();
+    }
+
+    @CallSuper
     protected void onPresenterDestroyed() {
-        // hook for subclasses
+        presenter = null;
     }
 
     @Override
@@ -80,7 +75,7 @@ public abstract class PresenterFragment<T extends Presenter<V>, V> extends BaseF
 
     @Override
     public void onPause() {
-        presenter.onViewDetached();
         super.onPause();
+        presenter.onViewDetached();
     }
 }
