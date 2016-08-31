@@ -1,5 +1,6 @@
 package io.github.plastix.forage.ui.base.rx.delivery;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -355,5 +356,53 @@ public class DeliverReplayTest {
         testScheduler.advanceTimeBy(TIME_DELAY_MS, TimeUnit.MILLISECONDS);
         testSubscriber.awaitTerminalEvent();
         testSubscriber.assertCompleted();
+    }
+
+    @Test
+    public void noItemsEmittedFromSourceBeforeSubscription() {
+        Observable<Boolean> view = Observable.just(true);
+        Observable.Transformer<Integer, Integer> transformer = new DeliverReplay<>(view);
+
+        final boolean[] emitted = {false}; // Flag required since doOnEach swallows errors
+        Observable.just(0, 1, 2)
+                .doOnNext(val -> emitted[0] = true)
+                .compose(transformer);
+
+        if (emitted[0]) {
+            Assert.fail("Source emitted items before downstream observable was subscribed to!");
+        }
+
+    }
+
+    @Test
+    public void noErrorEmittedFromSourceBeforeSubscription() {
+        Observable<Boolean> view = Observable.just(true);
+        Observable.Transformer<Integer, Integer> transformer = new DeliverReplay<>(view);
+
+        final boolean[] emitted = {false};
+        Observable.<Integer>error(new Throwable())
+                .doOnError(throwable -> emitted[0] = true)
+                .compose(transformer);
+
+        if (emitted[0]) {
+            Assert.fail("Source emitted error before downstream observable was subscribed to!");
+        }
+
+    }
+
+    @Test
+    public void noCompletionEmittedFromSourceBeforeSubscription() {
+        Observable<Boolean> view = Observable.just(true);
+        Observable.Transformer<Integer, Integer> transformer = new DeliverReplay<>(view);
+
+        final boolean[] emitted = {false};
+        Observable.<Integer>empty()
+                .doOnCompleted(() -> emitted[0] = true)
+                .compose(transformer);
+
+        if (emitted[0]) {
+            Assert.fail("Source emitted completion before downstream observable was subscribed to!");
+        }
+
     }
 }
