@@ -57,7 +57,10 @@ public class LogPresenterTest {
     @Test
     public void submitLog_NoInternet() {
         when(networkInteractor.hasInternetConnectionCompletable()).
-                thenReturn(Completable.error(new Throwable("Error!")));
+                thenReturn(Completable.error(new NetworkInteractor.NetworkUnavailableException()));
+
+        when(okApiInteractor.submitLog(anyString(), anyString(), anyString()))
+                .thenReturn(Single.just(mock(SubmitLogResponse.class)));
 
         logPresenter.submitLog("", "", "");
 

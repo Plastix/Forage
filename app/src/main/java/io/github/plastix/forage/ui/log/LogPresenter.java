@@ -28,41 +28,37 @@ public class LogPresenter extends RxPresenter<LogView> {
 
     public void submitLog(final String cacheCode, final String comment, final String type) {
         networkInteractor.hasInternetConnectionCompletable()
-                .subscribe(() -> addSubscription(
-                        okApiInteractor.submitLog(cacheCode, type, comment)
-                                .toObservable()
-                                .compose(LogPresenter.this.<SubmitLogResponse>deliverFirst())
-                                .toSingle()
-                                .doOnSubscribe(() -> {
-                                    if (isViewAttached()) {
-                                        view.showSubmittingDialog();
-                                    }
-                                })
-                                .subscribe(submitLogResponse -> {
-                                            if (isViewAttached()) {
-                                                if (submitLogResponse.isSuccessful) {
-                                                    view.showSuccessfulSubmit();
-                                                } else {
-                                                    view.showErrorDialog(submitLogResponse.message);
-                                                }
-                                            }
-                                        },
-                                        throwable -> {
-                                            if (isViewAttached()) {
-                                                // Non-200 HTTP Code
-                                                if (throwable instanceof HttpException) {
-                                                    HttpException httpException = ((HttpException) throwable);
-                                                    view.showErrorDialog(httpException.getMessage());
-                                                } else {
-                                                    view.showErrorDialog(R.string.log_submit_error_unknown);
-                                                }
-                                            }
-                                        })
-                ), throwable -> {
+                .andThen(okApiInteractor.submitLog(cacheCode, type, comment))
+                .toObservable()
+                .compose(LogPresenter.this.<SubmitLogResponse>deliverFirst())
+                .toSingle()
+                .doOnSubscribe(() -> {
                     if (isViewAttached()) {
-                        view.showErrorInternetDialog();
+                        view.showSubmittingDialog();
                     }
-                });
+                })
+                .subscribe(submitLogResponse -> {
+                            if (isViewAttached()) {
+                                if (submitLogResponse.isSuccessful) {
+                                    view.showSuccessfulSubmit();
+                                } else {
+                                    view.showErrorDialog(submitLogResponse.message);
+                                }
+                            }
+                        },
+                        throwable -> {
+                            if (isViewAttached()) {
+                                if (throwable instanceof NetworkInteractor.NetworkUnavailableException) {
+                                    view.showErrorInternetDialog();
+                                } else if (throwable instanceof HttpException) { // Non-200 HTTP Code
+                                    HttpException httpException = ((HttpException) throwable);
+                                    view.showErrorDialog(httpException.getMessage());
+                                } else {
+                                    view.showErrorDialog(R.string.log_submit_error_unknown);
+                                }
+                            }
+                        }
+                );
     }
 
     public void getLogTypes(String cacheCode) {
