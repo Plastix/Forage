@@ -58,7 +58,7 @@ public class LoginPresenterTest {
     @Test
     public void startOAuth_callsViewIfNoInternet() {
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(
-                Completable.error(new Throwable("No Internet!")));
+                Completable.error(new NetworkInteractor.NetworkUnavailableException()));
 
         presenter.startOAuth();
 
