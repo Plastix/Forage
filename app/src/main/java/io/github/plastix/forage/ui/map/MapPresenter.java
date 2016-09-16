@@ -43,17 +43,19 @@ public class MapPresenter extends RxPresenter<MapActivityView> {
 
     @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
     void centerMapOnLocation() {
-        addSubscription(locationInteractor.getUpdatedLocation()
-                .toObservable()
-                .compose(deliverFirst())
-                .toSingle()
-                .subscribe(location -> {
-                            if (isViewAttached()) {
-                                view.animateMapCamera(location);
-                            }
-                        }, throwable -> Timber.e(throwable, "Error fetching location!")
+        addSubscription(
+                locationInteractor.isLocationAvailable()
+                        .andThen(locationInteractor.getUpdatedLocation())
+                        .toObservable()
+                        .compose(deliverFirst())
+                        .toSingle()
+                        .subscribe(location -> {
+                                    if (isViewAttached()) {
+                                        view.animateMapCamera(location);
+                                    }
+                                }, throwable -> Timber.e(throwable, "Error fetching location!")
 
-                )
+                        )
         );
     }
 

@@ -11,6 +11,7 @@ import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.realm.OrderedRealmCollection;
+import rx.Completable;
 import rx.Single;
 
 import static org.mockito.Matchers.any;
@@ -74,24 +75,42 @@ public class MapPresenterTest {
 
     @Test
     public void centerMapOnLocation_shouldCallView() {
+        when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
         Location location = mock(Location.class);
         when(locationInteractor.getUpdatedLocation()).thenReturn(Single.just(location));
 
         mapPresenter.centerMapOnLocation();
 
-        verify(locationInteractor, only()).getUpdatedLocation();
+        verify(locationInteractor, times(1)).isLocationAvailable();
+        verify(locationInteractor, times(1)).getUpdatedLocation();
         verify(view, times(1)).animateMapCamera(location);
 
     }
 
     @Test
     public void centerMapOnLocation_errorDoesNothing() {
+        when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
         when(locationInteractor.getUpdatedLocation()).thenReturn(Single.error(new Throwable("Error 2")));
 
         mapPresenter.centerMapOnLocation();
 
-        verify(locationInteractor, only()).getUpdatedLocation();
+        verify(locationInteractor, times(1)).isLocationAvailable();
+        verify(locationInteractor, times(1)).getUpdatedLocation();
         verify(view, never()).animateMapCamera(any(Location.class));
 
+    }
+
+    @Test
+    public void centerMapOnLocation_errorOnNoLocationDoesNothing() {
+        when(locationInteractor.isLocationAvailable())
+                .thenReturn(Completable.error(new LocationInteractor.LocationUnavailableException()));
+        when(locationInteractor.getUpdatedLocation())
+                .thenReturn(Single.just(mock(Location.class)));
+
+        mapPresenter.centerMapOnLocation();
+
+        verify(locationInteractor, times(1)).isLocationAvailable();
+        verify(locationInteractor, times(1)).getUpdatedLocation();
+        verify(view, never()).animateMapCamera(any(Location.class));
     }
 }
