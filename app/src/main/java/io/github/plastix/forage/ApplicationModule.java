@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import timber.log.Timber;
 
 /**
  * Dagger module that provides (singleton) application wide dependencies.
@@ -21,6 +22,20 @@ public class ApplicationModule {
 
     public ApplicationModule(@NonNull ForageApplication app) {
         this.app = app;
+    }
+
+    @NonNull
+    @Provides
+    @Singleton
+    public static Resources provideResources(@NonNull @ForApplication Context context) {
+        return context.getResources();
+    }
+
+    @NonNull
+    @Provides
+    @Singleton
+    public static Timber.DebugTree provideDebugTree() {
+        return new Timber.DebugTree();
     }
 
     @NonNull
@@ -40,12 +55,5 @@ public class ApplicationModule {
     @ForApplication
     public Context provideApplicationContext() {
         return app.getApplicationContext();
-    }
-
-    @NonNull
-    @Provides
-    @Singleton
-    public static Resources provideResources(@NonNull @ForApplication Context context) {
-        return context.getResources();
     }
 }

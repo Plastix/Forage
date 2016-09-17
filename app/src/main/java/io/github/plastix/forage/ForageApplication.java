@@ -14,16 +14,15 @@ import timber.log.Timber;
 
 public class ForageApplication extends Application {
 
-    @SuppressWarnings("NullableProblems")
-    @NonNull
     @Inject
     Lazy<DevMetricsProxy> devMetricsProxy;
 
-    @SuppressWarnings("NullableProblems")
+    @Inject
+    Lazy<Timber.DebugTree> debugTree;
+
     // Initialized in onCreate. But be careful if you have ContentProviders
     // -> their onCreate may be called before app.onCreate()
     // -> move initialization to attachBaseContext().
-    @NonNull
     private ApplicationComponent component;
 
     @NonNull
@@ -47,7 +46,7 @@ public class ForageApplication extends Application {
         //Use debug tools only in debug builds
         if (BuildConfig.DEBUG) {
             LeakCanary.install(this);
-            Timber.plant(new Timber.DebugTree());
+            Timber.plant(debugTree.get());
             devMetricsProxy.get().apply();
         }
     }
