@@ -45,7 +45,7 @@ public class LocationInteractor {
         LocationAsyncEmitter locationEmitter = locationEmitterProvider.get();
         locationEmitter.setLocationRequest(request);
 
-        return Observable.fromAsync(locationEmitter, AsyncEmitter.BackpressureMode.LATEST)
+        return Observable.fromEmitter(locationEmitter, AsyncEmitter.BackpressureMode.LATEST)
                 .take(1)
                 .toSingle();
     }
@@ -69,7 +69,7 @@ public class LocationInteractor {
         LocationAsyncEmitter locationEmitter = locationEmitterProvider.get();
         locationEmitter.setLocationRequest(request);
 
-        return Observable.fromAsync(locationEmitter, AsyncEmitter.BackpressureMode.LATEST);
+        return Observable.fromEmitter(locationEmitter, AsyncEmitter.BackpressureMode.LATEST);
     }
 
     /**
@@ -80,7 +80,7 @@ public class LocationInteractor {
      */
     @NonNull
     public Completable isLocationAvailable() {
-        return Observable.fromAsync(locationAvailableProvider.get(),
+        return Observable.fromEmitter(locationAvailableProvider.get(),
                 AsyncEmitter.BackpressureMode.NONE).toCompletable();
     }
 

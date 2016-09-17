@@ -141,7 +141,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:9.2.1'
 
     // RxJava
-    compile 'io.reactivex:rxjava:1.1.7'
+    compile 'io.reactivex:rxjava:1.1.10'
     compile 'io.reactivex:rxandroid:1.2.0'
 
     // Retrofit

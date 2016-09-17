@@ -29,6 +29,6 @@ public class AzimuthInteractor {
     @NonNull
     public Observable<Float> getAzimuthObservable() {
         AzimuthAsyncEmitter azimuthAsyncEmitter = azimuthProvider.get();
-        return Observable.fromAsync(azimuthAsyncEmitter, AsyncEmitter.BackpressureMode.LATEST);
+        return Observable.fromEmitter(azimuthAsyncEmitter, AsyncEmitter.BackpressureMode.LATEST);
     }
 }
