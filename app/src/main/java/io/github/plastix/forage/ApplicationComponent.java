@@ -1,6 +1,5 @@
 package io.github.plastix.forage;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;
@@ -61,8 +60,6 @@ public interface ApplicationComponent {
     OkApiService okApiService();
 
     DatabaseInteractor databaseInteractor();
-
-    GoogleApiClient googleClient();
 
     ///
     // Injector for Custom Application Class
