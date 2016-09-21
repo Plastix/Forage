@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.2.0'
 
         // Backport of some Java 8 language features such as Lambdas and method references.
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
@@ -36,7 +36,7 @@ allprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
+    gradleVersion = '2.14.1'
 }
 
 task clean(type: Delete) {
