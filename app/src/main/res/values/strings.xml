@@ -34,7 +34,8 @@
     <string name="cachedetail_description_header">Description</string>
     <string name="cachedetail_cacheinfo_header">Cache Info</string>
     <string name="cachedetail_size_header">Size</string>
-    <string name="cachedetail_rating">%s/5</string>
+    <string name="cachedetail_rating_terrain">%.1f/5</string>
+    <string name="cachedetail_rating_difficulty">%.1f/5</string>
     <string name="cachedetail_error_requires_login">You must be logged in to submit a cache log!</string>
 
     <!-- Cache Item layout Strings -->

@@ -128,8 +128,8 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
         title.setText(cache.name);
         type.setText(resources.getString(R.string.cacheitem_type, cache.type));
         description.setText(cache.description);
-        difficulty.setText(resources.getString(R.string.cachedetail_rating, cache.difficulty));
-        terrain.setText(resources.getString(R.string.cachedetail_rating, cache.terrain));
+        difficulty.setText(resources.getString(R.string.cachedetail_rating_difficulty, cache.difficulty));
+        terrain.setText(resources.getString(R.string.cachedetail_rating_terrain, cache.terrain));
         size.setText(cache.size);
 
         setFabClickListener(cache);

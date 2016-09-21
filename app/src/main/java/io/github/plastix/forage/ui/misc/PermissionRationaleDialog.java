@@ -3,7 +3,6 @@ package io.github.plastix.forage.ui.misc;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -36,7 +35,7 @@ public class PermissionRationaleDialog extends DialogFragment {
         }
     }
 
-    public static PermissionRationaleDialog newInstance(@IntegerRes int contentId) {
+    public static PermissionRationaleDialog newInstance(@StringRes int contentId) {
         PermissionRationaleDialog dialog = new PermissionRationaleDialog();
         dialog.setCancelable(false);
 
