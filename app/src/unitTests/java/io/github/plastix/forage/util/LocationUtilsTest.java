@@ -34,7 +34,7 @@ public class LocationUtilsTest {
             location.setLatitude(0);
             location.setLongitude(0);
 
-            assertThat(LocationUtils.getMagneticDeclination(location)).isWithin(0.05).of(-5.39);
+            assertThat(LocationUtils.getMagneticDeclination(location)).isWithin(0.1).of(-5.339);
 
             location.setLatitude(40.7128);
             location.setLongitude(74.0059);
