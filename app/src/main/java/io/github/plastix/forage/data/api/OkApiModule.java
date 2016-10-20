@@ -8,7 +8,6 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -35,7 +34,7 @@ public class OkApiModule {
     @NonNull
     @Provides
     @Singleton
-    @Named("BASE_ENDPOINT")
+    @EndpointQualifier
     public static String provideBaseURL() {
         return ApiConstants.BASE_ENDPOINT;
     }
@@ -80,10 +79,10 @@ public class OkApiModule {
     @NonNull
     @Provides
     @Singleton
-    public static Retrofit provideRetrofit(@NonNull @Named("BASE_ENDPOINT") String baseUrl,
-                                    @NonNull GsonConverterFactory gsonConverter,
-                                    @NonNull RxJavaCallAdapterFactory rxAdapter,
-                                    @NonNull OkHttpClient client) {
+    public static Retrofit provideRetrofit(@NonNull @EndpointQualifier String baseUrl,
+                                           @NonNull GsonConverterFactory gsonConverter,
+                                           @NonNull RxJavaCallAdapterFactory rxAdapter,
+                                           @NonNull OkHttpClient client) {
 
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -107,8 +106,8 @@ public class OkApiModule {
     @Provides
     @Singleton
     public static Gson provideGson(@NonNull ListTypeAdapterFactory jsonArrayTypeAdapterFactory,
-                            @NonNull HtmlAdapter htmlAdapter,
-                            @NonNull StringCapitalizerAdapter stringCapitalizerAdapter) {
+                                   @NonNull HtmlAdapter htmlAdapter,
+                                   @NonNull StringCapitalizerAdapter stringCapitalizerAdapter) {
 
         return new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
