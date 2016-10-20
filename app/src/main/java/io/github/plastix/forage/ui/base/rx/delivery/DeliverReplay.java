@@ -22,7 +22,7 @@ public class DeliverReplay<T> implements Observable.Transformer<T, T> {
         // 1 element array is a hack fix to allow use in doOnSubscribe lambda expression
         final Subscription[] subscription = {Subscriptions.unsubscribed()};
         return view
-                .switchMap(flag -> flag ? subject : Observable.<T>never())
+                .switchMap(flag -> flag ? subject : Observable.never())
                 .doOnUnsubscribe(subscription[0]::unsubscribe)
                 .doOnSubscribe(() -> subscription[0] = observable.subscribe(subject));
     }
