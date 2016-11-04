@@ -12,10 +12,10 @@ import org.mockito.MockitoAnnotations;
 import java.util.concurrent.TimeUnit;
 
 import io.github.plastix.forage.ForageRoboelectricUnitTestRunner;
-import io.github.plastix.forage.RxSchedulersOverrideRule;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.sensor.AzimuthInteractor;
 import io.github.plastix.forage.util.LocationUtils;
+import io.github.plastix.rx1.RxSchedulerRule;
 import rx.Completable;
 import rx.Observable;
 
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 public class CompassPresenterTest {
 
     @Rule
-    public RxSchedulersOverrideRule rxSchedulersOverrideRule = new RxSchedulersOverrideRule();
+    public RxSchedulerRule rxSchedulerRule = new RxSchedulerRule();
 
     private CompassPresenter compassPresenter;
 

@@ -141,8 +141,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:9.2.1'
 
     // RxJava
-    compile 'io.reactivex:rxjava:1.1.10'
-    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxjava:1.2.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
 
     // Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.0'
@@ -182,6 +182,7 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4-rule:1.6.2'
     testCompile 'org.powermock:powermock-classloading-xstream:1.6.2'
     testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
+    testCompile 'com.github.Plastix.RxSchedulerRule:rx1:1.0.1'
 
     // Custom Retrolambda version
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'

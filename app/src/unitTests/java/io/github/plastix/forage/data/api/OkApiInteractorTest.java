@@ -9,9 +9,9 @@ import org.junit.Test;
 import java.util.List;
 
 import dagger.Lazy;
-import io.github.plastix.forage.RxSchedulersOverrideRule;
 import io.github.plastix.forage.data.api.response.SubmitLogResponse;
 import io.github.plastix.forage.data.local.model.Cache;
+import io.github.plastix.rx1.RxSchedulerRule;
 import rx.Single;
 import rx.singles.BlockingSingle;
 
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 public class OkApiInteractorTest {
 
     @Rule
-    public final RxSchedulersOverrideRule schedulersOverrideRule = new RxSchedulersOverrideRule();
+    public final RxSchedulerRule rxSchedulerRule = new RxSchedulerRule();
 
     @SuppressWarnings("NullableProblems") // Initialized in @Before.
     @NonNull

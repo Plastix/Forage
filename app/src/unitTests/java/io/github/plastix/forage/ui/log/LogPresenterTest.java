@@ -7,12 +7,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import io.github.plastix.forage.R;
-import io.github.plastix.forage.RxSchedulersOverrideRule;
 import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.api.response.SubmitLogResponse;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.network.NetworkInteractor;
+import io.github.plastix.rx1.RxSchedulerRule;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.adapter.rxjava.HttpException;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 public class LogPresenterTest {
 
     @Rule
-    public RxSchedulersOverrideRule rxSchedulersOverrideRule = new RxSchedulersOverrideRule();
+    public RxSchedulerRule rxSchedulerRule = new RxSchedulerRule();
 
     private LogPresenter logPresenter;
 
