@@ -4,10 +4,10 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.api.OkApiInteractor;
-import io.github.plastix.forage.data.api.response.SubmitLogResponse;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
+import io.github.plastix.rxdelay.RxDelay;
 import retrofit2.adapter.rxjava.HttpException;
 import timber.log.Timber;
 
@@ -29,9 +29,7 @@ public class LogPresenter extends RxPresenter<LogView> {
     public void submitLog(final String cacheCode, final String comment, final String type) {
         networkInteractor.hasInternetConnectionCompletable()
                 .andThen(okApiInteractor.submitLog(cacheCode, type, comment))
-                .toObservable()
-                .compose(LogPresenter.this.<SubmitLogResponse>deliverFirst())
-                .toSingle()
+                .compose(RxDelay.delaySingle(getViewState()))
                 .doOnSubscribe(() -> {
                     if (isViewAttached()) {
                         view.showSubmittingDialog();

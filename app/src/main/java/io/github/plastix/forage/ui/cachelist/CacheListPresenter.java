@@ -8,6 +8,7 @@ import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.github.plastix.forage.util.RxUtils;
+import io.github.plastix.rxdelay.RxDelay;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 import timber.log.Timber;
@@ -43,9 +44,7 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
                 .andThen(locationInteractor.getUpdatedLocation())
                 .flatMap(location -> apiInteractor.getNearbyCaches(location.getLatitude(),
                         location.getLongitude(), NEARBY_CACHE_RADIUS_MILES))
-                .toObservable()
-                .compose(this.deliverFirst())
-                .toSingle()
+                .compose(RxDelay.delaySingle(getViewState()))
                 .doOnSubscribe(this::setRefreshing)
                 .subscribe(caches -> {
                     // The adapter will update automatically after this database write

@@ -6,10 +6,9 @@ import android.support.annotation.RequiresPermission;
 import javax.inject.Inject;
 
 import io.github.plastix.forage.data.local.DatabaseInteractor;
-import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
-import io.realm.OrderedRealmCollection;
+import io.github.plastix.rxdelay.RxDelay;
 import timber.log.Timber;
 
 public class MapPresenter extends RxPresenter<MapActivityView> {
@@ -27,9 +26,7 @@ public class MapPresenter extends RxPresenter<MapActivityView> {
     public void setupMap() {
         addSubscription(
                 databaseInteractor.getGeocaches()
-                        .toObservable()
-                        .compose(this.<OrderedRealmCollection<Cache>>deliverFirst())
-                        .toSingle()
+                        .compose(RxDelay.delaySingle(getViewState()))
                         .subscribe(caches -> {
                             if (isViewAttached()) {
                                 view.addMapMarkers(caches);
@@ -46,9 +43,7 @@ public class MapPresenter extends RxPresenter<MapActivityView> {
         addSubscription(
                 locationInteractor.isLocationAvailable()
                         .andThen(locationInteractor.getUpdatedLocation())
-                        .toObservable()
-                        .compose(deliverFirst())
-                        .toSingle()
+                        .compose(RxDelay.delaySingle(getViewState()))
                         .subscribe(location -> {
                                     if (isViewAttached()) {
                                         view.animateMapCamera(location);

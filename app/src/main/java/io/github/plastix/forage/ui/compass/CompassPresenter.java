@@ -14,6 +14,7 @@ import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.github.plastix.forage.util.AngleUtils;
 import io.github.plastix.forage.util.LocationUtils;
 import io.github.plastix.forage.util.RxUtils;
+import io.github.plastix.rxdelay.RxDelay;
 import rx.Observable;
 
 public class CompassPresenter extends RxPresenter<CompassView> {
@@ -71,7 +72,7 @@ public class CompassPresenter extends RxPresenter<CompassView> {
                         })
                         .compose(RxUtils.<Pair<Float, Location>>observeOnUIThreadTransformer())
                         .throttleFirst(COMPASS_UPDATE_INTERVAL, TimeUnit.MILLISECONDS)
-                        .compose(this.<Pair<Float, Location>>deliverLatest())
+                        .compose(RxDelay.delayLatest(getViewState()))
                         .subscribe(pair -> {
                             if (isViewAttached()) {
                                 view.rotateCompass(pair.first);

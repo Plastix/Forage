@@ -143,6 +143,7 @@ dependencies {
     // RxJava
     compile 'io.reactivex:rxjava:1.2.0'
     compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.github.Plastix.RxDelay:rx1:0.5.0'
 
     // Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.0'

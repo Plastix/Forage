@@ -1,9 +1,7 @@
 package io.github.plastix.forage.ui.base.rx;
 
 import io.github.plastix.forage.ui.base.Presenter;
-import io.github.plastix.forage.ui.base.rx.delivery.DeliverFirst;
-import io.github.plastix.forage.ui.base.rx.delivery.DeliverLatest;
-import io.github.plastix.forage.ui.base.rx.delivery.DeliverReplay;
+import rx.Observable;
 import rx.Subscription;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
@@ -70,38 +68,11 @@ public abstract class RxPresenter<V> extends Presenter<V> {
     }
 
     /**
-     * Returns an {@link rx.Observable.Transformer} that delays emission from the source {@link rx.Observable}.
-     * <p>
-     * {@link DeliverFirst} delivers only the first onNext value that has been emitted by the source observable.
-     *
-     * @param <T> the type of source observable emissions
+     * Exposes the state of the attached view as a boolean Observabele. True is emitted when the view
+     * is attached and false is emitted when the view detatches.
      */
-    public <T> DeliverFirst<T> deliverFirst() {
-        return new DeliverFirst<>(viewLifecycle);
-    }
-
-    /**
-     * Returns an {@link rx.Observable.Transformer} that delays emission from the source {@link rx.Observable}.
-     * <p>
-     * {@link DeliverLatest} keeps the latest onNext value and emits it when there is attached view.
-     * Terminates when source observable completes {link rx.Observable#onCompleted()}
-     *
-     * @param <T> the type of source observable emissions
-     */
-    public <T> DeliverLatest<T> deliverLatest() {
-        return new DeliverLatest<>(viewLifecycle);
-    }
-
-
-    /**
-     * Returns an {@link rx.Observable.Transformer} that delays emission from the source {@link rx.Observable}.
-     * <p>
-     * {@link DeliverReplay} keeps all onNext values and emits them each time a new view gets attached.
-     *
-     * @param <T> the type of source observable emissions
-     */
-    public <T> DeliverReplay<T> deliverReplay() {
-        return new DeliverReplay<>(viewLifecycle);
+    public Observable<Boolean> getViewState() {
+        return viewLifecycle.asObservable();
     }
 
 }

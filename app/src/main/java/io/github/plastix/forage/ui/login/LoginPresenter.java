@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import io.github.plastix.forage.data.api.auth.OAuthInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
+import io.github.plastix.rxdelay.RxDelay;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 
@@ -37,9 +38,7 @@ public class LoginPresenter extends RxPresenter<LoginView> {
 
     private void getRequestToken() {
         requestTokenSubscription = oAuthInteractor.retrieveRequestToken()
-                .toObservable()
-                .compose(this.<String>deliverFirst())
-                .toSingle()
+                .compose(RxDelay.delaySingle(getViewState()))
                 .doOnSubscribe(() -> {
                     if (isViewAttached()) {
                         view.showLoading();
@@ -61,14 +60,12 @@ public class LoginPresenter extends RxPresenter<LoginView> {
 
     public void oauthCallback(final Uri uri) {
         accessTokenSubscription = oAuthInteractor.retrieveAccessToken(uri)
-                .toObservable()
-                .compose(deliverFirst())
-                .doOnSubscribe(() -> {
+                .compose(RxDelay.delayCompletable(getViewState()))
+                .doOnSubscribe(subscription -> {
                     if (isViewAttached()) {
                         view.showLoading();
                     }
                 })
-                .toCompletable()
                 .subscribe(() -> {
                     if (isViewAttached()) {
                         view.onAuthSuccess();
