@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.plastix.forage.ui.ActivityScope;
 
 @Module
 public abstract class ActivityModule {
@@ -17,13 +16,11 @@ public abstract class ActivityModule {
     }
 
     @Provides
-    @ActivityScope
     public AppCompatActivity provideActivity() {
         return activity;
     }
 
     @Provides
-    @ActivityScope
     public Context provideContext() {
         return activity.getBaseContext();
     }

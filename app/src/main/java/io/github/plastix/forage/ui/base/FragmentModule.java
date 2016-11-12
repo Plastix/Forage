@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.plastix.forage.ui.FragmentScope;
 
 @Module
 public abstract class FragmentModule {
@@ -17,13 +16,11 @@ public abstract class FragmentModule {
     }
 
     @Provides
-    @FragmentScope
     public Fragment provideFragment() {
         return fragment;
     }
 
     @Provides
-    @FragmentScope
     public Context provideContext() {
         return fragment.getContext();
     }
