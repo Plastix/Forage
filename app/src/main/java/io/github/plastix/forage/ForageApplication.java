@@ -20,9 +20,6 @@ public class ForageApplication extends Application {
     @Inject
     Lazy<Timber.DebugTree> debugTree;
 
-    // Initialized in onCreate. But be careful if you have ContentProviders
-    // -> their onCreate may be called before app.onCreate()
-    // -> move initialization to attachBaseContext().
     private ApplicationComponent component;
 
     @NonNull
@@ -40,7 +37,6 @@ public class ForageApplication extends Application {
         super.onCreate();
 
         this.component = prepareApplicationComponent().build();
-
         this.component.injectTo(this);
 
         //Use debug tools only in debug builds
