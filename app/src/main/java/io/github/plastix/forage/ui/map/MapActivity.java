@@ -79,7 +79,7 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
 
     @Override
     public void addMapMarkers(List<Cache> caches) {
-        if (googleMap != null) {
+        if (hasMap()) {
             for (Cache cache : caches) {
                 MarkerOptions markerOptions = new MarkerOptions()
                         .position(new LatLng(cache.location.latitude, cache.location.longitude))
@@ -88,6 +88,10 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
                 markers.put(marker, cache.cacheCode);
             }
         }
+    }
+
+    private boolean hasMap() {
+        return googleMap != null;
     }
 
     @Override
@@ -123,8 +127,10 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
 
     @Override
     public void animateMapCamera(Location location) {
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        if (hasMap()) {
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        }
     }
 
     @Override
@@ -149,7 +155,9 @@ public class MapActivity extends PresenterActivity<MapPresenter, MapActivityView
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        googleMap.setOnInfoWindowClickListener(null);
+        if (hasMap()) {
+            googleMap.setOnInfoWindowClickListener(null);
+        }
         googleMap = null;
         markers.clear();
         markers = null;
