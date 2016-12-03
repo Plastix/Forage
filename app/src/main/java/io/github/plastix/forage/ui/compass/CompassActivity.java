@@ -6,7 +6,10 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.AngleUtils;
 import io.github.plastix.forage.util.StringUtils;
 import io.github.plastix.forage.util.UnitUtils;
+import io.github.plastix.forage.util.ViewUtils;
 
 /**
  * Activity that represents the compass screen of the app.
@@ -32,6 +36,15 @@ public class CompassActivity extends PresenterActivity<CompassPresenter, Compass
 
     @Inject
     LinearInterpolator linearInterpolator;
+
+    @BindView(R.id.compass_loading)
+    View compassLoading;
+
+    @BindView(R.id.compass_loading_icon)
+    View compassLoadingSpinner;
+
+    @BindView(R.id.compass_content)
+    View compassContent;
 
     @BindView(R.id.compass_toolbar)
     Toolbar toolbar;
@@ -74,11 +87,18 @@ public class CompassActivity extends PresenterActivity<CompassPresenter, Compass
         setSupportActionBar(toolbar);
         ActivityUtils.setSupportActionBarBack(getDelegate());
 
+        setupView();
+    }
+
+    private void setupView() {
         // Don't dim the screen
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         this.target = getIntent().getParcelableExtra(EXTRA_CACHE_LOCATION);
         arrow.setRotation(currentAzimuth);
+
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotation);
+        compassLoadingSpinner.startAnimation(animation);
     }
 
     @Override
@@ -88,8 +108,8 @@ public class CompassActivity extends PresenterActivity<CompassPresenter, Compass
     }
 
     @Override
-    protected void onPresenterProvided(CompassPresenter presenter) {
-        super.onPresenterProvided(presenter);
+    protected void onResume() {
+        super.onResume();
         presenter.startCompass(target);
     }
 
@@ -127,5 +147,11 @@ public class CompassActivity extends PresenterActivity<CompassPresenter, Compass
     @Override
     public void showLocationUnavailableDialog() {
         LocationUnavailableDialog.show(this);
+    }
+
+    @Override
+    public void showCompass() {
+        ViewUtils.show(compassContent);
+        ViewUtils.hide(compassLoading);
     }
 }

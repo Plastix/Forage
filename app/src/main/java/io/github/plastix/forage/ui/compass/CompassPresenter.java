@@ -38,17 +38,23 @@ public class CompassPresenter extends RxPresenter<CompassView> {
     public void startCompass(@NonNull Location location) {
         target = location;
 
-        locationInteractor.isLocationAvailable().subscribe(() -> {
-            if (!enabled) {
-                rotateCompass();
-                enabled = !enabled;
-            }
-
-        }, throwable -> {
+        if (enabled) {
             if (isViewAttached()) {
-                view.showLocationUnavailableDialog();
+                view.showCompass();
             }
-        });
+        } else {
+            locationInteractor.isLocationAvailable().subscribe(() -> {
+                if (!enabled) {
+                    rotateCompass();
+                    enabled = true;
+                }
+
+            }, throwable -> {
+                if (isViewAttached()) {
+                    view.showLocationUnavailableDialog();
+                }
+            });
+        }
     }
 
     private void rotateCompass() {
@@ -73,6 +79,11 @@ public class CompassPresenter extends RxPresenter<CompassView> {
                         .compose(RxUtils.<Pair<Float, Location>>observeOnUIThreadTransformer())
                         .throttleFirst(COMPASS_UPDATE_INTERVAL, TimeUnit.MILLISECONDS)
                         .compose(RxDelay.delayLatest(getViewState()))
+                        .compose(RxUtils.doOnFirst(floatLocationPair -> {
+                            if (isViewAttached()) {
+                                view.showCompass();
+                            }
+                        }))
                         .subscribe(pair -> {
                             if (isViewAttached()) {
                                 view.rotateCompass(pair.first);

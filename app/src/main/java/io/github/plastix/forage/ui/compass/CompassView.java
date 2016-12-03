@@ -14,4 +14,6 @@ public interface CompassView {
 
     void showLocationUnavailableDialog();
 
+    void showCompass();
+
 }

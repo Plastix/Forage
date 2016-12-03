@@ -24,4 +24,6 @@
 
     <include layout="@layout/content_compass"/>
 
+    <include layout="@layout/content_compass_loading"/>
+
 </android.support.design.widget.CoordinatorLayout>

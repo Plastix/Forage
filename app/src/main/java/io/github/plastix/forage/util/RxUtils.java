@@ -2,10 +2,13 @@ package io.github.plastix.forage.util;
 
 import android.support.annotation.Nullable;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import rx.Observable;
 import rx.Single;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -87,6 +90,20 @@ public class RxUtils {
      */
     public static <T> Single.Transformer<T, T> subscribeOnComputationThreadTransformerSingle() {
         return tSingle -> tSingle.subscribeOn(Schedulers.computation());
+    }
+
+    /**
+     * Transformer which calls the specified Action1 upon first emission from the source observable.
+     */
+    public static <T> Observable.Transformer<T, T> doOnFirst(Action1<? super T> action) {
+        return o -> Observable.defer(() -> {
+            final AtomicBoolean first = new AtomicBoolean(true);
+            return o.doOnNext(t -> {
+                if (first.compareAndSet(true, false)) {
+                    action.call(t);
+                }
+            });
+        });
     }
 
 }
