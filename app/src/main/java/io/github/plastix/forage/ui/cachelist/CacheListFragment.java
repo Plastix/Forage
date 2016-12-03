@@ -20,6 +20,7 @@ import io.github.plastix.forage.ui.misc.PermissionRationaleDialog;
 import io.github.plastix.forage.ui.misc.SimpleDividerItemDecoration;
 import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.PermissionUtils;
+import io.github.plastix.forage.util.ViewUtils;
 
 /**
  * Fragment that is responsible for the Geocache list.
@@ -90,9 +91,9 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
 
     private void updateEmptyView() {
         if (recyclerView.getAdapter() == null || adapter.getItemCount() == 0) {
-            emptyView.setVisibility(View.VISIBLE);
+            ViewUtils.show(emptyView);
         } else {
-            emptyView.setVisibility(View.GONE);
+            ViewUtils.hide(emptyView);
         }
 
     }

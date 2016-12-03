@@ -9,7 +9,6 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
@@ -20,6 +19,7 @@ import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.api.ApiConstants;
 import io.github.plastix.forage.ui.base.PresenterActivity;
 import io.github.plastix.forage.util.ActivityUtils;
+import io.github.plastix.forage.util.ViewUtils;
 import timber.log.Timber;
 
 public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> implements LoginView {
@@ -68,7 +68,7 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> 
     @Override
     public void stopLoading() {
         loginButton.setEnabled(true);
-        progressBar.setVisibility(View.INVISIBLE);
+        ViewUtils.invis(progressBar);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> 
     @Override
     public void showLoading() {
         loginButton.setEnabled(false);
-        progressBar.setVisibility(View.VISIBLE);
+        ViewUtils.show(progressBar);
     }
 
     @Override

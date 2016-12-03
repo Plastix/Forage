@@ -32,4 +32,11 @@ public class ViewUtilsTest {
 
         verify(view).setVisibility(View.GONE);
     }
+
+    @Test
+    public void invis_callsCorrectMethod() {
+        ViewUtils.invis(view);
+
+        verify(view).setVisibility(View.INVISIBLE);
+    }
 }
