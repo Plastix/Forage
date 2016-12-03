@@ -33,35 +33,38 @@ public class AzimuthAsyncEmitter implements Action1<AsyncEmitter<Float>> {
 
 
     @Override
-    public void call(AsyncEmitter<Float> floatAsyncEmitter) {
-        this.compass = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+    public void call(AsyncEmitter<Float> emitter) {
+        compass = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 
-        SensorEventListener sensorEventListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
+        if (compass != null) {
+            SensorEventListener sensorEventListener = new SensorEventListener() {
+                @Override
+                public void onSensorChanged(SensorEvent event) {
 
-                if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
-                    // Calculate the rotation matrix
-                    SensorManager.getRotationMatrixFromVector(rMat, event.values);
+                    if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+                        // Calculate the rotation matrix
+                        SensorManager.getRotationMatrixFromVector(rMat, event.values);
 
-                    // Compass direction is result[0]
-                    float[] result = SensorManager.getOrientation(rMat, orientation);
-                    float azimuth = (float) (Math.toDegrees(result[0]));
-                    azimuth += AngleUtils.getRotationOffset(windowManager);
+                        // Compass direction is result[0]
+                        float[] result = SensorManager.getOrientation(rMat, orientation);
+                        float azimuth = (float) (Math.toDegrees(result[0]));
+                        azimuth += AngleUtils.getRotationOffset(windowManager);
 
-                    floatAsyncEmitter.onNext(azimuth);
+                        emitter.onNext(azimuth);
+                    }
                 }
-            }
 
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int i) {
-                // No op
-            }
-        };
+                @Override
+                public void onAccuracyChanged(Sensor sensor, int i) {
+                    // No op
+                }
+            };
 
-        sensorManager.registerListener(sensorEventListener, compass, SensorManager.SENSOR_DELAY_GAME);
+            sensorManager.registerListener(sensorEventListener, compass, SensorManager.SENSOR_DELAY_GAME);
 
-        floatAsyncEmitter.setCancellation(() -> sensorManager.unregisterListener(sensorEventListener, compass));
-
+            emitter.setCancellation(() -> sensorManager.unregisterListener(sensorEventListener, compass));
+        } else {
+            emitter.onError(new SensorUnavailableException("Compass Sensor not available!"));
+        }
     }
 }

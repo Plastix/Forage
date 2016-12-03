@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.location.LocationInteractor;
+import io.github.plastix.forage.data.location.LocationUnavailableException;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.github.plastix.forage.util.RxUtils;
@@ -55,7 +56,7 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
                     if (isViewAttached()) {
                         if (throwable instanceof NetworkInteractor.NetworkUnavailableException) {
                             view.onErrorInternet();
-                        } else if (throwable instanceof LocationInteractor.LocationUnavailableException) {
+                        } else if (throwable instanceof LocationUnavailableException) {
                             view.onErrorLocation();
                         } else {
                             view.onErrorFetch();

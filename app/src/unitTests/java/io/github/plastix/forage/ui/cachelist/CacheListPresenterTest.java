@@ -13,6 +13,7 @@ import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
+import io.github.plastix.forage.data.location.LocationUnavailableException;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import rx.Completable;
 import rx.Single;
@@ -90,7 +91,7 @@ public class CacheListPresenterTest {
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(
                 Completable.complete());
 
-        when(locationInteractor.isLocationAvailable()).thenReturn(Completable.error(new LocationInteractor.LocationUnavailableException()));
+        when(locationInteractor.isLocationAvailable()).thenReturn(Completable.error(new LocationUnavailableException()));
 
         cacheListPresenter.getGeocachesFromInternet();
 

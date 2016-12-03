@@ -10,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
+import io.github.plastix.forage.data.location.LocationUnavailableException;
 import io.realm.OrderedRealmCollection;
 import rx.Completable;
 import rx.Single;
@@ -103,7 +104,7 @@ public class MapPresenterTest {
     @Test
     public void centerMapOnLocation_errorOnNoLocationDoesNothing() {
         when(locationInteractor.isLocationAvailable())
-                .thenReturn(Completable.error(new LocationInteractor.LocationUnavailableException()));
+                .thenReturn(Completable.error(new LocationUnavailableException()));
         when(locationInteractor.getUpdatedLocation())
                 .thenReturn(Single.just(mock(Location.class)));
 

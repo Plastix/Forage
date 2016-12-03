@@ -32,14 +32,14 @@ public class LocationAvailableAsyncEmitter implements Action1<AsyncEmitter<Void>
     public void call(AsyncEmitter<Void> locationAsyncEmitter) {
 
         GoogleApiClient.OnConnectionFailedListener onConnectionFailedListener = connectionResult ->
-                locationAsyncEmitter.onError(new LocationInteractor.LocationUnavailableException("Failed to connect to Google Play Services!"));
+                locationAsyncEmitter.onError(new LocationUnavailableException("Failed to connect to Google Play Services!"));
 
         ResultCallback<LocationSettingsResult> pendingResultCallback = locationSettingsResult -> {
             Status status = locationSettingsResult.getStatus();
             if (status.getStatusCode() == LocationSettingsStatusCodes.SUCCESS) {
                 locationAsyncEmitter.onCompleted();
             } else {
-                locationAsyncEmitter.onError(new LocationInteractor.LocationUnavailableException("Location services not enabled!"));
+                locationAsyncEmitter.onError(new LocationUnavailableException("Location services not enabled!"));
             }
         };
 
@@ -60,13 +60,13 @@ public class LocationAvailableAsyncEmitter implements Action1<AsyncEmitter<Void>
                     result.setResultCallback(pendingResultCallback);
 
                 } catch (SecurityException e) {
-                    locationAsyncEmitter.onError(new LocationInteractor.LocationUnavailableException("Location permission not available?"));
+                    locationAsyncEmitter.onError(new LocationUnavailableException("Location permission not available?"));
                 }
             }
 
             @Override
             public void onConnectionSuspended(int i) {
-                locationAsyncEmitter.onError(new LocationInteractor.LocationUnavailableException("Connection lost to Google Play Services"));
+                locationAsyncEmitter.onError(new LocationUnavailableException("Connection lost to Google Play Services"));
 
             }
         };

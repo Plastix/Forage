@@ -83,14 +83,4 @@ public class LocationInteractor {
         return Observable.fromEmitter(locationAvailableProvider.get(),
                 AsyncEmitter.BackpressureMode.NONE).toCompletable();
     }
-
-    public static class LocationUnavailableException extends Throwable {
-        public LocationUnavailableException(String message) {
-            super(message);
-        }
-
-        public LocationUnavailableException() {
-        }
-    }
-
 }

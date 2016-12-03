@@ -35,11 +35,9 @@ public class CompassPresenter extends RxPresenter<CompassView> {
         this.enabled = false;
     }
 
-    public void setTargetLocation(@NonNull Location location) {
-        this.target = location;
-    }
+    public void startCompass(@NonNull Location location) {
+        target = location;
 
-    public void startCompass() {
         locationInteractor.isLocationAvailable().subscribe(() -> {
             if (!enabled) {
                 rotateCompass();
@@ -56,7 +54,9 @@ public class CompassPresenter extends RxPresenter<CompassView> {
     private void rotateCompass() {
         addSubscription(
                 Observable.combineLatest(
-                        azimuthInteractor.getAzimuthObservable(),
+                        // If we get an error from the Azimuth observable it means we don't have a
+                        // compass sensor. Thus, send 0 downstream and only use the location
+                        azimuthInteractor.getAzimuthObservable().onErrorReturn(throwable -> 0f),
                         locationInteractor.getLocationObservable(LOCATION_UPDATE_INTERVAL),
                         Pair::new)
                         .compose(RxUtils.<Pair<Float, Location>>subscribeOnComputationThreadTransformer())

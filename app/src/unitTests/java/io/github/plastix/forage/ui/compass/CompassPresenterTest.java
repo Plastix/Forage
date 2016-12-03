@@ -53,7 +53,6 @@ public class CompassPresenterTest {
     public void updateCompass_updatesView() throws InterruptedException {
         Location target = LocationUtils.buildLocation(0, 0);
 
-        compassPresenter.setTargetLocation(target);
         when(azimuthInteractor.getAzimuthObservable()).thenReturn(Observable.just(0f));
 
         Location location = LocationUtils.buildLocation(0, 0);
@@ -61,7 +60,7 @@ public class CompassPresenterTest {
 
         when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
 
-        compassPresenter.startCompass();
+        compassPresenter.startCompass(target);
 
         // Wait for the compass presenter to update the view
         // We need this because we're applying backpressure operators to the observable

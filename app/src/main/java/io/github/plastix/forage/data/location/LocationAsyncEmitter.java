@@ -36,7 +36,7 @@ public class LocationAsyncEmitter implements Action1<AsyncEmitter<Location>> {
         LocationListener locationListener = locationAsyncEmitter::onNext;
 
         GoogleApiClient.OnConnectionFailedListener onConnectionFailedListener = connectionResult ->
-                locationAsyncEmitter.onError(new Throwable("Failed to connect to Google Play Services!"));
+                locationAsyncEmitter.onError(new LocationUnavailableException("Failed to connect to Google Play Services!"));
 
         GoogleApiClient.ConnectionCallbacks connectionCallbacks = new GoogleApiClient.ConnectionCallbacks() {
             @Override
@@ -44,13 +44,13 @@ public class LocationAsyncEmitter implements Action1<AsyncEmitter<Location>> {
                 try {
                     LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, locationListener);
                 } catch (SecurityException e) {
-                    locationAsyncEmitter.onError(new Throwable("Location permission not available!"));
+                    locationAsyncEmitter.onError(new LocationUnavailableException("Location permission not available!"));
                 }
             }
 
             @Override
             public void onConnectionSuspended(int i) {
-                locationAsyncEmitter.onError(new Throwable("Connection lost to Google Play Services"));
+                locationAsyncEmitter.onError(new LocationUnavailableException("Connection lost to Google Play Services"));
 
             }
         };
