@@ -34,12 +34,4 @@ public class NetworkInteractor {
         }
     }
 
-    public static class NetworkUnavailableException extends Throwable {
-        public NetworkUnavailableException(String message) {
-            super(message);
-        }
-
-        public NetworkUnavailableException() {
-        }
-    }
 }

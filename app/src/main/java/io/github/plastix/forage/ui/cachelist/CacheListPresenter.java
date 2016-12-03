@@ -7,6 +7,7 @@ import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.location.LocationUnavailableException;
 import io.github.plastix.forage.data.network.NetworkInteractor;
+import io.github.plastix.forage.data.network.NetworkUnavailableException;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.github.plastix.forage.util.RxUtils;
 import io.github.plastix.rxdelay.RxDelay;
@@ -54,7 +55,7 @@ public class CacheListPresenter extends RxPresenter<CacheListView> {
                 }, throwable -> {
                     Timber.e(throwable, "Error fetching caches!");
                     if (isViewAttached()) {
-                        if (throwable instanceof NetworkInteractor.NetworkUnavailableException) {
+                        if (throwable instanceof NetworkUnavailableException) {
                             view.onErrorInternet();
                         } else if (throwable instanceof LocationUnavailableException) {
                             view.onErrorLocation();

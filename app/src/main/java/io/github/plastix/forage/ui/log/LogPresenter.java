@@ -6,6 +6,7 @@ import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
+import io.github.plastix.forage.data.network.NetworkUnavailableException;
 import io.github.plastix.forage.ui.base.rx.RxPresenter;
 import io.github.plastix.rxdelay.RxDelay;
 import retrofit2.adapter.rxjava.HttpException;
@@ -46,7 +47,7 @@ public class LogPresenter extends RxPresenter<LogView> {
                         },
                         throwable -> {
                             if (isViewAttached()) {
-                                if (throwable instanceof NetworkInteractor.NetworkUnavailableException) {
+                                if (throwable instanceof NetworkUnavailableException) {
                                     view.showErrorInternetDialog();
                                 } else if (throwable instanceof HttpException) { // Non-200 HTTP Code
                                     HttpException httpException = ((HttpException) throwable);

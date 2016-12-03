@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 
 import io.github.plastix.forage.data.api.auth.OAuthInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
+import io.github.plastix.forage.data.network.NetworkUnavailableException;
 import rx.Completable;
 import rx.Single;
 
@@ -58,7 +59,7 @@ public class LoginPresenterTest {
     @Test
     public void startOAuth_callsViewIfNoInternet() {
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(
-                Completable.error(new NetworkInteractor.NetworkUnavailableException()));
+                Completable.error(new NetworkUnavailableException()));
 
         presenter.startOAuth();
 

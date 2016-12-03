@@ -15,6 +15,7 @@ import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.location.LocationUnavailableException;
 import io.github.plastix.forage.data.network.NetworkInteractor;
+import io.github.plastix.forage.data.network.NetworkUnavailableException;
 import rx.Completable;
 import rx.Single;
 
@@ -76,7 +77,7 @@ public class CacheListPresenterTest {
     @Test
     public void fetchGeocaches_networkErrorUpdatesView() {
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(
-                Completable.error(new NetworkInteractor.NetworkUnavailableException()));
+                Completable.error(new NetworkUnavailableException()));
 
         when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
 

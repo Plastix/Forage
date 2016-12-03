@@ -12,6 +12,7 @@ import io.github.plastix.forage.data.api.response.SubmitLogResponse;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.local.model.Cache;
 import io.github.plastix.forage.data.network.NetworkInteractor;
+import io.github.plastix.forage.data.network.NetworkUnavailableException;
 import io.github.plastix.rx1.RxSchedulerRule;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -57,7 +58,7 @@ public class LogPresenterTest {
     @Test
     public void submitLog_NoInternet() {
         when(networkInteractor.hasInternetConnectionCompletable()).
-                thenReturn(Completable.error(new NetworkInteractor.NetworkUnavailableException()));
+                thenReturn(Completable.error(new NetworkUnavailableException()));
 
         when(okApiInteractor.submitLog(anyString(), anyString(), anyString()))
                 .thenReturn(Single.just(mock(SubmitLogResponse.class)));
