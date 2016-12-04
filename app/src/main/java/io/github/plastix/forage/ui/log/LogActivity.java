@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.StringRes;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -24,6 +25,9 @@ import io.github.plastix.forage.util.ActivityUtils;
 public class LogActivity extends PresenterActivity<LogPresenter, LogView> implements LogView {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
+
+    @BindView(R.id.log_coordinator)
+    CoordinatorLayout coordinatorLayout;
 
     @BindView(R.id.log_toolbar)
     Toolbar toolbar;
@@ -129,7 +133,7 @@ public class LogActivity extends PresenterActivity<LogPresenter, LogView> implem
     @Override
     public void showSuccessfulSubmit() {
         closeOpenDialog();
-        Toast.makeText(getApplicationContext(), R.string.log_submit_success, Toast.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, R.string.log_submit_success, Snackbar.LENGTH_SHORT).show();
         finish();
     }
 }
