@@ -8,13 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,6 +44,9 @@ import io.github.plastix.forage.util.MenuUtils;
 public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter, CacheDetailView> implements CacheDetailView {
 
     private static final String EXTRA_CACHE_CODE = "CACHE_CODE";
+
+    @BindView(R.id.cachdetail_coordinatorlayout)
+    CoordinatorLayout coordinatorLayout;
 
     @BindView(R.id.cachedetail_appbar)
     AppBarLayout appBarLayout;
@@ -183,7 +187,7 @@ public class CacheDetailActivity extends PresenterActivity<CacheDetailPresenter,
 
     @Override
     public void onErrorRequiresLogin() {
-        Toast.makeText(CacheDetailActivity.this, R.string.cachedetail_error_requires_login, Toast.LENGTH_SHORT).show();
+        Snackbar.make(collapsingToolbarLayout, R.string.cachedetail_error_requires_login, Snackbar.LENGTH_LONG).show();
     }
 
     /**
