@@ -6,8 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -60,9 +62,12 @@ public class LoginActivity extends PresenterActivity<LoginPresenter, LoginView> 
         // Users can navigate out of the browser and come back to Forage without logging in
         stopLoading();
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(authUrl));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
+        Uri uri = Uri.parse(authUrl);
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder()
+                .setToolbarColor(ContextCompat.getColor(this, R.color.color_primary));
+
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(this, uri);
     }
 
     @Override

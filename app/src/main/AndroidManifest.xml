@@ -51,10 +51,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/GOOGLE_MAPS_API_KEY"/>
 
+        <!-- Chrome Custom Tabs doesn't work with launchMode "singleInstance" -->
+        <!-- For some reason it opens the tab outside of the app in Chrome -->
+        <!-- Use singleTask instead -->
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/login_screen_title"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
