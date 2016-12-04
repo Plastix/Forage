@@ -39,7 +39,8 @@ public class OAuthInteractor {
         return Single.fromCallable(() -> {
             // Makes a blocking HTTP request
             return okHttpOAuthProvider.retrieveRequestToken(okHttpOAuthConsumer, ApiConstants.OAUTH_CALLBACK);
-        }).subscribeOn(Schedulers.io())
+        })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
@@ -57,6 +58,7 @@ public class OAuthInteractor {
             okHttpOAuthProvider.retrieveAccessToken(okHttpOAuthConsumer, verifier);
 
             return null;
+
         }).doOnCompleted(() -> {
             // okHttpOAuthProvider.retrieveAccessToken sets the token and secret on the
             // OAuthConsumer so all we have to do is store the values in shared preferences
@@ -68,7 +70,7 @@ public class OAuthInteractor {
     }
 
     public boolean hasSavedOAuthTokens() {
-        return userToken.isSet() & userTokenSecret.isSet();
+        return userToken.isSet() && userTokenSecret.isSet();
     }
 
     public void clearSavedOAuthTokens() {

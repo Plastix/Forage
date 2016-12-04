@@ -11,12 +11,12 @@ import okhttp3.Request;
  * Adapted from https://gist.github.com/swankjesse/8571a8207a5815cca1fb
  */
 public final class HostSelectionInterceptor implements Interceptor {
+
     private volatile String host;
 
     public void setHost(String host) {
         this.host = host;
     }
-
 
     @Override
     public okhttp3.Response intercept(Chain chain) throws IOException {
