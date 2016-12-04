@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/cachedetail_action_log"
-        android:icon="@drawable/ic_create"
+        android:icon="@drawable/ic_pencil_box"
         android:title="@string/cachelist_action_map_title"
         app:showAsAction="ifRoom"/>
 
