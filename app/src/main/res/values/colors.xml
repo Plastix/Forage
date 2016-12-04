@@ -18,7 +18,6 @@
     <color name="pink">#FF4081</color>
 
     <!-- Text Scrim Colors -->
-    <color name="translucent_scrim_top">#26000000</color>
-    <color name="translucent_scrim_top_center">#0C000000</color>
+    <color name="translucent_scrim_top">#80000000</color>
 
 </resources>
