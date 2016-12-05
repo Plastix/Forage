@@ -4,7 +4,6 @@
                                                  xmlns:tools="http://schemas.android.com/tools"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
-                                                 android:fitsSystemWindows="false"
                                                  android:orientation="vertical"
                                                  tools:context="io.github.plastix.forage.ui.map.MapActivity">
 
@@ -18,18 +17,16 @@
         map:mapType="normal"
         tools:ignore="MissingPrefix"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sheet_text_scrim_height_top"
+        android:background="@drawable/scrim_top"
+        />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/scrim_top"
-            />
-
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/map_toolbar"
@@ -39,6 +36,5 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     </FrameLayout>
-
 
 </android.support.design.widget.CoordinatorLayout>
