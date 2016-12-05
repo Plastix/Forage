@@ -77,6 +77,4 @@ public class OAuthInteractor {
         userToken.delete();
         userTokenSecret.delete();
     }
-
-
 }
