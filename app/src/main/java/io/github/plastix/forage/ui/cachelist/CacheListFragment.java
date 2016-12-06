@@ -1,6 +1,8 @@
 package io.github.plastix.forage.ui.cachelist;
 
 
+import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -16,11 +18,15 @@ import butterknife.BindView;
 import io.github.plastix.forage.ApplicationComponent;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.ui.base.PresenterFragment;
+import io.github.plastix.forage.ui.cachedetail.CacheDetailActivity;
 import io.github.plastix.forage.ui.misc.PermissionRationaleDialog;
 import io.github.plastix.forage.ui.misc.SimpleDividerItemDecoration;
 import io.github.plastix.forage.util.ActivityUtils;
 import io.github.plastix.forage.util.PermissionUtils;
+import io.github.plastix.forage.util.RxUtils;
 import io.github.plastix.forage.util.ViewUtils;
+import rx.Subscription;
+import rx.subscriptions.Subscriptions;
 
 /**
  * Fragment that is responsible for the Geocache list.
@@ -29,7 +35,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final int LOCATION_REQUEST_CODE = 0;
-    private static final String LOCATION_PERMISSION = android.Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION;
 
     @Inject
     CacheAdapter adapter;
@@ -50,6 +56,7 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
     View emptyView;
 
     private DataChangeListener dataChangeListener;
+    private Subscription cacheClicks = Subscriptions.unsubscribed();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,6 +103,23 @@ public class CacheListFragment extends PresenterFragment<CacheListPresenter, Cac
             ViewUtils.hide(emptyView);
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cacheClicks = adapter.itemClicks().subscribe(this::onCacheClicked);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        RxUtils.safeUnsubscribe(cacheClicks);
+    }
+
+    private void onCacheClicked(String cacheCode) {
+        Intent intent = CacheDetailActivity.newIntent(getContext(), cacheCode);
+        startActivity(intent);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package io.github.plastix.forage.ui.cachelist;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,14 +12,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.plastix.forage.R;
 import io.github.plastix.forage.data.local.model.Cache;
-import io.github.plastix.forage.ui.cachedetail.CacheDetailActivity;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 /**
  * RecyclerView adapter to get {@link Cache}s from Realm and display them.
  */
 public class CacheAdapter extends RealmRecyclerViewAdapter<Cache, CacheAdapter.CacheHolder> {
+
+    private PublishSubject<String> clickEvents = PublishSubject.create();
 
     public CacheAdapter(Context context, OrderedRealmCollection<Cache> data, boolean autoUpdate) {
         super(context, data, autoUpdate);
@@ -44,6 +46,10 @@ public class CacheAdapter extends RealmRecyclerViewAdapter<Cache, CacheAdapter.C
         holder.cacheTerrain.setText(String.valueOf(cache.terrain));
         holder.cacheDifficulty.setText(String.valueOf(cache.difficulty));
         holder.cacheSize.setText(cache.size);
+    }
+
+    public Observable<String> itemClicks(){
+        return clickEvents.asObservable();
     }
 
 
@@ -72,14 +78,9 @@ public class CacheAdapter extends RealmRecyclerViewAdapter<Cache, CacheAdapter.C
 
         @Override
         public void onClick(View v) {
-            CacheAdapter adapter = CacheAdapter.this;
-            Context context = adapter.context;
-
             Cache item = getItem(getLayoutPosition());
             if (item != null) {
-
-                Intent intent = CacheDetailActivity.newIntent(context, item.cacheCode);
-                context.startActivity(intent);
+                clickEvents.onNext(item.cacheCode);
             }
         }
     }
