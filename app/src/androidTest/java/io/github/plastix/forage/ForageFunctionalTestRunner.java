@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.test.runner.AndroidJUnitRunner;
 
 // Custom runner allows us set config in one place instead of setting it in each test class.
 public class ForageFunctionalTestRunner extends AndroidJUnitRunner {

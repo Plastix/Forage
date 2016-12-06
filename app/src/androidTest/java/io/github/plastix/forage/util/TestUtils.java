@@ -1,6 +1,7 @@
 package io.github.plastix.forage.util;
 
 import android.support.annotation.NonNull;
+import android.support.test.InstrumentationRegistry;
 
 import io.github.plastix.forage.ForageApplication;
 
