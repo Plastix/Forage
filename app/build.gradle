@@ -29,7 +29,7 @@ android {
     defaultConfig {
         applicationId "io.github.plastix.forage"
         minSdkVersion 16
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "0.7"
 
