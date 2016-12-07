@@ -19,7 +19,7 @@ import rx.Observable;
 
 public class CompassPresenter extends RxPresenter<CompassView> {
 
-    private static long LOCATION_UPDATE_INTERVAL = 5000;
+    private static long LOCATION_UPDATE_INTERVAL = 1000;
     private static long COMPASS_UPDATE_INTERVAL = 250;
 
     private AzimuthInteractor azimuthInteractor;
