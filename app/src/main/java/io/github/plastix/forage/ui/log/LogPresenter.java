@@ -7,7 +7,7 @@ import io.github.plastix.forage.data.api.OkApiInteractor;
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.data.network.NetworkUnavailableException;
-import io.github.plastix.forage.ui.base.rx.RxPresenter;
+import io.github.plastix.forage.ui.base.RxPresenter;
 import io.github.plastix.rxdelay.RxDelay;
 import retrofit2.adapter.rxjava.HttpException;
 import timber.log.Timber;

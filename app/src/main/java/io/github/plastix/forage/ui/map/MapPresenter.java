@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.data.local.DatabaseInteractor;
 import io.github.plastix.forage.data.location.LocationInteractor;
-import io.github.plastix.forage.ui.base.rx.RxPresenter;
+import io.github.plastix.forage.ui.base.RxPresenter;
 import io.github.plastix.rxdelay.RxDelay;
 import timber.log.Timber;
 

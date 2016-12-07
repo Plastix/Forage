@@ -1,6 +1,5 @@
-package io.github.plastix.forage.ui.base.rx;
+package io.github.plastix.forage.ui.base;
 
-import io.github.plastix.forage.ui.base.Presenter;
 import rx.Observable;
 import rx.Subscription;
 import rx.subjects.BehaviorSubject;

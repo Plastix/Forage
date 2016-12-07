@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.sensor.AzimuthInteractor;
-import io.github.plastix.forage.ui.base.rx.RxPresenter;
+import io.github.plastix.forage.ui.base.RxPresenter;
 import io.github.plastix.forage.util.AngleUtils;
 import io.github.plastix.forage.util.LocationUtils;
 import io.github.plastix.forage.util.RxUtils;

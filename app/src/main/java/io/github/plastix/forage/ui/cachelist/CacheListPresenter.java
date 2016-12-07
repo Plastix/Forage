@@ -8,7 +8,7 @@ import io.github.plastix.forage.data.location.LocationInteractor;
 import io.github.plastix.forage.data.location.LocationUnavailableException;
 import io.github.plastix.forage.data.network.NetworkInteractor;
 import io.github.plastix.forage.data.network.NetworkUnavailableException;
-import io.github.plastix.forage.ui.base.rx.RxPresenter;
+import io.github.plastix.forage.ui.base.RxPresenter;
 import io.github.plastix.forage.util.RxUtils;
 import io.github.plastix.rxdelay.RxDelay;
 import rx.Subscription;

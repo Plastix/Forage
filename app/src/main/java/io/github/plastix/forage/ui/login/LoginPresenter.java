@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import io.github.plastix.forage.data.api.auth.OAuthInteractor;
 import io.github.plastix.forage.data.network.NetworkInteractor;
-import io.github.plastix.forage.ui.base.rx.RxPresenter;
+import io.github.plastix.forage.ui.base.RxPresenter;
 import io.github.plastix.rxdelay.RxDelay;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
