@@ -44,11 +44,8 @@ public class CompassPresenter extends RxPresenter<CompassView> {
             }
         } else {
             locationInteractor.isLocationAvailable().subscribe(() -> {
-                if (!enabled) {
-                    rotateCompass();
-                    enabled = true;
-                }
-
+                rotateCompass();
+                enabled = true;
             }, throwable -> {
                 if (isViewAttached()) {
                     view.showLocationUnavailableDialog();
@@ -65,18 +62,9 @@ public class CompassPresenter extends RxPresenter<CompassView> {
                         azimuthInteractor.getAzimuthObservable().onErrorReturn(throwable -> 0f),
                         locationInteractor.getLocationObservable(LOCATION_UPDATE_INTERVAL),
                         Pair::new)
-                        .compose(RxUtils.<Pair<Float, Location>>subscribeOnComputationThreadTransformer())
-                        .map(pair -> {
-                            float azimuth = pair.first;
-                            Location location = pair.second;
-
-                            azimuth += (float) LocationUtils.getMagneticDeclination(location);
-                            float bearing = location.bearingTo(target);
-
-                            return new Pair<>(AngleUtils.normalize(azimuth - bearing), location);
-
-                        })
-                        .compose(RxUtils.<Pair<Float, Location>>observeOnUIThreadTransformer())
+                        .compose(RxUtils.subscribeOnComputationThreadTransformer())
+                        .map(this::calculateAngle)
+                        .compose(RxUtils.observeOnUIThreadTransformer())
                         .throttleFirst(COMPASS_UPDATE_INTERVAL, TimeUnit.MILLISECONDS)
                         .compose(RxDelay.delayLatest(getViewState()))
                         .compose(RxUtils.doOnFirst(floatLocationPair -> {
@@ -92,6 +80,16 @@ public class CompassPresenter extends RxPresenter<CompassView> {
                             }
                         }, Throwable::printStackTrace)
         );
+    }
+
+    private Pair<Float, Location> calculateAngle(Pair<Float, Location> pair) {
+        float azimuth = pair.first;
+        Location location = pair.second;
+
+        azimuth += (float) LocationUtils.getMagneticDeclination(location);
+        float bearing = location.bearingTo(target);
+
+        return Pair.create(AngleUtils.normalize(azimuth - bearing), location);
     }
 
     @Override
