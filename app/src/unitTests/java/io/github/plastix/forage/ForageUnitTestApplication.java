@@ -3,6 +3,7 @@ package io.github.plastix.forage;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import io.github.plastix.forage.data.local.DatabaseModuleForTest;
 import io.github.plastix.forage.dev_tools.DebugToolsModule;
 import io.github.plastix.forage.dev_tools.DevMetricsProxy;
 
@@ -20,6 +21,7 @@ public class ForageUnitTestApplication extends ForageApplication {
                             //No Op
                         };
                     }
-                });
+                })
+                .databaseModule(new DatabaseModuleForTest());
     }
 }
