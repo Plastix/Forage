@@ -4,11 +4,11 @@ import android.app.Application;
 
 import io.realm.Realm;
 
-public class RealmProxyImpl implements RealmProxy {
+public class RealmInitWrapperImpl implements RealmInitWrapper {
 
     private Application application;
 
-    public RealmProxyImpl(Application application) {
+    public RealmInitWrapperImpl(Application application) {
         this.application = application;
     }
 

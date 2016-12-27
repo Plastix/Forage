@@ -1,6 +1,6 @@
 package io.github.plastix.forage.data.local;
 
-public interface RealmProxy {
+public interface RealmInitWrapper {
 
     void init();
 }

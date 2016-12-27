@@ -35,7 +35,7 @@ public class DatabaseModule {
     @NonNull
     @Provides
     @Singleton
-    public RealmProxy provideRealmProxy(Application application) {
-        return new RealmProxyImpl(application);
+    public RealmInitWrapper provideRealmProxy(Application application) {
+        return new RealmInitWrapperImpl(application);
     }
 }

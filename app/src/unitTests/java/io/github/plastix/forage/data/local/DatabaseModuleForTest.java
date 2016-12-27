@@ -7,7 +7,7 @@ public class DatabaseModuleForTest extends DatabaseModule {
 
     @NonNull
     @Override
-    public RealmProxy provideRealmProxy(Application application) {
+    public RealmInitWrapper provideRealmProxy(Application application) {
         return () -> {
         };
     }

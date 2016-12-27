@@ -9,14 +9,14 @@ import com.squareup.leakcanary.LeakCanary;
 import javax.inject.Inject;
 
 import dagger.Lazy;
-import io.github.plastix.forage.data.local.RealmProxy;
+import io.github.plastix.forage.data.local.RealmInitWrapper;
 import io.github.plastix.forage.dev_tools.DevMetricsProxy;
 import timber.log.Timber;
 
 public class ForageApplication extends Application {
 
     @Inject
-    Lazy<RealmProxy> realmProxy;
+    Lazy<RealmInitWrapper> realmProxy;
 
     @Inject
     Lazy<DevMetricsProxy> devMetricsProxy;
