@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="4dp"
+              android:layout_marginTop="4dp"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/library_icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerInParent="true"
         android:contentDescription="@string/library_icon_description"
         android:tint="@color/color_accent"
         app:srcCompat="@drawable/ic_extension"/>
@@ -23,13 +21,10 @@
         android:id="@+id/library_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_toEndOf="@id/library_icon"
-        android:layout_toRightOf="@id/library_icon"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:fontFamily="sans-serif-light"
         android:textSize="24sp"
         tools:text="Library Name"/>
 
-</RelativeLayout>
+</LinearLayout>

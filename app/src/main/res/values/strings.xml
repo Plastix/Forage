@@ -21,12 +21,24 @@
 
     <!-- About Screen Strings -->
      <string name="about_version_info" formatted="false"
-             tools:ignore="StringFormatInvalid">Version %1$s-%2$s (Build %3$s)</string>
+             tools:ignore="StringFormatInvalid">Version %1$s-%2$s (Build %3$d)</string>
     <string name="about_screen_title">About</string>
     <string name="about_info">A free and open source material design Geocaching client for Android</string>
     <string name="about_opencaching">Powered by OpenCaching</string>
     <string name="about_logo_description">Application Logo</string>
     <string name="about_libraries_header_title">Third Party Libraries</string>
+    <string-array name="about_libraries_list">
+        <item>Dagger 2</item>
+        <item>Retrofit 2</item>
+        <item>RxJava</item>
+        <item>RxAndroid</item>
+        <item>Butterknife</item>
+        <item>Realm</item>
+        <item>Icepick</item>
+        <item>Signpost</item>
+        <item>Material Dialogs</item>
+        <item>Timber</item>
+    </string-array>
 
     <!-- Cache Detail Strings -->
     <string name="cachedetail_difficulty_header">Difficulty</string>

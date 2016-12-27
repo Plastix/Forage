@@ -18,19 +18,6 @@ import io.github.plastix.forage.util.ActivityUtils;
 
 public class AboutActivity extends BaseActivity {
 
-    private static String[] libraries = {
-            "Dagger 2",
-            "Retrofit 2",
-            "RxJava",
-            "RxAndroid",
-            "Butterknife",
-            "Realm",
-            "Icepick",
-            "Signpost",
-            "Material Dialogs",
-            "Retrolambda",
-    };
-
     @BindView(R.id.about_toolbar)
     Toolbar toolbar;
 
@@ -50,10 +37,12 @@ public class AboutActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         setSupportActionBar(toolbar);
-
         ActivityUtils.setSupportActionBarBack(getDelegate());
 
+        setupUI();
+    }
 
+    private void setupUI() {
         String raw = getString(R.string.about_version_info);
         String ver = String.format(raw,
                 BuildConfig.VERSION_NAME,
@@ -62,13 +51,12 @@ public class AboutActivity extends BaseActivity {
         version.setText(ver);
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        for (String library : libraries) {
+        for (String library : getResources().getStringArray(R.array.about_libraries_list)) {
             View view = inflater.inflate(R.layout.library_item, linearLayout, false);
             TextView title = ((TextView) view.findViewById(R.id.library_title));
             title.setText(library);
             linearLayout.addView(view);
         }
-
     }
 
     @Override
