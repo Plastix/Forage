@@ -50,7 +50,6 @@ public class LoginPresenterTest {
 
         presenter.startOAuth();
 
-        verify(networkInteractor, times(1)).hasInternetConnectionCompletable();
         verify(loginView, times(1)).showLoading();
         verify(loginView, times(1)).openBrowser(OAUTH_CALLBACK);
         verifyNoMoreInteractions(loginView);
@@ -63,10 +62,8 @@ public class LoginPresenterTest {
 
         presenter.startOAuth();
 
-        verify(networkInteractor, times(1)).hasInternetConnectionCompletable();
         verify(loginView, times(1)).onErrorNoInternet();
         verifyNoMoreInteractions(loginView);
-
     }
 
     @Test
@@ -77,7 +74,6 @@ public class LoginPresenterTest {
 
         presenter.startOAuth();
 
-        verify(networkInteractor, times(1)).hasInternetConnectionCompletable();
         verify(loginView, times(1)).onErrorRequestToken();
         verify(loginView, times(1)).showLoading();
         verifyNoMoreInteractions(loginView);

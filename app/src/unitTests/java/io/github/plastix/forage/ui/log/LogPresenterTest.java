@@ -141,7 +141,6 @@ public class LogPresenterTest {
         String cacheCode = "";
         logPresenter.getLogTypes(cacheCode);
 
-        verify(databaseInteractor, times(1)).getGeocache(cacheCode);
         verify(view).setLogTypes(R.array.log_types_event);
     }
 
@@ -155,9 +154,7 @@ public class LogPresenterTest {
         String cacheCode = "";
         logPresenter.getLogTypes(cacheCode);
 
-        verify(databaseInteractor, times(1)).getGeocache(cacheCode);
         verifyZeroInteractions(view);
-
     }
 
     @Test
@@ -168,7 +165,6 @@ public class LogPresenterTest {
         String cacheCode = "";
         logPresenter.getLogTypes(cacheCode);
 
-        verify(databaseInteractor, times(1)).getGeocache(cacheCode);
         verifyZeroInteractions(view);
     }
 

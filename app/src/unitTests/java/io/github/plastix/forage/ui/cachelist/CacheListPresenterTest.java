@@ -68,7 +68,6 @@ public class CacheListPresenterTest {
         when(networkInteractor.hasInternetConnectionCompletable()).thenReturn(Completable.complete());
         when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
 
-
         cacheListPresenter.getGeocachesFromInternet();
 
         verify(databaseInteractor).clearAndSaveGeocaches(caches);
@@ -80,7 +79,6 @@ public class CacheListPresenterTest {
                 Completable.error(new NetworkUnavailableException()));
 
         when(locationInteractor.isLocationAvailable()).thenReturn(Completable.complete());
-
 
         cacheListPresenter.getGeocachesFromInternet();
 

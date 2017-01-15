@@ -58,7 +58,6 @@ public class MapPresenterTest {
 
         mapPresenter.setupMap();
 
-        verify(databaseInteractor, only()).getGeocaches();
         verify(view, times(1)).addMapMarkers(caches);
     }
 
@@ -67,10 +66,8 @@ public class MapPresenterTest {
         when(databaseInteractor.getGeocaches()).
                 thenReturn(Single.<OrderedRealmCollection<Cache>>error(new Throwable("Error")));
 
-
         mapPresenter.setupMap();
 
-        verify(databaseInteractor, only()).getGeocaches();
         verify(view, never()).addMapMarkers(anyListOf(Cache.class));
     }
 
@@ -82,10 +79,7 @@ public class MapPresenterTest {
 
         mapPresenter.centerMapOnLocation();
 
-        verify(locationInteractor, times(1)).isLocationAvailable();
-        verify(locationInteractor, times(1)).getUpdatedLocation();
         verify(view, times(1)).animateMapCamera(location);
-
     }
 
     @Test
@@ -95,10 +89,7 @@ public class MapPresenterTest {
 
         mapPresenter.centerMapOnLocation();
 
-        verify(locationInteractor, times(1)).isLocationAvailable();
-        verify(locationInteractor, times(1)).getUpdatedLocation();
         verify(view, never()).animateMapCamera(any(Location.class));
-
     }
 
     @Test
@@ -110,8 +101,6 @@ public class MapPresenterTest {
 
         mapPresenter.centerMapOnLocation();
 
-        verify(locationInteractor, times(1)).isLocationAvailable();
-        verify(locationInteractor, times(1)).getUpdatedLocation();
         verify(view, never()).animateMapCamera(any(Location.class));
     }
 }

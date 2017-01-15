@@ -66,9 +66,7 @@ public class AngleUtilsTest {
         when(display.getRotation()).thenReturn(Surface.ROTATION_270);
         assertThat(AngleUtils.getRotationOffset(windowManager)).isEqualTo(270);
 
-
         when(display.getRotation()).thenReturn(Surface.ROTATION_0);
         assertThat(AngleUtils.getRotationOffset(windowManager)).isEqualTo(0);
-
     }
 }

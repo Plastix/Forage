@@ -49,7 +49,6 @@ public class CacheDetailPresenterTest {
 
         cacheDetailPresenter.getGeocache(cacheCode);
 
-        verify(databaseInteractor, only()).getGeocacheCopy(cacheCode);
         verify(view, only()).returnedGeocache(cache);
     }
 
@@ -61,7 +60,6 @@ public class CacheDetailPresenterTest {
 
         cacheDetailPresenter.getGeocache(cacheCode);
 
-        verify(databaseInteractor, only()).getGeocacheCopy(cacheCode);
         verify(view, only()).onError();
     }
 
