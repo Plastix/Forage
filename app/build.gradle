@@ -20,7 +20,7 @@ buildscript {
 android {
 
     compileSdkVersion 25
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "io.github.plastix.forage"
